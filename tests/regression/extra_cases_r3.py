@@ -48,13 +48,23 @@ STATIC_JS = r"""async (rel) => {
 
 
 # Cụm tiếng Anh chủ hồ sơ CỐ Ý giữ trong bản VI/ES/ZH (quyết định 2026-11-20); chỉ miễn đúng cụm này, từ đơn lẻ vẫn bị bắt.
-ALLOWED_PHRASES = ("GA4 Tracking", "Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page", "Rubric Engineering")
+ALLOWED_PHRASES = ("GA4 Tracking", "Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page", "Rubric Engineering",
+    # W17_03_Life_Insurance (chủ hồ sơ chốt 2026-11-21): định vị, chức danh chính thức tại doanh nghiệp (không dịch),
+    # tên nhóm kỹ năng và tag do chủ hồ sơ đặt bằng tiếng Anh.
+    "Agency Compensation & Incentive Specialist", "Assistant Manager — Agency Planning & Performance Analytics",
+    "Assistant Manager – Agency Planning & Performance Analytics", "Agency Specialist (DCOM)", "Agency Payment (DCOM)",
+    "The Gallerie Compensation & Incentive Senior Specialist", "Senior Pricing & Business Analyst",
+    "Agency Operations & Compensation", "Planning & Business Intelligence", "Data Automation & Technical Tools",
+    "AI Engineering & Quality Control", "Digital Analytics", "Advanced Excel", "Process Automation", "Agency Support",
+    # DOM tách đuôi tiêu đề vào span bảo vệ 2 chữ cuối, nên chữ cuối của định vị là một nút chữ riêng.
+    "Specialist")
 
 
 def _deny_hits(strings):
     hits = []
     for s in strings:
         plain = re.sub(r"<[^>]+>", " ", s).replace("&amp;", "&")
+        plain = re.sub(r"\s+", " ", plain)
         for phrase in ALLOWED_PHRASES:
             plain = plain.replace(phrase, " ")
         m = re.search(DENY_RE, plain)

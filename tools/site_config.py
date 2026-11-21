@@ -132,7 +132,7 @@ def validate_value(dotted, value):
     if dotted == "site.baseUrl":
         host = value.split("/")[2]
         if host in BLOCKED_HOSTS or host.startswith("127."):
-            raise ConfigError("Địa chỉ web phải là trang công khai (vd. https://teoteo1081.github.io/W17_03_Claude_porfolio/), "
+            raise ConfigError("Địa chỉ web phải là trang công khai (vd. https://teoteo1081.github.io/W17_03_Life_Insurance/), "
                               "không dùng localhost hay link repo GitHub.")
     return value
 

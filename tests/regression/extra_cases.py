@@ -42,6 +42,10 @@ def t_n01_migration_cards(b, env):
             pg.wait_for_timeout(250)
             keys_legacy = pg.evaluate("[...document.querySelectorAll('.solution-card-item')].map((c) => (c.querySelector('[data-i18n^=sol_card]') || {getAttribute: () => null}).getAttribute('data-i18n'))")
             store = pg.evaluate("() => Object.fromEntries(Object.entries(localStorage))")
+            # W17_03_Life_Insurance dùng khóa nháp riêng (không đọc nháp của repo gốc): fixture cũ ghi khóa gốc,
+            # nên chuyển sang khóa của dự án này để vẫn kiểm được logic migration.
+            if "tj_capability_w17_03_saved_html" in store:
+                store["tj_w17_03_life_insurance_saved_html"] = store.pop("tj_capability_w17_03_saved_html")
             ctx.close()
             ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 900})
             pg = R.new_page(ctx)

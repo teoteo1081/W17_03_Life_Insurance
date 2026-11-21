@@ -20,7 +20,9 @@ import json
 R = None  # gán bởi run_all
 
 PUBLIC = "https://teoteo1081.github.io/W17_03_Life_Insurance/"
-GA_ID = "G-501ZEXPEVQ"
+# W17_03_Life_Insurance: GA4 đang TẮT trên file thật (measurementId rỗng). Khi giả lập web công khai, trang được
+# phục vụ kèm một mã GIẢ để vẫn kiểm được đường code GA4/consent mà không dùng property thật nào.
+GA_ID = "G-TEST123456"
 PII = ["Nguyen Van Khach", "khach.test@example.com", "0901234567", "Noi dung bi mat"]
 PRIVACY = {"vi": "Quyền riêng tư & cookie", "en": "Privacy & cookies", "es": "Privacidad y cookies", "zh": "隐私与 Cookie"}
 
@@ -39,7 +41,8 @@ def _public_context(b, env, tz="Asia/Ho_Chi_Minh"):
         path = route.request.url.split("?")[0][len(PUBLIC):] or "index.html"
         f = env.work / path
         if f.is_file() and f.suffix == ".html":
-            route.fulfill(status=200, body=f.read_bytes(), headers={"Content-Type": "text/html; charset=utf-8"})
+            body = f.read_bytes().replace(b'"measurementId":""', b'"measurementId":"' + GA_ID.encode() + b'"')
+            route.fulfill(status=200, body=body, headers={"Content-Type": "text/html; charset=utf-8"})
         else:
             route.fulfill(status=404, body=b"")
 
@@ -78,6 +81,10 @@ def t_no_tracking_local(b, env):
     if reqs:
         bad.append(f"có request Google: {reqs[:3]}")
     ctx.close()
+    for rel in ("index.html", "index_portfolio_clean.html"):
+        txt = (R.REPO / rel).read_text(encoding="utf-8")
+        if '"measurementId":""' not in txt or "G-501ZEXPEVQ" in txt:
+            bad.append(f"{rel}: GA4 phải TẮT (measurementId rỗng, không dùng ID của Portfolio gốc)")
     R.record("R8", "R8-01 localhost/editor/trình duyệt tự động: không tải gtag, không dataLayer, không request Google (4 trang)", not bad, " | ".join(bad))
 
 

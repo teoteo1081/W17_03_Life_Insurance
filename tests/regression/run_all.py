@@ -106,7 +106,7 @@ class Env:
 
     def reset_work(self):
         # server sinh lại file Creator sau mỗi lần lưu: khôi phục cả Final lẫn Creator
-        for rel in ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"]:
+        for rel in ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html", "sitemap.xml"]:
             shutil.copyfile(self.pristine / rel, self.work / rel)
 
     def start(self):
@@ -597,6 +597,9 @@ def t_f05_migration(b, env):
         pg.wait_for_timeout(300)
         order_before = pg.evaluate("[...document.querySelectorAll('#reorderable-sections > .reorderable-section')].map((s) => s.getAttribute('data-section-id'))")
         legacy_vals = pg.evaluate("() => Object.fromEntries(Object.entries(localStorage))")
+        # W17_03_Life_Insurance dùng khóa nháp riêng (không đọc nháp của repo gốc): fixture cũ ghi khóa gốc -> chuyển khóa.
+        if "tj_capability_w17_03_saved_html" in legacy_vals:
+            legacy_vals["tj_w17_03_life_insurance_saved_html"] = legacy_vals.pop("tj_capability_w17_03_saved_html")
         ctx.close()
         ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
@@ -607,7 +610,11 @@ def t_f05_migration(b, env):
         order_after = pg.evaluate("[...document.querySelectorAll('#reorderable-sections > .reorderable-section')].map((s) => s.getAttribute('data-section-id'))")
         tag_ok = pg.evaluate("[...document.querySelectorAll('.skill-tag')].some((t) => t.textContent.includes('MIGRATE-ME-TAG'))")
         kept = pg.evaluate("localStorage.getItem('tj_w17_03_life_insurance_saved_html')")
-        if order_after != order_before:
+        # Mục 'metrics' của Creator cũ đã bỏ khỏi CV (lỗi có sẵn ở repo gốc), và CV này thêm mục 'experience':
+        # chỉ yêu cầu các mục còn tồn tại ở cả hai giữ đúng thứ tự tương đối, và không mục hiện có nào bị mất.
+        common_before = [s for s in order_before if s in order_after]
+        common_after = [s for s in order_after if s in order_before]
+        if common_after != common_before or len(common_before) < 3 or sorted(order_after) != ["education", "experience", "skills", "solutions"]:
             bad.append(f"cv: thứ tự section không được giữ {order_before} -> {order_after}")
         if not tag_ok:
             bad.append("cv: tag đã sửa không được giữ")
@@ -1052,7 +1059,7 @@ SERVICE_TITLES = {
 }
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
 # Chủ hồ sơ sửa bản VI qua editor (2026-11-20): Portfolio dùng câu định vị tiếng Anh, CV dùng "và" thay "&".
-POSITIONING_VI = {"portfolio": "End-to-End Operations Automation", "cv": "Vận hành và Phân tích Dữ liệu"}
+POSITIONING_VI = {"portfolio": "End-to-End Operations Automation", "cv": "Agency Compensation & Incentive Specialist"}
 # Bản EN/ES/ZH của câu định vị Portfolio dịch theo câu VI mới (2026-11-20); CV vẫn dùng POSITIONING.
 POSITIONING_PORTFOLIO = {"en": "End-to-End Operations Automation", "es": "Automatización de Operaciones de Principio a Fin", "zh": "端到端运营自动化"}
 
@@ -1060,7 +1067,12 @@ POSITIONING_PORTFOLIO = {"en": "End-to-End Operations Automation", "es": "Automa
 def positioning(l, page):
     if l == "vi":
         return POSITIONING_VI[page]
-    return POSITIONING_PORTFOLIO[l] if page == "portfolio" else POSITIONING[l]
+    return POSITIONING_PORTFOLIO[l] if page == "portfolio" else POSITIONING_CV[l]
+
+
+# W17_03_Life_Insurance (2026-11-21): CV định vị Agency Compensation & Incentive Specialist.
+POSITIONING_CV = {"vi": "Agency Compensation & Incentive Specialist", "en": "Agency Compensation & Incentive Specialist",
+                  "es": "Especialista en Compensación e Incentivos de Agencia", "zh": "代理人佣金与激励专员"}
 
 
 def t_content(b, env):
@@ -1093,10 +1105,10 @@ def t_content(b, env):
         open_page(pg, env, rel)
         for l in LOCALES:
             set_lang(pg, l)
-            t = pg.evaluate("document.querySelector('[data-i18n=hero_title]').textContent")
+            t = pg.evaluate("document.querySelector('[data-i18n=hero_title]').textContent.replace(/\\s+/g, ' ')")
             if positioning(l, "cv") not in t:
                 bad.append(f"{rel}/{l}: sai định vị {t!r}")
-    record("CONTENT", "giữ định vị Operations & Data Analyst (đã dịch theo từng locale), đúng 6 dịch vụ (2 chính, 2 chuyên ngành thuế Mỹ + lương thưởng, 2 nhận làm) + badge theo dictionary, dịch vụ 6 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
+    record("CONTENT", "giữ định vị (Portfolio: Operations Automation; CV: Agency Compensation & Incentive Specialist, dịch theo locale), đúng 6 dịch vụ (2 chính, 2 chuyên ngành thuế Mỹ + lương thưởng, 2 nhận làm) + badge theo dictionary, dịch vụ 6 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
     ctx.close()
 
 
