@@ -3,7 +3,7 @@
 R8 — P0-3: GA4 cho Portfolio + CV, đồng ý (Consent Mode v2, lựa chọn 2b), sự kiện, không lọt dữ liệu cá nhân.
 
 KHÔNG gửi dữ liệu thật lên Google: trang "công khai" được giả lập bằng route của Playwright (phục vụ file trong bản sao tạm
-dưới địa chỉ https://teoteo1081.github.io/W17_03_Claude_porfolio/), gtag.js được thay bằng file rỗng, mọi request tới
+dưới địa chỉ https://teoteo1081.github.io/W17_03_Life_Insurance/), gtag.js được thay bằng file rỗng, mọi request tới
 google-analytics.com / googletagmanager.com khác đều bị chặn. Kiểm bằng cách đọc window.dataLayer.
 
   R8-01  localhost (Final + editor) và trình duyệt tự động thật: không tải gtag, không có dataLayer, không request Google
@@ -19,7 +19,7 @@ import json
 
 R = None  # gán bởi run_all
 
-PUBLIC = "https://teoteo1081.github.io/W17_03_Claude_porfolio/"
+PUBLIC = "https://teoteo1081.github.io/W17_03_Life_Insurance/"
 GA_ID = "G-501ZEXPEVQ"
 PII = ["Nguyen Van Khach", "khach.test@example.com", "0901234567", "Noi dung bi mat"]
 PRIVACY = {"vi": "Quyền riêng tư & cookie", "en": "Privacy & cookies", "es": "Privacidad y cookies", "zh": "隐私与 Cookie"}

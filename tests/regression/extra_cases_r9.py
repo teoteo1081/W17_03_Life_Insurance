@@ -154,7 +154,7 @@ def t_editor_layout(b, env):
     st = pg2.evaluate(STATE_JS)
     if st["order"] != want_order or [h for h, _ in st["desktop"]] != want_nav or pg2.evaluate("getComputedStyle(document.getElementById('website')).display") != "none":
         bad.append(f"Final đã lưu: {st}")
-    pg.evaluate("() => localStorage.removeItem('w17_03_portfolio_edits_v1')")
+    pg.evaluate("() => localStorage.removeItem('w17_03_life_insurance_portfolio_edits_v1')")
     if errors:
         bad.append("lỗi JS: " + " | ".join(errors[:2]))
     ctx.close()

@@ -23,8 +23,8 @@ import stat
 
 R = None  # gán bởi run_all
 
-CV_KEY = "tj_capability_w17_03_state_v1"
-P_KEY = "w17_03_portfolio_edits_v1"
+CV_KEY = "tj_w17_03_life_insurance_cv_state_v1"
+P_KEY = "w17_03_life_insurance_portfolio_edits_v1"
 
 
 def _raw(path):

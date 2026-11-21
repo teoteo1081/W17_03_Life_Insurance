@@ -25,7 +25,7 @@ OLD = {
     "contact.phone": "+84 855 239 805",
     "contact.zaloUrl": "https://zalo.me/0855239805",
     "contact.githubUrl": "https://github.com/teoteo1081",
-    "site.baseUrl": "https://teoteo1081.github.io/W17_03_Claude_porfolio/",
+    "site.baseUrl": "https://teoteo1081.github.io/W17_03_Life_Insurance/",
     "ga4.measurementId": "G-501ZEXPEVQ",
 }
 NEW = {
@@ -214,7 +214,7 @@ def t_cv_known_ids(b, env):
     if len(sol) < 3 or len(tags) < 2:
         bad.append(f"không đủ thẻ để kiểm: {base}")
     else:
-        key = "tj_capability_w17_03_state_v1"
+        key = "tj_w17_03_life_insurance_cv_state_v1"
         first, second, third = sol[0], sol[1], sol[2]
         keep_tags = [{"id": tags[1], "i18nKey": None, "text": "X"}]
         scenarios = [

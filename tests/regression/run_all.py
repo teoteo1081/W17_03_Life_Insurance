@@ -264,7 +264,7 @@ def t_f02(b, env):
     sentinel = {
         "w17_03_portfolio_edited_html_v1": "AUDIT_SENTINEL",
         "w17_03_portfolio_edited_header_v1": "AUDIT_SENTINEL",
-        "tj_capability_w17_03_saved_html": "AUDIT_SENTINEL",
+        "tj_w17_03_life_insurance_saved_html": "AUDIT_SENTINEL",
         "tj_capability_w17_03_saved_brand": "AUDIT_SENTINEL",
         "w17_portfolio_edited_html_v3": "W17_OTHER_APP",
         "tj_capability_v10_saved_html": "W17_OTHER_APP",
@@ -485,10 +485,10 @@ def t_f05(b, env):
     bad = []
     # 1) cache có schema chứa HTML độc hại
     for rel, key, shape in [
-        (FINAL_PORTFOLIO, "w17_03_portfolio_edits_v1", lambda: {"schema": 1, "editsByLang": {"vi": {"hero_badge": evil, "__proto__": {"x": "1"}}}}),
-        (CREATOR_PORTFOLIO, "w17_03_portfolio_edits_v1", lambda: {"schema": 1, "editsByLang": {"vi": {"hero_badge": evil}}}),
-        (FINAL_CV, "tj_capability_w17_03_state_v1", lambda: {"schema": 1, "textEditsByLang": {"vi": {"hero_bio": evil}}, "fieldEdits": {"hero_name": evil}, "avatarDataUrl": "javascript:window.__pwned=5"}),
-        (CREATOR_CV, "tj_capability_w17_03_state_v1", lambda: {"schema": 1, "textEditsByLang": {"vi": {"hero_bio": evil}}, "fieldEdits": {"hero_name": evil}, "avatarDataUrl": "javascript:window.__pwned=5"}),
+        (FINAL_PORTFOLIO, "w17_03_life_insurance_portfolio_edits_v1", lambda: {"schema": 1, "editsByLang": {"vi": {"hero_badge": evil, "__proto__": {"x": "1"}}}}),
+        (CREATOR_PORTFOLIO, "w17_03_life_insurance_portfolio_edits_v1", lambda: {"schema": 1, "editsByLang": {"vi": {"hero_badge": evil}}}),
+        (FINAL_CV, "tj_w17_03_life_insurance_cv_state_v1", lambda: {"schema": 1, "textEditsByLang": {"vi": {"hero_bio": evil}}, "fieldEdits": {"hero_name": evil}, "avatarDataUrl": "javascript:window.__pwned=5"}),
+        (CREATOR_CV, "tj_w17_03_life_insurance_cv_state_v1", lambda: {"schema": 1, "textEditsByLang": {"vi": {"hero_bio": evil}}, "fieldEdits": {"hero_name": evil}, "avatarDataUrl": "javascript:window.__pwned=5"}),
     ]:
         ctx = b.new_context(locale="vi-VN", viewport={"width": 1280, "height": 800})
         pg = new_page(ctx)
@@ -567,7 +567,7 @@ def t_f05_migration(b, env):
         open_page(pg, env, CREATOR_PORTFOLIO)
         badge = pg.evaluate("document.querySelector('[data-i18n=eco_title]').textContent.trim()")
         kept = pg.evaluate("(ks) => Object.fromEntries(ks.map((k) => [k, localStorage.getItem(k)]))", list(legacy_before))
-        state = pg.evaluate("JSON.parse(localStorage.getItem('w17_03_portfolio_edits_v1') || 'null')")
+        state = pg.evaluate("JSON.parse(localStorage.getItem('w17_03_life_insurance_portfolio_edits_v1') || 'null')")
         if badge != "MIGRATE-ME portfolio badge":
             bad.append(f"portfolio: chỉnh sửa cũ không được chuyển (title={badge!r})")
         if kept != legacy_before:
@@ -602,11 +602,11 @@ def t_f05_migration(b, env):
         pg = new_page(ctx)
         pg.goto(f"{env.base}/editor_workspace/editor_cv.html"); pg.wait_for_timeout(300)
         pg.evaluate("(d) => Object.entries(d).forEach(([k, v]) => localStorage.setItem(k, v))", legacy_vals)
-        legacy_snapshot = legacy_vals.get("tj_capability_w17_03_saved_html")
+        legacy_snapshot = legacy_vals.get("tj_w17_03_life_insurance_saved_html")
         open_page(pg, env, CREATOR_CV)
         order_after = pg.evaluate("[...document.querySelectorAll('#reorderable-sections > .reorderable-section')].map((s) => s.getAttribute('data-section-id'))")
         tag_ok = pg.evaluate("[...document.querySelectorAll('.skill-tag')].some((t) => t.textContent.includes('MIGRATE-ME-TAG'))")
-        kept = pg.evaluate("localStorage.getItem('tj_capability_w17_03_saved_html')")
+        kept = pg.evaluate("localStorage.getItem('tj_w17_03_life_insurance_saved_html')")
         if order_after != order_before:
             bad.append(f"cv: thứ tự section không được giữ {order_before} -> {order_after}")
         if not tag_ok:
@@ -649,7 +649,7 @@ def t_f05_nodes(b, env):
         if after != "NODEEDIT-KEEP" or after_lang != "NODEEDIT-KEEP":
             bad.append(f"{rel}: node không-i18n mất chỉnh sửa (sau reload={after!r}, sau đổi ngôn ngữ={after_lang!r}, gốc={orig!r})")
         # văn bản gốc khác => không áp nhầm: sửa dữ liệu "from" rồi tải lại, node phải giữ văn bản hiện hành
-        key = "w17_03_portfolio_edits_v1" if idx_name == "w17NodeIndex" else "tj_capability_w17_03_state_v1"
+        key = "w17_03_life_insurance_portfolio_edits_v1" if idx_name == "w17NodeIndex" else "tj_w17_03_life_insurance_cv_state_v1"
         pg.evaluate("(k) => { const s = JSON.parse(localStorage.getItem(k)); Object.keys(s.nodeEdits).forEach((i) => { s.nodeEdits[i].from = 'KHÔNG-KHỚP'; }); localStorage.setItem(k, JSON.stringify(s)); }", key)
         open_page(pg, env, rel)
         mism = pg.evaluate(f"{idx_name}[2].el.textContent")
@@ -692,9 +692,9 @@ def t_f07(b, env):
             if scenario == "cache-with-data":
                 # đã có dữ liệu chỉnh sửa từ phiên trước (đặt bằng đúng schema)
                 if is_cv:
-                    pg.evaluate("localStorage.setItem('tj_capability_w17_03_state_v1', JSON.stringify({schema:1, textEditsByLang:{vi:{sol_heading:'PRE-EXISTING heading VI'}}}))")
+                    pg.evaluate("localStorage.setItem('tj_w17_03_life_insurance_cv_state_v1', JSON.stringify({schema:1, textEditsByLang:{vi:{sol_heading:'PRE-EXISTING heading VI'}}}))")
                 else:
-                    pg.evaluate("localStorage.setItem('w17_03_portfolio_edits_v1', JSON.stringify({schema:1, editsByLang:{vi:{hero_btn_github:'PRE-EXISTING github VI'}}}))")
+                    pg.evaluate("localStorage.setItem('w17_03_life_insurance_portfolio_edits_v1', JSON.stringify({schema:1, editsByLang:{vi:{hero_btn_github:'PRE-EXISTING github VI'}}}))")
                 open_page(pg, env, src_rel)
             set_lang(pg, "en")
             # chỉnh sửa trong EN

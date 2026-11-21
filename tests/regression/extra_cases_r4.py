@@ -219,8 +219,8 @@ def t_public_host_drafts(b, env):
 
     ctx.route(pub + "/**", handler)
     ctx.add_init_script("""try {
-      localStorage.setItem('w17_03_portfolio_edits_v1', JSON.stringify({schema: 1, editsByLang: {vi: {hero_badge: 'DRAFT-R4-PORTFOLIO'}}}));
-      localStorage.setItem('tj_capability_w17_03_state_v1', JSON.stringify({schema: 1, textEditsByLang: {vi: {pill_lang: 'DRAFT-R4-CV'}}}));
+      localStorage.setItem('w17_03_life_insurance_portfolio_edits_v1', JSON.stringify({schema: 1, editsByLang: {vi: {hero_badge: 'DRAFT-R4-PORTFOLIO'}}}));
+      localStorage.setItem('tj_w17_03_life_insurance_cv_state_v1', JSON.stringify({schema: 1, textEditsByLang: {vi: {pill_lang: 'DRAFT-R4-CV'}}}));
     } catch (e) {}""")
     pg = R.new_page(ctx)
     checks = [
@@ -296,7 +296,7 @@ def t_editor_publish_e2e(b, env):
             _, expected = _sync(env).creator_for("index.html", root=env.work)
             if expected != _raw(env.work / R.CREATOR_PORTFOLIO):
                 bad.append(f"lần {cycle}: file editor lệch khỏi build(Final)")
-            drafts = pg.evaluate("JSON.parse(localStorage.getItem('w17_03_portfolio_edits_v1') || 'null')")
+            drafts = pg.evaluate("JSON.parse(localStorage.getItem('w17_03_life_insurance_portfolio_edits_v1') || 'null')")
             if not drafts or any(drafts.get("editsByLang", {}).values()):
                 bad.append(f"lần {cycle}: bản nháp chưa được dọn {drafts}")
             R.set_lang(pg, "vi")

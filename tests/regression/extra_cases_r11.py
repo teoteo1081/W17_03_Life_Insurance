@@ -19,8 +19,8 @@ import re
 R = None  # gán bởi run_all
 X8 = None  # gán bởi run_all (dùng lại trang công khai giả lập của R8)
 
-P_KEY = "w17_03_portfolio_edits_v1"
-CV_KEY = "tj_capability_w17_03_state_v1"
+P_KEY = "w17_03_life_insurance_portfolio_edits_v1"
+CV_KEY = "tj_w17_03_life_insurance_cv_state_v1"
 
 
 def _raw(path):
@@ -41,7 +41,7 @@ def _jsonld(html):
 def t_seo(b, env):
     bad = []
     env.reset_work()
-    base = "https://teoteo1081.github.io/W17_03_Claude_porfolio/"
+    base = "https://teoteo1081.github.io/W17_03_Life_Insurance/"
     for name, img in (("index.html", "assets/og-portfolio.png"), ("index_portfolio_clean.html", "assets/og-cv.png")):
         html = _raw(env.work / name)
         ld = _jsonld(html)
