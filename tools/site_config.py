@@ -365,7 +365,7 @@ def check(root=ROOT):
             else:
                 shared.append(found[0])
         if len(shared) == 2:
-            scripts[name] = shared
+            scripts[name] = [x.replace("\r\n", "\n") for x in shared]  # so nội dung, không so kiểu xuống dòng (CRLF/LF)
     if PORTFOLIO in configs:
         try:
             if (Path(root) / SITEMAP).read_text(encoding="utf-8") != sitemap_xml(configs[PORTFOLIO]):

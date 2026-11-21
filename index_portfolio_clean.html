@@ -583,6 +583,23 @@
        (ngày giờ, tiêu đề, địa chỉ web, số trang); khoảng cách mép do main tự đệm
        và lặp lại ở mỗi trang (box-decoration-break: clone). */
     @page { size: A4; margin: 0; }
+
+    /* ===== Ẩn mục / ẩn mốc thời gian (Kinh nghiệm) — web, PDF và editor khi không bật Sửa chữ thì biến mất hẳn,
+       bố cục tự khép lại (flex/gap); khi đang Sửa chữ thì hiện mờ + viền đứt để bật lại được. ===== */
+    body:not(.is-editing) [data-w17-hidden],
+    body:not(.is-editing) [data-w17-auto-hidden],
+    body:not(.is-editing) #portfolio-root[data-w17-hide-dates] [data-w17-date] { display: none !important; }
+    body.is-editing #portfolio-root [data-w17-hidden],
+    body.is-editing #portfolio-root [data-w17-auto-hidden] { opacity: .45; outline: 2px dashed #f59e0b; outline-offset: 3px; border-radius: 8px; }
+    body.is-editing #portfolio-root[data-w17-hide-dates] [data-w17-date] { opacity: .45; text-decoration: line-through; }
+    .exp-roles:empty, .exp-points:empty { display: none; }
+    .w17-exp-ctl { margin-left: auto; flex-wrap: nowrap; flex-shrink: 0; gap: .25rem; }
+    .w17-exp-ctl .reorder-btn { padding: .15rem .45rem; font-size: .7rem; line-height: 1.2; }
+    .w17-exp-ctl .reorder-btn[data-act="del"] { border-color: rgba(248, 113, 113, .5); color: #fca5a5; }
+    .w17-exp-ctl .reorder-btn[aria-pressed="true"] { border-color: #f59e0b; color: #fcd34d; }
+    .w17-exp-ctl .reorder-btn:disabled { opacity: .35; cursor: not-allowed; }
+    .w17-exp-ctl .reorder-btn:focus-visible { outline: 2px solid #38bdf8; outline-offset: 1px; }
+    .w17-exp-addrow { display: flex; flex-wrap: wrap; gap: .5rem; }
     @media print {
       main#portfolio-root {
         padding: 9mm 0 !important;
@@ -603,6 +620,9 @@
       .editor-only-overlay,
       #avatar-file-input,
       .no-print,
+      [data-w17-hidden],
+      [data-w17-auto-hidden],
+      #portfolio-root[data-w17-hide-dates] [data-w17-date],
       .delete-btn,
       .reorder-btn,
       .reorder-controls,
@@ -698,7 +718,7 @@
             <span class="inline-flex items-center gap-1.5">
               <span class="text-sky-400 no-edit" aria-hidden="true">📞</span> <a href="tel:+84855239805" class="hover:text-sky-300 hover:underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded"><span class="no-edit">+84 855 239 805</span></a>
             </span>
-            <span class="inline-flex items-center gap-1.5">
+            <span data-w17-date="" class="inline-flex items-center gap-1.5">
               <span data-i18n="hero_dob" class="editable-node">🎂 Ngày sinh: 28/01/1989</span>
             </span>
             <span class="editable-node inline-flex items-center gap-1.5 text-emerald-400 font-medium">
@@ -766,93 +786,89 @@
 
       <!-- ==================== (0) KINH NGHIỆM LIÊN QUAN CHỌN LỌC (3 nhóm, gộp theo CV26) ==================== -->
       <section data-section-id="experience" class="reorderable-section relative space-y-4 pt-2">
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-2">
-          <div class="flex items-center gap-2.5">
-            <span class="text-amber-400 text-base no-edit" aria-hidden="true">💼</span>
-            <h2 data-i18n="exp_heading" class="editable-node text-lg sm:text-xl font-extrabold text-white text-balance">Kinh Nghiệm Liên Quan <span class="inline-block">Chọn Lọc</span></h2>
-          </div>
-          <p data-i18n="exp_note" class="editable-node text-xs text-slate-400 lg:max-w-md leading-relaxed text-balance">Chọn lọc cho hồ sơ Thù lao &amp; Thi đua kênh Đại lý, không phải toàn bộ quá trình làm việc.</p>
+        <div class="flex items-center gap-2.5">
+          <span class="text-amber-400 text-base no-edit" aria-hidden="true">💼</span>
+          <h2 data-i18n="exp_heading" class="editable-node text-lg sm:text-xl font-extrabold text-white text-balance">Kinh Nghiệm Làm Việc <span class="inline-block">Toàn Thời Gian</span></h2>
         </div>
         <div id="experience-grid" class="flex flex-col gap-5">
-          <article class="exp-card surface-card p-5 sm:p-6 space-y-4 border-t-2 border-t-sky-400">
+          <article data-card-id="exp_ins" class="exp-card exp-card-item draggable-card relative surface-card p-5 sm:p-6 space-y-4 border-t-2 border-t-sky-400">
             <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <h3 data-i18n="exp_ins_title" class="editable-node text-base sm:text-[17px] font-bold text-white leading-snug text-balance">Bảo hiểm nhân thọ — Kênh Đại lý</h3>
-              <span data-i18n="exp_ins_period" class="editable-node text-xs font-mono font-semibold text-sky-400">2020 – 2025</span>
+              <span data-i18n="exp_ins_period" data-w17-date="" class="editable-node text-xs font-mono font-semibold text-sky-400">2020 – 2025</span>
             </div>
             <div data-i18n="exp_ins_sub" class="editable-node text-[11.5px] font-medium text-sky-400 leading-relaxed">Thù lao, hoa hồng &amp; thi đua • Chi trả &amp; đối soát • Lập kế hoạch &amp; hiệu suất</div>
-            <ul class="flex flex-col gap-3">
-              <li class="border-l-2 border-slate-700 pl-3 space-y-0.5">
+            <ul class="exp-roles flex flex-col gap-3">
+              <li data-card-id="exp_role_1" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span data-i18n="exp_r1_co" class="editable-node text-sm font-bold text-white">AIA Vietnam</span>
-                  <span data-i18n="exp_r1_date" class="editable-node text-xs font-mono text-slate-400">12/2024 – 11/2025</span>
+                  <span data-i18n="exp_r1_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">12/2024 – 11/2025</span>
                 </div>
                 <div data-i18n="exp_r1_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Agency Payment (DCOM)</div>
               </li>
-              <li class="border-l-2 border-amber-400 pl-3 space-y-0.5">
+              <li data-card-id="exp_role_2" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span data-i18n="exp_r2_co" class="editable-node text-sm font-bold text-white">Chubb Life Vietnam</span>
-                  <span data-i18n="exp_r2_badge" class="editable-node px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/25">Nguyên Assistant Manager</span>
-                  <span data-i18n="exp_r2_date" class="editable-node text-xs font-mono text-slate-400">03/2023 – 06/2024</span>
+                  <span data-i18n="exp_r2_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">03/2023 – 06/2024</span>
                 </div>
                 <div data-i18n="exp_r2_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Assistant Manager — Agency Planning &amp; Performance Analytics</div>
               </li>
-              <li class="border-l-2 border-slate-700 pl-3 space-y-0.5">
+              <li data-card-id="exp_role_3" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span data-i18n="exp_r3_co" class="editable-node text-sm font-bold text-white">AIA Vietnam</span>
-                  <span data-i18n="exp_r3_date" class="editable-node text-xs font-mono text-slate-400">01/2022 – 03/2023</span>
+                  <span data-i18n="exp_r3_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">01/2022 – 03/2023</span>
                 </div>
                 <div data-i18n="exp_r3_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Agency Specialist (DCOM)</div>
               </li>
-              <li class="border-l-2 border-slate-700 pl-3 space-y-0.5">
+              <li data-card-id="exp_role_4" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span data-i18n="exp_r4_co" class="editable-node text-sm font-bold text-white">Prudential Vietnam</span>
-                  <span data-i18n="exp_r4_date" class="editable-node text-xs font-mono text-slate-400">03/2020 – 01/2022</span>
+                  <span data-i18n="exp_r4_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">03/2020 – 01/2022</span>
                 </div>
                 <div data-i18n="exp_r4_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">The Gallerie Compensation &amp; Incentive Senior Specialist</div>
               </li>
             </ul>
-            <ul class="space-y-2.5 text-xs text-slate-300 leading-relaxed">
-              <li class="flex items-start gap-2">
+            <ul class="exp-points space-y-2.5 text-xs text-slate-300 leading-relaxed">
+              <li data-card-id="exp_ins_p1" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
                 <span data-i18n="exp_ins_p1" class="editable-node"><strong class="text-white">Chi trả &amp; đối soát (AIA):</strong> tổng hợp dữ liệu nhiều nguồn để tính thù lao, hoa hồng cho đại lý; chi trả 2 kỳ/tháng, theo dõi điều chỉnh clawback tới 6 tháng, đối chiếu với hệ thống trước khi chi.</span>
               </li>
-              <li class="flex items-start gap-2">
+              <li data-card-id="exp_ins_p2" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
                 <span data-i18n="exp_ins_p2" class="editable-node"><strong class="text-white">Thù lao &amp; thi đua (Prudential):</strong> quản lý và tính các chương trình thù lao, thi đua, ghi nhận ngắn hạn và dài hạn; theo dõi ngân sách; soạn memo truyền thông chương trình.</span>
               </li>
-              <li class="flex items-start gap-2">
+              <li data-card-id="exp_ins_p3" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
                 <span data-i18n="exp_ins_p3" class="editable-node"><strong class="text-white">Lập kế hoạch &amp; hiệu suất (Chubb Life):</strong> lập kế hoạch kinh doanh kênh Đại lý và dự báo doanh số; hỗ trợ thiết kế, theo dõi thi đua; quản lý ngân sách và chi phí hoạt động bán hàng.</span>
               </li>
-              <li class="flex items-start gap-2">
+              <li data-card-id="exp_ins_p4" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
                 <span data-i18n="exp_ins_p4" class="editable-node"><strong class="text-white">Báo cáo &amp; hỗ trợ đại lý:</strong> báo cáo ngày/tuần/tháng và dashboard cho Leader, đội ngũ kinh doanh; giải đáp đại lý về cách tính hoa hồng; phối hợp Finance, Reporting, Actuarial.</span>
               </li>
             </ul>
           </article>
-          <article class="exp-card surface-card p-5 sm:p-6 space-y-3 border-t-2 border-t-emerald-400">
+          <article data-card-id="exp_data" class="exp-card exp-card-item draggable-card relative surface-card p-5 sm:p-6 space-y-3 border-t-2 border-t-emerald-400">
             <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <h3 data-i18n="exp_data_title" class="editable-node text-base font-bold text-white leading-snug text-balance">Phân tích dữ liệu, tài chính &amp; kinh doanh</h3>
-              <span data-i18n="exp_data_period" class="editable-node text-xs font-mono font-semibold text-emerald-400">2018 – 2019</span>
+              <span data-i18n="exp_data_period" data-w17-date="" class="editable-node text-xs font-mono font-semibold text-emerald-400">2018 – 2019</span>
             </div>
             <div data-i18n="exp_data_cos" class="editable-node text-xs font-semibold text-slate-200">Rich Products Vietnam · Lazada E-Logistics · Speedlink</div>
             <div data-i18n="exp_data_roles" class="editable-node text-[11.5px] text-sky-400 font-medium leading-snug">Data Analyst · Invoice Lead · Senior Pricing &amp; Business Analyst</div>
-            <ul class="space-y-2 text-xs text-slate-300 leading-relaxed">
-              <li class="flex items-start gap-2">
+            <ul class="exp-points space-y-2 text-xs text-slate-300 leading-relaxed">
+              <li data-card-id="exp_data_p1" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-emerald-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
                 <span data-i18n="exp_data_p1" class="editable-node">Báo cáo P&amp;L và chi phí đa chiều (tuyến, khu vực, 3PL, bảng giá, trọng lượng) trên Power BI; công cụ định giá cho bộ phận Billing; đối soát hóa đơn vận chuyển 3PL; chuẩn hóa dữ liệu bán ra từ nhà phân phối.</span>
               </li>
             </ul>
           </article>
-          <article class="exp-card surface-card p-5 sm:p-6 space-y-3 border-t-2 border-t-amber-400">
+          <article data-card-id="exp_acc" class="exp-card exp-card-item draggable-card relative surface-card p-5 sm:p-6 space-y-3 border-t-2 border-t-amber-400">
             <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <h3 data-i18n="exp_acc_title" class="editable-node text-base font-bold text-white leading-snug text-balance">Kế toán</h3>
-              <span data-i18n="exp_acc_period" class="editable-node text-xs font-mono font-semibold text-amber-400">2012 – 2018</span>
+              <span data-i18n="exp_acc_period" data-w17-date="" class="editable-node text-xs font-mono font-semibold text-amber-400">2012 – 2018</span>
             </div>
             <div data-i18n="exp_acc_cos" class="editable-node text-xs font-semibold text-slate-200">Saigon Co.op</div>
             <div data-i18n="exp_acc_roles" class="editable-node text-[11.5px] text-sky-400 font-medium leading-snug">Accountant Staff</div>
-            <ul class="space-y-2 text-xs text-slate-300 leading-relaxed">
-              <li class="flex items-start gap-2">
+            <ul class="exp-points space-y-2 text-xs text-slate-300 leading-relaxed">
+              <li data-card-id="exp_acc_p1" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-amber-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
                 <span data-i18n="exp_acc_p1" class="editable-node">AP/AR; phát hành và kiểm tra hóa đơn thuế đầu vào/đầu ra; thanh toán nhà cung cấp và đối chiếu tài khoản thanh toán bù trừ cho 30 Co.op; Oracle ERP, DataLoad, Access, Excel.</span>
               </li>
@@ -1109,27 +1125,27 @@
           <div data-card-id="edu_card_1" class="edu-card-item draggable-card surface-card p-5 relative flex flex-col justify-between border-t-2 border-t-sky-400 space-y-3" draggable="true">
             <span data-i18n="edu_cat_1" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 font-mono">Thạc sĩ</span>
             <div data-i18n="edu_title_1" class="editable-node text-sm font-bold text-white leading-snug">Thạc sĩ Quản Trị Kinh Doanh (MBA)</div>
-            <div data-i18n="edu_meta_1" class="editable-node text-xs text-slate-400 leading-snug">Đại học Mở TP.HCM · 2014–2016</div>
+            <div class="text-xs text-slate-400 leading-snug"><span data-i18n="edu_meta_1" class="editable-node">Đại học Mở TP.HCM</span><span data-w17-date="" class="no-edit" aria-hidden="true"> · </span><span data-i18n="edu_year_1" data-w17-date="" class="editable-node">2014–2016</span></div>
           </div>
 
           <!-- Mục 2: Cử nhân Kế toán – Kiểm toán -->
           <div data-card-id="edu_card_2" class="edu-card-item draggable-card surface-card p-5 relative flex flex-col justify-between border-t-2 border-t-sky-400 space-y-3" draggable="true">
             <span data-i18n="edu_cat_2" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 font-mono">Cử nhân</span>
             <div data-i18n="edu_title_2" class="editable-node text-sm font-bold text-white leading-snug">Cử nhân Kế toán – Kiểm toán</div>
-            <div data-i18n="edu_meta_2" class="editable-node text-xs text-slate-400 leading-snug">Đại học Tôn Đức Thắng · 2007–2012</div>
+            <div class="text-xs text-slate-400 leading-snug"><span data-i18n="edu_meta_2" class="editable-node">Đại học Tôn Đức Thắng</span><span data-w17-date="" class="no-edit" aria-hidden="true"> · </span><span data-i18n="edu_year_2" data-w17-date="" class="editable-node">2007–2012</span></div>
           </div>
 
           <!-- Mục 5 -->
           <div data-card-id="edu_card_5" class="edu-card-item draggable-card surface-card p-5 relative flex flex-col justify-between border-t-2 border-t-sky-400 space-y-3" draggable="true">
             <span data-i18n="edu_cat_5" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 font-mono">Chứng chỉ</span>
             <div data-i18n="edu_title_5" class="editable-node text-sm font-bold text-white leading-snug">Chứng chỉ Kế toán trưởng</div>
-            <div data-i18n="edu_meta_5" class="editable-node text-xs text-slate-400 leading-snug">Đại học Kinh tế · 2012</div>
+            <div class="text-xs text-slate-400 leading-snug"><span data-i18n="edu_meta_5" class="editable-node">Đại học Kinh tế</span><span data-w17-date="" class="no-edit" aria-hidden="true"> · </span><span data-i18n="edu_year_5" data-w17-date="" class="editable-node">2012</span></div>
           </div>
           <!-- Mục 6 -->
           <div data-card-id="edu_card_6" class="edu-card-item draggable-card surface-card p-5 relative flex flex-col justify-between border-t-2 border-t-sky-400 space-y-3" draggable="true">
             <span data-i18n="edu_cat_6" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 font-mono">Ngoại ngữ</span>
             <div data-i18n="edu_title_6" class="editable-node text-sm font-bold text-white leading-snug">TOEIC 755</div>
-            <div data-i18n="edu_meta_6" class="editable-node text-xs text-slate-400 leading-snug">Thi ngày 21/11/2026</div>
+            <div data-i18n="edu_meta_6" data-w17-date="" class="editable-node text-xs text-slate-400 leading-snug">Thi ngày 21/11/2026</div>
           </div>
           <!-- Mục 3: Google Skillshop -->
           <div data-card-id="edu_card_3" class="edu-card-item draggable-card surface-card p-5 relative flex flex-col justify-between border-t-2 border-t-emerald-400 space-y-3" draggable="true">
@@ -1549,6 +1565,138 @@
         "es": "✨ Tarjetas intercambiadas y guardadas automáticamente.",
         "zh": "✨ 卡片已交换位置并自动保存！"
       },
+      "ui_dates_hide": {
+        "vi": "📅 Ẩn ngày sinh & mốc thời gian",
+        "en": "📅 Hide birth date & dates",
+        "es": "📅 Ocultar nacimiento y fechas",
+        "zh": "📅 隐藏出生日期与时间"
+      },
+      "ui_dates_show": {
+        "vi": "📅 Hiện ngày sinh & mốc thời gian",
+        "en": "📅 Show birth date & dates",
+        "es": "📅 Mostrar nacimiento y fechas",
+        "zh": "📅 显示出生日期与时间"
+      },
+      "ui_dates_t": {
+        "vi": "Ẩn/hiện ngày sinh, kỳ làm việc, ngày từng vị trí, năm học và ngày thi trên web và PDF",
+        "en": "Hide/show birth date, work periods, role dates, study years and test date on the web and PDF",
+        "es": "Ocultar/mostrar fecha de nacimiento, periodos, fechas de cargos, años de estudio y fecha de examen en la web y el PDF",
+        "zh": "在网页和 PDF 中隐藏/显示出生日期、任职期间、职位日期、就读年份与考试日期"
+      },
+      "ui_exp_up_t": {
+        "vi": "Đưa mục này lên trên",
+        "en": "Move this item up",
+        "es": "Subir este elemento",
+        "zh": "上移此项"
+      },
+      "ui_exp_down_t": {
+        "vi": "Đưa mục này xuống dưới",
+        "en": "Move this item down",
+        "es": "Bajar este elemento",
+        "zh": "下移此项"
+      },
+      "ui_exp_hide_t": {
+        "vi": "Ẩn mục này trên web và PDF (vẫn giữ trong file, bật lại được)",
+        "en": "Hide this item on the web and PDF (kept in the file, can be shown again)",
+        "es": "Ocultar en la web y el PDF (se conserva en el archivo)",
+        "zh": "在网页和 PDF 中隐藏此项（保留在文件中，可再次显示）"
+      },
+      "ui_exp_show_t": {
+        "vi": "Đang ẩn — bấm để hiện lại",
+        "en": "Hidden — click to show again",
+        "es": "Oculto: haga clic para mostrar",
+        "zh": "已隐藏 — 点击重新显示"
+      },
+      "ui_exp_del_t": {
+        "vi": "Xóa mục này (bấm 2 lần; khôi phục được ở Đã xóa)",
+        "en": "Delete this item (click twice; restorable from Deleted)",
+        "es": "Eliminar (dos clics; se puede restaurar)",
+        "zh": "删除此项（点两次；可在“已删除”中恢复）"
+      },
+      "ui_add_exp_role": {
+        "vi": "+ Thêm vị trí",
+        "en": "+ Add role",
+        "es": "+ Añadir cargo",
+        "zh": "+ 添加职位"
+      },
+      "ui_add_exp_point": {
+        "vi": "+ Thêm ý",
+        "en": "+ Add point",
+        "es": "+ Añadir punto",
+        "zh": "+ 添加要点"
+      },
+      "ui_add_exp_card": {
+        "vi": "+ Thêm nhóm kinh nghiệm",
+        "en": "+ Add experience group",
+        "es": "+ Añadir grupo de experiencia",
+        "zh": "+ 添加经历分组"
+      },
+      "ui_new_exp_title": {
+        "vi": "Tên nhóm / ngành — bấm để sửa",
+        "en": "Group / industry — click to edit",
+        "es": "Grupo / sector: haga clic para editar",
+        "zh": "分组 / 行业 — 点击编辑"
+      },
+      "ui_new_exp_period": {
+        "vi": "Năm – năm",
+        "en": "Year – year",
+        "es": "Año – año",
+        "zh": "年份 – 年份"
+      },
+      "ui_new_exp_cos": {
+        "vi": "Tên công ty",
+        "en": "Company name",
+        "es": "Nombre de la empresa",
+        "zh": "公司名称"
+      },
+      "ui_new_exp_co": {
+        "vi": "Công ty",
+        "en": "Company",
+        "es": "Empresa",
+        "zh": "公司"
+      },
+      "ui_new_exp_date": {
+        "vi": "MM/YYYY – MM/YYYY",
+        "en": "MM/YYYY – MM/YYYY",
+        "es": "MM/AAAA – MM/AAAA",
+        "zh": "MM/YYYY – MM/YYYY"
+      },
+      "ui_new_exp_role": {
+        "vi": "Chức danh",
+        "en": "Job title",
+        "es": "Cargo",
+        "zh": "职位名称"
+      },
+      "ui_new_exp_point": {
+        "vi": "Mô tả công việc / kết quả — bấm để sửa",
+        "en": "Responsibility / result — click to edit",
+        "es": "Responsabilidad / resultado: haga clic para editar",
+        "zh": "职责 / 成果 — 点击编辑"
+      },
+      "t_exp_hidden": {
+        "vi": "🙈 Đã ẩn trên web và PDF. Bấm 👁 để hiện lại.",
+        "en": "🙈 Hidden on the web and PDF. Click 👁 to show again.",
+        "es": "🙈 Oculto en la web y el PDF. Pulse 👁 para mostrar.",
+        "zh": "🙈 已在网页和 PDF 中隐藏。点 👁 重新显示。"
+      },
+      "t_exp_shown": {
+        "vi": "👁 Đã hiện lại.",
+        "en": "👁 Shown again.",
+        "es": "👁 Visible de nuevo.",
+        "zh": "👁 已重新显示。"
+      },
+      "t_dates_hidden": {
+        "vi": "📅 Đã ẩn ngày sinh & mọi mốc thời gian trên web và PDF.",
+        "en": "📅 Birth date & all dates hidden on the web and PDF.",
+        "es": "📅 Fecha de nacimiento y fechas ocultas en la web y el PDF.",
+        "zh": "📅 已在网页和 PDF 中隐藏出生日期与所有时间。"
+      },
+      "t_dates_shown": {
+        "vi": "📅 Đã hiện lại ngày sinh & mốc thời gian.",
+        "en": "📅 Birth date & dates shown again.",
+        "es": "📅 Fecha de nacimiento y fechas visibles de nuevo.",
+        "zh": "📅 已重新显示出生日期与时间。"
+      },
       "ui_add_edu": {
         "vi": "+ Thêm học vấn",
         "en": "+ Add education",
@@ -1920,8 +2068,7 @@
         skill_tag_utm: "Kiến trúc theo dõi UTM",
         skill_tag_git: "Git & GitHub",
         hero_dob: "🎂 Ngày sinh: 28/01/1989",
-        exp_heading: "Kinh Nghiệm Liên Quan <span class=\"inline-block\">Chọn Lọc</span>",
-        exp_note: "Chọn lọc cho hồ sơ Thù lao & Thi đua kênh Đại lý, không phải toàn bộ quá trình làm việc.",
+        exp_heading: "Kinh Nghiệm Làm Việc <span class=\"inline-block\">Toàn Thời Gian</span>",
         exp_ins_title: "Bảo hiểm nhân thọ — Kênh Đại lý",
         exp_ins_period: "2020 – 2025",
         exp_ins_sub: "Thù lao, hoa hồng & thi đua • Chi trả & đối soát • Lập kế hoạch & hiệu suất",
@@ -1937,7 +2084,6 @@
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
         exp_r4_date: "03/2020 – 01/2022",
-        exp_r2_badge: "Nguyên Assistant Manager",
         exp_ins_p1: "<strong class=\"text-white\">Chi trả & đối soát (AIA):</strong> tổng hợp dữ liệu nhiều nguồn để tính thù lao, hoa hồng cho đại lý; chi trả 2 kỳ/tháng, theo dõi điều chỉnh clawback tới 6 tháng, đối chiếu với hệ thống trước khi chi.",
         exp_ins_p2: "<strong class=\"text-white\">Thù lao & thi đua (Prudential):</strong> quản lý và tính các chương trình thù lao, thi đua, ghi nhận ngắn hạn và dài hạn; theo dõi ngân sách; soạn memo truyền thông chương trình.",
         exp_ins_p3: "<strong class=\"text-white\">Lập kế hoạch & hiệu suất (Chubb Life):</strong> lập kế hoạch kinh doanh kênh Đại lý và dự báo doanh số; hỗ trợ thiết kế, theo dõi thi đua; quản lý ngân sách và chi phí hoạt động bán hàng.",
@@ -1953,11 +2099,14 @@
         exp_acc_roles: "Accountant Staff",
         exp_acc_p1: "AP/AR; phát hành và kiểm tra hóa đơn thuế đầu vào/đầu ra; thanh toán nhà cung cấp và đối chiếu tài khoản thanh toán bù trừ cho 30 Co.op; Oracle ERP, DataLoad, Access, Excel.",
         skill_grp_5: "Agency Operations & Compensation",
-        edu_meta_1: "Đại học Mở TP.HCM · 2014–2016",
-        edu_meta_2: "Đại học Tôn Đức Thắng · 2007–2012",
+        edu_meta_1: "Đại học Mở TP.HCM",
+        edu_year_1: "2014–2016",
+        edu_meta_2: "Đại học Tôn Đức Thắng",
+        edu_year_2: "2007–2012",
         edu_cat_5: "Chứng chỉ",
         edu_title_5: "Chứng chỉ Kế toán trưởng",
-        edu_meta_5: "Đại học Kinh tế · 2012",
+        edu_meta_5: "Đại học Kinh tế",
+        edu_year_5: "2012",
         edu_cat_6: "Ngoại ngữ",
         edu_title_6: "TOEIC 755",
         edu_meta_6: "Thi ngày 21/11/2026",
@@ -2042,8 +2191,7 @@
         skill_tag_utm: "UTM Tracking Architecture",
         skill_tag_git: "Git & GitHub",
         hero_dob: "🎂 Date of birth: 28 Jan 1989",
-        exp_heading: "Selected Relevant <span class=\"inline-block\">Experience</span>",
-        exp_note: "Selected for an agency compensation & incentive profile; not a full employment history.",
+        exp_heading: "Full-time Work <span class=\"inline-block\">Experience</span>",
         exp_ins_title: "Life Insurance — Agency Channel",
         exp_ins_period: "2020 – 2025",
         exp_ins_sub: "Compensation, commissions & incentives • Payment & reconciliation • Planning & performance",
@@ -2059,7 +2207,6 @@
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
         exp_r4_date: "03/2020 – 01/2022",
-        exp_r2_badge: "Former Assistant Manager",
         exp_ins_p1: "<strong class=\"text-white\">Payment & reconciliation (AIA):</strong> combined multi-source data to calculate agency compensation and commissions; ran payouts twice a month, tracked clawback adjustments for up to six months and cross-checked results with the system before payment.",
         exp_ins_p2: "<strong class=\"text-white\">Compensation & incentives (Prudential):</strong> administered and calculated short- and long-term compensation, incentive and recognition programs; tracked budget spending; prepared program memos for stakeholders.",
         exp_ins_p3: "<strong class=\"text-white\">Planning & performance (Chubb Life):</strong> prepared agency business plans and sales forecasts; supported contest design and periodic tracking; managed sales-activity budgets and costs.",
@@ -2075,11 +2222,14 @@
         exp_acc_roles: "Accountant Staff",
         exp_acc_p1: "AP/AR; issued and validated input/output tax invoices; vendor payments and clearing-account reconciliation for 30 Co.op stores; Oracle ERP, DataLoad, Access, Excel.",
         skill_grp_5: "Agency Operations & Compensation",
-        edu_meta_1: "Open University (HCMC) · 2014–2016",
-        edu_meta_2: "Ton Duc Thang University · 2007–2012",
+        edu_meta_1: "Open University (HCMC)",
+        edu_year_1: "2014–2016",
+        edu_meta_2: "Ton Duc Thang University",
+        edu_year_2: "2007–2012",
         edu_cat_5: "Certificate",
         edu_title_5: "Chief Accountant Certification",
-        edu_meta_5: "Economics University · 2012",
+        edu_meta_5: "Economics University",
+        edu_year_5: "2012",
         edu_cat_6: "Language",
         edu_title_6: "TOEIC 755",
         edu_meta_6: "Taken 21 Nov 2026",
@@ -2164,8 +2314,7 @@
         skill_tag_utm: "Arquitectura de seguimiento UTM",
         skill_tag_git: "Git & GitHub",
         hero_dob: "🎂 Fecha de nacimiento: 28/01/1989",
-        exp_heading: "Experiencia Relevante <span class=\"inline-block\">Seleccionada</span>",
-        exp_note: "Seleccionada para un perfil de compensación e incentivos de agencia; no es el historial laboral completo.",
+        exp_heading: "Experiencia Laboral a <span class=\"inline-block\">Tiempo Completo</span>",
         exp_ins_title: "Seguros de vida — Canal de agencias",
         exp_ins_period: "2020 – 2025",
         exp_ins_sub: "Compensación, comisiones e incentivos • Pagos y conciliación • Planificación y desempeño",
@@ -2181,7 +2330,6 @@
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
         exp_r4_date: "03/2020 – 01/2022",
-        exp_r2_badge: "Ex Assistant Manager",
         exp_ins_p1: "<strong class=\"text-white\">Pagos y conciliación (AIA):</strong> consolidé datos de varias fuentes para calcular compensaciones y comisiones de agentes; pagos dos veces al mes, seguimiento de ajustes de clawback hasta seis meses y verificación con el sistema antes de pagar.",
         exp_ins_p2: "<strong class=\"text-white\">Compensación e incentivos (Prudential):</strong> administré y calculé programas de compensación, incentivos y reconocimiento de corto y largo plazo; seguimiento del presupuesto; memorandos de comunicación de los programas.",
         exp_ins_p3: "<strong class=\"text-white\">Planificación y desempeño (Chubb Life):</strong> planes de negocio del canal de agencias y previsiones de ventas; apoyo al diseño y seguimiento de concursos; gestión de presupuestos y costos de actividades comerciales.",
@@ -2197,11 +2345,14 @@
         exp_acc_roles: "Accountant Staff",
         exp_acc_p1: "AP/AR; emisión y validación de facturas fiscales de compra y venta; pagos a proveedores y conciliación de la cuenta de compensación para 30 tiendas Co.op; Oracle ERP, DataLoad, Access, Excel.",
         skill_grp_5: "Operaciones y compensación de agencias",
-        edu_meta_1: "Universidad Abierta (HCMC) · 2014–2016",
-        edu_meta_2: "Universidad Ton Duc Thang · 2007–2012",
+        edu_meta_1: "Universidad Abierta (HCMC)",
+        edu_year_1: "2014–2016",
+        edu_meta_2: "Universidad Ton Duc Thang",
+        edu_year_2: "2007–2012",
         edu_cat_5: "Certificado",
         edu_title_5: "Certificación de Contador Jefe",
-        edu_meta_5: "Universidad de Economía · 2012",
+        edu_meta_5: "Universidad de Economía",
+        edu_year_5: "2012",
         edu_cat_6: "Idioma",
         edu_title_6: "TOEIC 755",
         edu_meta_6: "Fecha: 21/11/2026",
@@ -2286,8 +2437,7 @@
         skill_tag_utm: "UTM 追踪架构",
         skill_tag_git: "Git & GitHub",
         hero_dob: "🎂 出生日期：1989-01-28",
-        exp_heading: "精选相关经历",
-        exp_note: "为代理人薪酬与激励方向精选，并非完整工作履历。",
+        exp_heading: "全职工作经历",
         exp_ins_title: "人寿保险 — 代理人渠道",
         exp_ins_period: "2020 – 2025",
         exp_ins_sub: "薪酬、佣金与激励 • 支付与对账 • 规划与绩效",
@@ -2303,7 +2453,6 @@
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
         exp_r4_date: "03/2020 – 01/2022",
-        exp_r2_badge: "前 Assistant Manager",
         exp_ins_p1: "<strong class=\"text-white\">支付与对账（AIA）：</strong>整合多来源数据计算代理人薪酬与佣金；每月两次发放，跟踪最长六个月的佣金追回调整，发放前与系统逐项核对。",
         exp_ins_p2: "<strong class=\"text-white\">薪酬与激励（Prudential）：</strong>管理并计算长短期薪酬、激励与表彰方案；跟踪预算支出；撰写方案沟通备忘录。",
         exp_ins_p3: "<strong class=\"text-white\">规划与绩效（Chubb Life）：</strong>制定代理人渠道业务计划与销售预测；协助竞赛方案设计与定期跟踪；管理销售活动预算与成本。",
@@ -2319,11 +2468,14 @@
         exp_acc_roles: "Accountant Staff",
         exp_acc_p1: "应付/应收（AP/AR）；开具并核验进项/销项税务发票；为 30 家 Co.op 门店处理供应商付款并核对清算账户；Oracle ERP、DataLoad、Access、Excel。",
         skill_grp_5: "代理人运营与薪酬",
-        edu_meta_1: "胡志明市开放大学 · 2014–2016",
-        edu_meta_2: "孙德胜大学 · 2007–2012",
+        edu_meta_1: "胡志明市开放大学",
+        edu_year_1: "2014–2016",
+        edu_meta_2: "孙德胜大学",
+        edu_year_2: "2007–2012",
         edu_cat_5: "证书",
         edu_title_5: "总会计师证书",
-        edu_meta_5: "经济大学 · 2012",
+        edu_meta_5: "经济大学",
+        edu_year_5: "2012",
         edu_cat_6: "外语",
         edu_title_6: "TOEIC 755",
         edu_meta_6: "考试日期：2026-11-21",
@@ -2408,7 +2560,7 @@
     // Mỗi node nhận một data-node-id ổn định (gán một lần trên DOM tĩnh, được giữ trong file Final khi xuất), nên chỉnh sửa
     // luôn đi theo ĐÚNG node dù thẻ bị kéo đổi chỗ hay nhiều node có cùng văn bản (vd. dấu ✓). Chỉ áp lại khi văn bản hiện tại đúng bằng "from".
     const NODE_SELECTOR_CV = 'h1, h2, h3, h4, p, span:not(.lucide):not(.no-edit), footer a, .editable-node';
-    const NODE_EXCLUDE_CV = '[data-i18n], [data-field-id], .skill-tag, .reorder-controls, .editor-only-overlay, #demo-modal, #dashboard, button, select, script, style, svg, .no-edit';
+    const NODE_EXCLUDE_CV = '[data-i18n], [data-field-id], [data-w17-custom], .skill-tag, .reorder-controls, .editor-only-overlay, #demo-modal, #dashboard, button, select, script, style, svg, .no-edit';
     let nodeIndexCV = [];
 
     function indexEditableNodesCV() {
@@ -2564,7 +2716,7 @@
     // Xóa thẻ/tag là thao tác TƯỜNG MINH: bấm ✕ hai lần (xác nhận) -> mã thẻ vào "deletedIds" của bản nháp và thẻ vào
     // thùng rác (khôi phục từng thẻ được). Khi khôi phục bản nháp, CHỈ thẻ có trong deletedIds bị gỡ (và vẫn nằm trong thùng rác);
     // không bao giờ suy "không có trong danh sách thứ tự = đã xóa": thẻ lạ/mới hoặc nháp cũ (snapshot, knownIds) đều được giữ.
-    const REMOVABLE_ITEM_SEL_CV = '.solution-card-item[data-card-id], .metric-card-item[data-card-id], .edu-card-item[data-card-id], .skill-tag[data-tag-id]';
+    const REMOVABLE_ITEM_SEL_CV = '.solution-card-item[data-card-id], .metric-card-item[data-card-id], .edu-card-item[data-card-id], .skill-tag[data-tag-id], .exp-card-item[data-card-id], .exp-role-item[data-card-id], .exp-point-item[data-card-id]';
     let initialItemIdsCV = [];
 
     function itemIdCV(node) {
@@ -2744,6 +2896,9 @@
           }
         }
 
+        // 6b. Kinh nghiệm: thứ tự, ẩn/hiện, mục tự thêm, mục tự thêm đang trong thùng rác; ẩn mốc thời gian
+        expRestoreCV(parsed.exp, deletedCV);
+
         renderTrashCV();
 
         // 7. Text edits + field dùng chung: áp từ cache (bản nhúng trong file Final đã được áp ở trên)
@@ -2832,6 +2987,7 @@
 
       // 2. Nạp dữ liệu cache JSON an toàn TRƯỚC khi áp dụng locale
       loadStructuredStateCV();
+      reflowExpCV();
 
       // 3. Áp dụng ngôn ngữ đã lưu từ w17_03_lang để F5 luôn đúng ngôn ngữ
       const savedLang = getPrefCV(LANG_KEY_CV, IS_CREATOR_CV ? 'vi' : detectLangCV(), LOCALES_CV);
@@ -2853,6 +3009,8 @@
       }
       pruneEmptyTags(root);
       initDragAndDrop();
+      syncExpDraggableCV();
+      syncHideDatesBtnCV();
 
       document.body.addEventListener('input', (e) => {
         if (isEditMode) saveCurrentState(e.target && e.target.closest ? e.target.closest('[data-i18n]') : null);
@@ -2972,6 +3130,9 @@
             <button type="button" onclick="resetOriginalState()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 text-slate-300 hover:text-white border border-slate-800 transition-all cursor-pointer whitespace-nowrap">
               <span>↺</span><span data-ui="ui_reset">Khôi phục</span>
             </button>
+            <button type="button" id="btn-hide-dates" onclick="toggleHideDatesCV()" aria-pressed="false" data-ui-title="ui_dates_t" title="" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 text-slate-200 border border-[#253552] transition-all cursor-pointer whitespace-nowrap">
+              <span data-ui="ui_dates_hide">📅 Ẩn ngày sinh &amp; mốc thời gian</span>
+            </button>
             <button type="button" id="btn-cv-trash" onclick="toggleTrashCV()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#111927] hover:bg-[#192438] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 text-amber-200 border border-amber-500/40 transition-all cursor-pointer whitespace-nowrap">
               <span>🗑</span><span data-ui="ui_trash">Đã xóa</span> (<span id="cv-trash-count">0</span>)
             </button>
@@ -3020,6 +3181,7 @@
       const customEdu = Array.from(doc.querySelectorAll('[data-w17-custom-edu]')).map(eduCardDataCV);
       if (live) trashCV.forEach((e) => { if (e.node.hasAttribute('data-w17-custom-edu')) customEdu.push(eduCardDataCV(e.node)); });
       state.customEdu = customEdu;
+      state.exp = expSerializeCV(doc, live);
 
       const parentSec = doc.getElementById('reorderable-sections');
       if (parentSec) {
@@ -3336,7 +3498,386 @@
           list.appendChild(addBtn);
         }
       });
+      ensureExpControlsCV(root);
       renderUiCV(root);
+    }
+
+    // ===== Kinh nghiệm linh hoạt: mỗi nhóm / vị trí / gạch đầu dòng đều ⬆ ⬇ (và kéo thả), 👁 ẩn/hiện, ✕ xóa (thùng rác), + thêm.
+    // Ẩn = data-w17-hidden (vẫn giữ trong file, bật lại được); web/PDF không hiện, bố cục tự khép (reflowExpCV).
+    // Mục tự thêm (data-w17-custom) dùng chung chữ mọi ngôn ngữ; nháp lưu ở state.exp tới khi Lưu (khi đó nằm thẳng trong HTML).
+    const EXP_ITEM_SEL_CV = '.exp-card-item, .exp-role-item, .exp-point-item';
+    const EXP_ID_RE_CV = /^[a-z][a-z0-9_]{1,40}$/;
+
+    function expElCV(tag, cls, attrs, text) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (attrs) Object.keys(attrs).forEach((k) => e.setAttribute(k, attrs[k]));
+      if (text !== undefined) e.textContent = text;
+      return e;
+    }
+
+    function expTxtCV(f, k, uiKey) {
+      return (f && typeof f[k] === 'string') ? f[k].slice(0, 400) : uiCV(uiKey);
+    }
+
+    function makeExpPointCV(d) {
+      const li = expElCV('li', 'exp-point-item draggable-card relative flex items-start gap-2', { 'data-card-id': d.id, 'data-w17-custom': '1' });
+      li.append(
+        expElCV('span', 'text-sky-400 font-bold shrink-0 no-edit', { 'aria-hidden': 'true' }, '✓'),
+        expElCV('span', 'editable-node', { 'data-w17-f': 'text' }, expTxtCV(d.f, 'text', 'ui_new_exp_point'))
+      );
+      return li;
+    }
+
+    function makeExpRoleCV(d) {
+      const li = expElCV('li', 'exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5', { 'data-card-id': d.id, 'data-w17-custom': '1' });
+      const row = expElCV('div', 'flex flex-wrap items-center gap-x-2 gap-y-1');
+      row.append(
+        expElCV('span', 'editable-node text-sm font-bold text-white', { 'data-w17-f': 'co' }, expTxtCV(d.f, 'co', 'ui_new_exp_co')),
+        expElCV('span', 'editable-node text-xs font-mono text-slate-400', { 'data-w17-f': 'date', 'data-w17-date': '' }, expTxtCV(d.f, 'date', 'ui_new_exp_date'))
+      );
+      li.append(row, expElCV('div', 'editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug', { 'data-w17-f': 'role' }, expTxtCV(d.f, 'role', 'ui_new_exp_role')));
+      return li;
+    }
+
+    function makeExpCardCV(d) {
+      const card = expElCV('article', 'exp-card exp-card-item draggable-card relative surface-card p-5 sm:p-6 space-y-3 border-t-2 border-t-sky-400', { 'data-card-id': d.id, 'data-w17-custom': '1' });
+      const head = expElCV('div', 'flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1');
+      head.append(
+        expElCV('h3', 'editable-node text-base font-bold text-white leading-snug text-balance', { 'data-w17-f': 'title' }, expTxtCV(d.f, 'title', 'ui_new_exp_title')),
+        expElCV('span', 'editable-node text-xs font-mono font-semibold text-sky-400', { 'data-w17-f': 'period', 'data-w17-date': '' }, expTxtCV(d.f, 'period', 'ui_new_exp_period'))
+      );
+      card.append(head, expElCV('div', 'editable-node text-xs font-semibold text-slate-200', { 'data-w17-f': 'cos' }, expTxtCV(d.f, 'cos', 'ui_new_exp_cos')));
+      return card;
+    }
+
+    function expListCV(card, cls) {
+      let ul = card.querySelector(':scope > ul.' + cls);
+      if (ul) return ul;
+      ul = cls === 'exp-roles'
+        ? expElCV('ul', 'exp-roles flex flex-col gap-3')
+        : expElCV('ul', 'exp-points space-y-2 text-xs text-slate-300 leading-relaxed');
+      const pts = card.querySelector(':scope > ul.exp-points');
+      const addrow = card.querySelector(':scope > .w17-exp-addrow');
+      if (cls === 'exp-roles' && pts) card.insertBefore(ul, pts);
+      else if (addrow) card.insertBefore(ul, addrow);
+      else card.appendChild(ul);
+      return ul;
+    }
+
+    function expFieldsCV(node) {
+      const o = {};
+      node.querySelectorAll('[data-w17-f]').forEach((el) => {
+        if (el.closest(EXP_ITEM_SEL_CV) !== node) return;
+        o[el.getAttribute('data-w17-f')] = (el.textContent || '').trim().slice(0, 400);
+      });
+      return o;
+    }
+
+    function expItemDataCV(n) {
+      const o = { id: n.getAttribute('data-card-id') };
+      if (n.hasAttribute('data-w17-hidden')) o.hidden = 1;
+      if (n.hasAttribute('data-w17-custom')) o.f = expFieldsCV(n);
+      if (n.matches('.exp-card-item')) {
+        o.roles = Array.from(n.querySelectorAll(':scope > ul.exp-roles > .exp-role-item')).map(expItemDataCV);
+        o.points = Array.from(n.querySelectorAll(':scope > ul.exp-points > .exp-point-item')).map(expItemDataCV);
+      }
+      return o;
+    }
+
+    function expSerializeCV(doc, live) {
+      const grid = doc.getElementById('experience-grid');
+      if (!grid) return null;
+      const root = doc.getElementById('portfolio-root');
+      const out = {
+        hideDates: !!(root && root.hasAttribute('data-w17-hide-dates')),
+        cards: Array.from(grid.querySelectorAll(':scope > .exp-card-item')).map(expItemDataCV),
+        trashed: []
+      };
+      if (live) {
+        trashCV.forEach((e) => {
+          const n = e.node;
+          if (!n || !n.matches || !n.matches(EXP_ITEM_SEL_CV) || !n.hasAttribute('data-w17-custom')) return;
+          const d = expItemDataCV(n);
+          const pc = e.parent && e.parent.closest ? e.parent.closest('.exp-card-item') : null;
+          d.kind = n.matches('.exp-card-item') ? 'card' : (n.matches('.exp-role-item') ? 'role' : 'point');
+          d.parent = pc ? pc.getAttribute('data-card-id') : null;
+          out.trashed.push(d);
+        });
+      }
+      return out;
+    }
+
+    function expSetHiddenCV(n, hidden) {
+      if (hidden) n.setAttribute('data-w17-hidden', '1');
+      else n.removeAttribute('data-w17-hidden');
+    }
+
+    function expRestoreCV(saved, deleted) {
+      if (!saved || typeof saved !== 'object') return;
+      const grid = document.getElementById('experience-grid');
+      if (!grid) return;
+      const root = document.getElementById('portfolio-root');
+      if (root) {
+        if (saved.hideDates) root.setAttribute('data-w17-hide-dates', '1');
+        else root.removeAttribute('data-w17-hide-dates');
+      }
+      if (!Array.isArray(saved.cards)) return;
+      const pool = (sel) => {
+        const m = new Map();
+        grid.querySelectorAll(sel).forEach((n) => { const id = n.getAttribute('data-card-id'); if (id) m.set(id, n); });
+        return m;
+      };
+      const cards = pool(':scope > .exp-card-item');
+      const roles = pool('.exp-role-item');
+      const points = pool('.exp-point-item');
+      const take = (map, d, maker) => {
+        if (!d || typeof d.id !== 'string' || !EXP_ID_RE_CV.test(d.id)) return null;
+        let n = map.get(d.id);
+        map.delete(d.id);
+        if (!n) {
+          if (!d.f || typeof d.f !== 'object' || grid.querySelector(`[data-card-id="${CSS.escape(d.id)}"]`)) return null;
+          n = maker(d);
+        }
+        expSetHiddenCV(n, !!d.hidden);
+        return n;
+      };
+      saved.cards.forEach((sc) => {
+        const card = take(cards, sc, makeExpCardCV);
+        if (!card) return;
+        grid.appendChild(card);
+        if (Array.isArray(sc.roles)) sc.roles.forEach((r) => { const n = take(roles, r, makeExpRoleCV); if (n) expListCV(card, 'exp-roles').appendChild(n); });
+        if (Array.isArray(sc.points)) sc.points.forEach((p) => { const n = take(points, p, makeExpPointCV); if (n) expListCV(card, 'exp-points').appendChild(n); });
+      });
+      // Mục có trong file nhưng không có trong nháp: giữ lại (chỉ bỏ khi nằm trong deletedIds) — không suy "vắng = đã xóa".
+      cards.forEach((c) => keepOrDropCV(c, deleted, grid));
+      roles.forEach((n) => { if (n.parentElement) keepOrDropCV(n, deleted, n.parentElement); });
+      points.forEach((n) => { if (n.parentElement) keepOrDropCV(n, deleted, n.parentElement); });
+      // Mục tự thêm đang nằm trong thùng rác: dựng lại để còn khôi phục được sau khi tải lại trang
+      if (Array.isArray(saved.trashed)) {
+        saved.trashed.forEach((d) => {
+          if (!d || !EXP_ID_RE_CV.test(String(d.id)) || !d.f || trashCV.has(d.id)) return;
+          let node = null;
+          let parent = null;
+          if (d.kind === 'card') {
+            node = makeExpCardCV(d);
+            (Array.isArray(d.roles) ? d.roles : []).forEach((r) => { if (r && r.f && EXP_ID_RE_CV.test(String(r.id))) expListCV(node, 'exp-roles').appendChild(makeExpRoleCV(r)); });
+            (Array.isArray(d.points) ? d.points : []).forEach((p) => { if (p && p.f && EXP_ID_RE_CV.test(String(p.id))) expListCV(node, 'exp-points').appendChild(makeExpPointCV(p)); });
+            parent = grid;
+          } else if (d.kind === 'role' || d.kind === 'point') {
+            const pc = (typeof d.parent === 'string' && EXP_ID_RE_CV.test(d.parent)) ? grid.querySelector(`.exp-card-item[data-card-id="${CSS.escape(d.parent)}"]`) : null;
+            if (!pc) return;
+            node = d.kind === 'role' ? makeExpRoleCV(d) : makeExpPointCV(d);
+            parent = expListCV(pc, d.kind === 'role' ? 'exp-roles' : 'exp-points');
+          }
+          if (!node) return;
+          trashCV.set(d.id, { node, parent, before: null });
+          deletedIdsCV.add(d.id);
+        });
+      }
+    }
+
+    // Tự khép bố cục: danh sách không còn mục hiện -> ẩn danh sách; nhóm có vị trí mà mọi vị trí đều ẩn -> ẩn nhóm;
+    // không còn nhóm nào hiện -> ẩn cả phần Kinh nghiệm (kể cả tiêu đề). Chạy cả trên web (bản Final) lẫn editor.
+    function reflowExpCV() {
+      const grid = document.getElementById('experience-grid');
+      if (!grid) return;
+      const vis = (n) => !n.hasAttribute('data-w17-hidden') && !n.hasAttribute('data-w17-auto-hidden');
+      const setAuto = (n, on) => { if (!n) return; if (on) n.setAttribute('data-w17-auto-hidden', '1'); else n.removeAttribute('data-w17-auto-hidden'); };
+      grid.querySelectorAll('ul.exp-roles, ul.exp-points').forEach((ul) => {
+        const items = Array.from(ul.children).filter((c) => c.matches(EXP_ITEM_SEL_CV));
+        setAuto(ul, items.length > 0 && !items.some(vis));
+      });
+      const cards = Array.from(grid.querySelectorAll(':scope > .exp-card-item'));
+      cards.forEach((c) => {
+        const rs = Array.from(c.querySelectorAll(':scope > ul.exp-roles > .exp-role-item'));
+        setAuto(c, rs.length > 0 && !rs.some(vis));
+      });
+      setAuto(grid.closest('.reorderable-section'), !cards.some(vis));
+      grid.querySelectorAll(EXP_ITEM_SEL_CV).forEach(syncExpCtlCV);
+    }
+
+    function expCtlHostCV(item) {
+      return item.matches('.exp-point-item') ? item : (item.querySelector(':scope > div') || item);
+    }
+
+    function expSibCV(item, dir) {
+      let s = dir < 0 ? item.previousElementSibling : item.nextElementSibling;
+      while (s && !s.matches(EXP_ITEM_SEL_CV)) s = dir < 0 ? s.previousElementSibling : s.nextElementSibling;
+      return s;
+    }
+
+    function syncExpCtlCV(item) {
+      const host = expCtlHostCV(item);
+      const ctl = host && host.querySelector(':scope > .w17-exp-ctl');
+      if (!ctl) return;
+      const hidden = item.hasAttribute('data-w17-hidden');
+      const hb = ctl.querySelector('[data-act="hide"]');
+      if (hb) {
+        const k = hidden ? 'ui_exp_show_t' : 'ui_exp_hide_t';
+        hb.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+        hb.setAttribute('data-ui-title', k);
+        hb.setAttribute('data-ui-aria', k);
+        hb.title = uiCV(k);
+        hb.setAttribute('aria-label', uiCV(k));
+        hb.textContent = hidden ? '🙈' : '👁';
+      }
+      const up = ctl.querySelector('[data-act="up"]');
+      const dn = ctl.querySelector('[data-act="down"]');
+      if (up) up.disabled = !expSibCV(item, -1);
+      if (dn) dn.disabled = !expSibCV(item, 1);
+    }
+
+    function ensureExpControlsCV(root) {
+      const grid = document.getElementById('experience-grid');
+      if (!grid) return;
+      grid.querySelectorAll(EXP_ITEM_SEL_CV).forEach((item) => {
+        const host = expCtlHostCV(item);
+        if (!host || host.querySelector(':scope > .w17-exp-ctl')) return;
+        const ctl = expElCV('span', 'reorder-controls w17-exp-ctl no-print', { contenteditable: 'false' });
+        [['up', '⬆', 'ui_exp_up_t'], ['down', '⬇', 'ui_exp_down_t'], ['hide', '👁', 'ui_exp_hide_t'], ['del', '✕', 'ui_exp_del_t']].forEach(([act, label, k]) => {
+          const b = expElCV('button', 'reorder-btn', { type: 'button', 'data-act': act, 'data-ui-title': k, 'data-ui-aria': k }, label);
+          b.title = uiCV(k);
+          b.setAttribute('aria-label', uiCV(k));
+          b.addEventListener('click', (ev) => expActCV(ev, b, act));
+          ctl.appendChild(b);
+        });
+        host.appendChild(ctl);
+        syncExpCtlCV(item);
+      });
+      grid.querySelectorAll(':scope > .exp-card-item').forEach((card) => {
+        if (card.querySelector(':scope > .w17-exp-addrow')) return;
+        const row = expElCV('div', 'add-edu-btn w17-exp-addrow no-print', { contenteditable: 'false' });
+        [['ui_add_exp_role', addExpRoleCV], ['ui_add_exp_point', addExpPointCV]].forEach(([k, fn]) => {
+          const b = expElCV('button', 'add-tag-btn', { type: 'button', 'data-ui': k }, uiCV(k));
+          b.addEventListener('click', (ev) => { ev.preventDefault(); fn(card); });
+          row.appendChild(b);
+        });
+        card.appendChild(row);
+      });
+      if (!document.getElementById('btn-add-exp-card')) {
+        const add = expElCV('button', 'add-edu-btn no-print mt-1 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 cursor-pointer',
+          { type: 'button', id: 'btn-add-exp-card', contenteditable: 'false', 'data-ui': 'ui_add_exp_card' }, uiCV('ui_add_exp_card'));
+        add.addEventListener('click', (e) => { e.preventDefault(); addExpCardCV(); });
+        grid.after(add);
+      }
+    }
+
+    function expActCV(ev, btn, act) {
+      if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+      const item = btn.closest(EXP_ITEM_SEL_CV);
+      if (!item || !item.parentNode) return;
+      if (act === 'up' || act === 'down') {
+        const sib = expSibCV(item, act === 'up' ? -1 : 1);
+        if (!sib) return;
+        if (act === 'up') item.parentNode.insertBefore(item, sib);
+        else item.parentNode.insertBefore(sib, item);
+        reflowExpCV();
+        saveCurrentState();
+        showToast(uiCV(act === 'up' ? 't_item_up' : 't_item_down'));
+        if (!btn.disabled) btn.focus();
+        return;
+      }
+      if (act === 'hide') {
+        expSetHiddenCV(item, !item.hasAttribute('data-w17-hidden'));
+        reflowExpCV();
+        saveCurrentState();
+        showToast(uiCV(item.hasAttribute('data-w17-hidden') ? 't_exp_hidden' : 't_exp_shown'));
+        btn.focus();
+        return;
+      }
+      if (act === 'del') {
+        if (!confirmDeleteCV(btn)) return;
+        trashItemCV(item, btn);
+        reflowExpCV();
+        saveCurrentState();
+        showToast(uiCV('t_deleted'));
+      }
+    }
+
+    function expNewIdCV(prefix) {
+      return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    }
+
+    function expMakeLiveCV(node) {
+      if (!document.body.classList.contains('is-editing')) return;
+      const nodes = node.matches('.editable-node') ? [node] : [];
+      node.querySelectorAll('.editable-node').forEach((el) => nodes.push(el));
+      nodes.forEach((el) => { el.setAttribute('contenteditable', 'true'); el.setAttribute('spellcheck', 'false'); });
+      ensureEditControls();
+      initDragAndDrop();
+      syncExpDraggableCV();
+    }
+
+    function expFocusCV(node) {
+      const f = node.querySelector('[data-w17-f]');
+      if (!f) return;
+      f.focus();
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(f);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } catch (e) {}
+    }
+
+    function expAddCV(node, parent, before) {
+      if (before) parent.insertBefore(node, before); else parent.appendChild(node);
+      expMakeLiveCV(node);
+      reflowExpCV();
+      saveCurrentState();
+      expFocusCV(node);
+    }
+
+    function addExpRoleCV(card) {
+      expAddCV(makeExpRoleCV({ id: expNewIdCV('expr') }), expListCV(card, 'exp-roles'));
+    }
+
+    function addExpPointCV(card) {
+      expAddCV(makeExpPointCV({ id: expNewIdCV('expp') }), expListCV(card, 'exp-points'));
+    }
+
+    function addExpCardCV() {
+      const grid = document.getElementById('experience-grid');
+      if (!grid) return;
+      const card = makeExpCardCV({ id: expNewIdCV('expc') });
+      expListCV(card, 'exp-roles').appendChild(makeExpRoleCV({ id: expNewIdCV('expr') }));
+      expListCV(card, 'exp-points').appendChild(makeExpPointCV({ id: expNewIdCV('expp') }));
+      expAddCV(card, grid);
+    }
+
+    // Chỉ cho kéo mục Kinh nghiệm khi đang Sửa chữ (trên web khách vẫn bôi đen, copy chữ bình thường)
+    function syncExpDraggableCV() {
+      const on = document.body.classList.contains('is-editing');
+      document.querySelectorAll('#experience-grid .draggable-card').forEach((n) => n.setAttribute('draggable', on ? 'true' : 'false'));
+    }
+
+    // Ẩn ngày sinh + mọi mốc thời gian ([data-w17-date]) trên web và PDF — một nút cho cả trang
+    function toggleHideDatesCV() {
+      const root = document.getElementById('portfolio-root');
+      if (!root) return;
+      const on = !root.hasAttribute('data-w17-hide-dates');
+      if (on) root.setAttribute('data-w17-hide-dates', '1');
+      else root.removeAttribute('data-w17-hide-dates');
+      syncHideDatesBtnCV();
+      saveCurrentState();
+      showToast(uiCV(on ? 't_dates_hidden' : 't_dates_shown'));
+    }
+
+    function syncHideDatesBtnCV() {
+      const b = document.getElementById('btn-hide-dates');
+      if (!b) return;
+      const root = document.getElementById('portfolio-root');
+      const on = !!(root && root.hasAttribute('data-w17-hide-dates'));
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      const lab = b.querySelector('[data-ui]');
+      if (lab) {
+        const k = on ? 'ui_dates_show' : 'ui_dates_hide';
+        lab.setAttribute('data-ui', k);
+        lab.textContent = uiCV(k);
+      }
+      b.title = uiCV('ui_dates_t');
     }
 
     // 1C. Kéo thả đổi chỗ (Drag and Drop) cho 3 Card Giải pháp & các Card Học vấn
@@ -3348,6 +3889,7 @@
         card.setAttribute('draggable', 'true');
 
         card.ondragstart = (e) => {
+          e.stopPropagation();
           // Không kéo khi người dùng đang bôi đen gõ chữ bên trong
           if (document.activeElement && document.activeElement.getAttribute('contenteditable') === 'true' && card.contains(document.activeElement)) {
             e.preventDefault();
@@ -3360,6 +3902,7 @@
 
         card.ondragover = (e) => {
           e.preventDefault();
+          e.stopPropagation();
           if (!draggedItem || draggedItem === card) return;
           if (draggedItem.parentElement !== card.parentElement) return;
           e.dataTransfer.dropEffect = 'move';
@@ -3372,6 +3915,7 @@
 
         card.ondrop = (e) => {
           e.preventDefault();
+          e.stopPropagation();
           card.classList.remove('drag-over-target');
           if (!draggedItem || draggedItem === card) return;
           const container = card.parentElement;
@@ -3387,6 +3931,7 @@
             container.insertBefore(draggedItem, card);
           }
           saveCurrentState();
+          reflowExpCV();
           showToast(uiCV('t_swapped'));
         };
 
@@ -3422,7 +3967,8 @@
     function trashItemCV(target, btnEl) {
       const id = itemIdCV(target);
       const parent = target.parentElement;
-      const before = target.classList.contains('skill-tag') ? parent.querySelector('.add-tag-btn') : null;
+      const before = target.classList.contains('skill-tag') ? parent.querySelector('.add-tag-btn')
+        : (target.matches(EXP_ITEM_SEL_CV) ? target.nextElementSibling : null);
       if (btnEl) disarmDeleteCV(btnEl);
       target.remove();
       if (id) {
@@ -3508,6 +4054,7 @@
       else e.parent.appendChild(e.node);
       trashCV.delete(id);
       deletedIdsCV.delete(id);
+      if (e.node.matches && e.node.matches(EXP_ITEM_SEL_CV)) { expMakeLiveCV(e.node); reflowExpCV(); }
       saveCurrentState();
       renderTrashCV();
       showToast(uiCV('t_restored'));
@@ -3588,6 +4135,7 @@
     // 3. Bật / Tắt chế độ sửa chữ toàn trang (Header, Body & Footer)
     function toggleEditMode() {
       isEditMode = !isEditMode;
+      setTimeout(syncExpDraggableCV, 0);
       const root = document.getElementById('portfolio-root');
       const label = document.getElementById('btn-edit-label');
 
