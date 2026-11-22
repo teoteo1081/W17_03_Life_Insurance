@@ -51,7 +51,7 @@ def t_contact(b, env):
         }""")
         if info["tel"] != [[TEL, PHONE]]:
             bad.append(f"{rel}: tel hero {info['tel']}")
-        if info["mail"] != ["mailto:teoteo108@gmail.com"]:
+        if info["mail"] != ["mailto:thuthao28011989@yahoo.com"]:
             bad.append(f"{rel}: mailto hero {info['mail']}")
         if info["ctas"] != ["hero_cta_zalo", "hero_cta_github", "hero_cta_portfolio"]:
             bad.append(f"{rel}: thứ tự nút {info['ctas']}")
@@ -118,7 +118,7 @@ def t_pdf_links(b, env):
     for u in uris:
         if not u.startswith(("https://", "mailto:", "tel:")) or "localhost" in u or "127.0.0.1" in u:
             bad.append(f"link không tuyệt đối/công khai: {u}")
-    for need in (PDF_URL, "mailto:teoteo108@gmail.com", TEL, "https://github.com/teoteo1081", "https://zalo.me/0855239805"):
+    for need in (PDF_URL, "mailto:thuthao28011989@yahoo.com", TEL, "https://github.com/teoteo1081", "https://zalo.me/0855239805"):
         if need not in uris:
             bad.append(f"thiếu link {need}")
     if uris.count(PDF_URL) < 2:

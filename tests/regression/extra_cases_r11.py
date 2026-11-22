@@ -50,7 +50,7 @@ def t_seo(b, env):
             continue
         types = {n["@type"]: n for n in ld["@graph"]}
         person = types.get("Person", {})
-        if types.get("WebSite", {}).get("url") != base or person.get("email") != "teoteo108@gmail.com" or person.get("telephone") != "+84855239805" \
+        if types.get("WebSite", {}).get("url") != base or person.get("email") != "thuthao28011989@yahoo.com" or person.get("telephone") != "+84855239805" \
                 or person.get("sameAs") != ["https://github.com/teoteo1081"]:
             bad.append(f"{name}: JSON-LD lệch cấu hình {person}")
         if name.startswith("index_portfolio_clean") and types.get("ProfilePage", {}).get("mainEntity", {}).get("@id") != base + "#person":

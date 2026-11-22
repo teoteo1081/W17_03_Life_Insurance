@@ -141,7 +141,7 @@ def t_public_events(b, env):
         if ev[4][1].get("project_id") != "spoke1" or ev[5][1].get("service_id") != "p1" or ev[6][1].get("language") != "en":
             bad.append(f"tham số sự kiện sai: {ev[4:7]}")
     dump = pg.evaluate(DL_JS)
-    for s in PII + ["mailto:", "tel:+", "teoteo108@gmail.com", "zalo.me/"]:
+    for s in PII + ["mailto:", "tel:+", "thuthao28011989@yahoo.com", "zalo.me/"]:
         if s in dump:
             bad.append(f"dataLayer chứa {s!r}")
     # ---------------- CV ----------------

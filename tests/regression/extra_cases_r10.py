@@ -147,7 +147,7 @@ def t_settings_rollback(b, env):
         if "khôi phục" not in (data.get("message") or ""):
             bad.append(f"thông báo không nói rõ đã khôi phục: {data.get('message')!r}")
         _, _, body = R.http("GET", env.base + "/api/settings", {"Origin": env.base})
-        if json.loads(body).get("values", {}).get("contact.email") != "teoteo108@gmail.com":
+        if json.loads(body).get("values", {}).get("contact.email") != "thuthao28011989@yahoo.com":
             bad.append("cấu hình bị đổi một phần")
     env.reset_work()
     R.record("R10", "R10-03 lưu cài đặt thất bại giữa chừng (khóa ghi Final CV / Creator CV) -> 5xx, cả 2 Final + 2 Creator giữ nguyên byte, cấu hình còn khớp", not bad, " | ".join(bad))

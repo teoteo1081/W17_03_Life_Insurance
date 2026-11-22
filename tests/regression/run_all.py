@@ -610,11 +610,11 @@ def t_f05_migration(b, env):
         order_after = pg.evaluate("[...document.querySelectorAll('#reorderable-sections > .reorderable-section')].map((s) => s.getAttribute('data-section-id'))")
         tag_ok = pg.evaluate("[...document.querySelectorAll('.skill-tag')].some((t) => t.textContent.includes('MIGRATE-ME-TAG'))")
         kept = pg.evaluate("localStorage.getItem('tj_w17_03_life_insurance_saved_html')")
-        # Mục 'metrics' của Creator cũ đã bỏ khỏi CV (lỗi có sẵn ở repo gốc), và CV này thêm mục 'experience':
+        # Mục 'metrics' của Creator cũ đã bỏ khỏi CV (lỗi có sẵn ở repo gốc), và CV này thêm mục 'experience', 'personal':
         # chỉ yêu cầu các mục còn tồn tại ở cả hai giữ đúng thứ tự tương đối, và không mục hiện có nào bị mất.
         common_before = [s for s in order_before if s in order_after]
         common_after = [s for s in order_after if s in order_before]
-        if common_after != common_before or len(common_before) < 3 or sorted(order_after) != ["education", "experience", "skills", "solutions"]:
+        if common_after != common_before or len(common_before) < 3 or sorted(order_after) != ["education", "experience", "personal", "skills", "solutions"]:
             bad.append(f"cv: thứ tự section không được giữ {order_before} -> {order_after}")
         if not tag_ok:
             bad.append("cv: tag đã sửa không được giữ")
@@ -1059,7 +1059,7 @@ SERVICE_TITLES = {
 }
 POSITIONING = {"vi": "Vận hành & Phân tích Dữ liệu", "en": "Operations & Data Analyst", "es": "Operaciones y Datos", "zh": "运营与数据分析师"}
 # Chủ hồ sơ sửa bản VI qua editor (2026-11-20): Portfolio dùng câu định vị tiếng Anh, CV dùng "và" thay "&".
-POSITIONING_VI = {"portfolio": "End-to-End Operations Automation", "cv": "Agency Compensation & Incentive Specialist"}
+POSITIONING_VI = {"portfolio": "End-to-End Operations Automation", "cv": "Chuyên viên Vận hành và Phân tích Dữ liệu"}
 # Bản EN/ES/ZH của câu định vị Portfolio dịch theo câu VI mới (2026-11-20); CV vẫn dùng POSITIONING.
 POSITIONING_PORTFOLIO = {"en": "End-to-End Operations Automation", "es": "Automatización de Operaciones de Principio a Fin", "zh": "端到端运营自动化"}
 
@@ -1070,9 +1070,9 @@ def positioning(l, page):
     return POSITIONING_PORTFOLIO[l] if page == "portfolio" else POSITIONING_CV[l]
 
 
-# W17_03_Life_Insurance (2026-11-21): CV định vị Agency Compensation & Incentive Specialist.
-POSITIONING_CV = {"vi": "Agency Compensation & Incentive Specialist", "en": "Agency Compensation & Incentive Specialist",
-                  "es": "Especialista en Compensación e Incentivos de Agencia", "zh": "代理人佣金与激励专员"}
+# W17_03_Life_Insurance (chủ hồ sơ chốt 2026-11-22): CV định vị Vận hành & Phân tích Dữ liệu.
+POSITIONING_CV = {"vi": "Chuyên viên Vận hành và Phân tích Dữ liệu", "en": "Operations & Data Analyst",
+                  "es": "Especialista en Operaciones y Análisis de Datos", "zh": "运营与数据分析专员"}
 
 
 def t_content(b, env):
@@ -1108,7 +1108,7 @@ def t_content(b, env):
             t = pg.evaluate("document.querySelector('[data-i18n=hero_title]').textContent.replace(/\\s+/g, ' ')")
             if positioning(l, "cv") not in t:
                 bad.append(f"{rel}/{l}: sai định vị {t!r}")
-    record("CONTENT", "giữ định vị (Portfolio: Operations Automation; CV: Agency Compensation & Incentive Specialist, dịch theo locale), đúng 6 dịch vụ (2 chính, 2 chuyên ngành thuế Mỹ + lương thưởng, 2 nhận làm) + badge theo dictionary, dịch vụ 6 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
+    record("CONTENT", "giữ định vị (Portfolio: Operations Automation; CV: Vận hành & Phân tích Dữ liệu, dịch theo locale), đúng 6 dịch vụ (2 chính, 2 chuyên ngành thuế Mỹ + lương thưởng, 2 nhận làm) + badge theo dictionary, dịch vụ 6 là đo lường hiệu suất quảng cáo, khối Power BI Telemetry, bốn ứng dụng Proof of Work (Final+Creator, 4 locale)", not bad, " | ".join(bad[:6]))
     ctx.close()
 
 

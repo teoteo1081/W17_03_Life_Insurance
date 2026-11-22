@@ -51,7 +51,7 @@ STATIC_JS = r"""async (rel) => {
 ALLOWED_PHRASES = ("GA4 Tracking", "Freelance & Remote", "End-to-End Operations Automation", "Website & Landing Page", "Rubric Engineering",
     # W17_03_Life_Insurance (chủ hồ sơ chốt 2026-11-21): định vị, chức danh chính thức tại doanh nghiệp (không dịch),
     # tên nhóm kỹ năng và tag do chủ hồ sơ đặt bằng tiếng Anh.
-    "Agency Compensation & Incentive Specialist", "Freelance / Remote", "Assistant Manager — Agency Planning & Performance Analytics",
+    "Agency Compensation & Incentive Specialist", "Freelance / Remote", "TJ • Data & Automation", "Assistant Manager — Agency Planning & Performance Analytics",
     "Assistant Manager – Agency Planning & Performance Analytics", "Agency Specialist (DCOM)", "Agency Payment (DCOM)",
     "The Gallerie Compensation & Incentive Senior Specialist", "Senior Pricing & Business Analyst",
     "Agency Operations & Compensation", "Planning & Business Intelligence", "Data Automation & Technical Tools",
