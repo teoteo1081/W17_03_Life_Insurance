@@ -659,20 +659,16 @@
   <main id="portfolio-root" class="max-w-5xl mx-auto py-8 space-y-6">
 
     <!-- ==================== [TOP HEADER NAVIGATION: QUAY LẠI PORTFOLIO SHOWCASE] ==================== -->
-    <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-[#0c1322]/90 border border-[#1a2740] shadow-lg no-print">
-      <div id="w17-page-switch" role="group" aria-label="Chuyển giữa Portfolio và CV" data-i18n-aria="aria_page_switch" class="inline-flex items-center rounded-xl border border-slate-700 dark:border-slate-700 bg-slate-900/80 p-0.5 text-xs font-bold shrink-0"><a href="./index.html" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Portfolio</a><span aria-current="page" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950">CV</span></div>
-      <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
-        <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-          <span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>
-          <span data-i18n="top_capability_badge" class="editable-node">CV &amp; Hồ sơ năng lực</span>
-        </div>
+    <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-2xl bg-[#0c1322]/90 border border-[#1a2740] shadow-lg no-print">
+      <div id="w17-page-switch" role="group" aria-label="Chuyển giữa Portfolio và CV" data-i18n-aria="aria_page_switch" class="grid grid-cols-2 w-full sm:w-auto items-center rounded-xl border border-slate-700 dark:border-slate-700 bg-slate-900/80 p-0.5 text-xs font-bold shrink-0"><a href="./index.html" class="px-3 py-2 sm:min-w-[6rem] text-center rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Portfolio</a><span aria-current="page" class="px-3 py-2 sm:min-w-[6rem] text-center rounded-lg bg-emerald-500 text-slate-950">CV</span></div>
+      <div class="flex items-center gap-2 w-full sm:w-auto">
         <!-- Tải CV (PDF): mở hộp thoại in của trình duyệt (chọn "Lưu thành PDF") -->
-        <button type="button" id="btn-cv-pdf" onclick="window.print()" data-i18n-aria="aria_pdf_btn" aria-label="Tải CV (PDF): mở hộp thoại in, chọn Lưu thành PDF" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500/15 hover:bg-sky-500/25 text-sky-200 border border-sky-500/40 hover:border-sky-400 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 cursor-pointer">
+        <button type="button" id="btn-cv-pdf" onclick="window.print()" data-i18n-aria="aria_pdf_btn" aria-label="Tải CV (PDF): mở hộp thoại in, chọn Lưu thành PDF" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 h-9 px-3 rounded-lg text-xs font-semibold bg-sky-500/15 hover:bg-sky-500/25 text-sky-200 border border-sky-500/40 hover:border-sky-400 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 cursor-pointer">
           <span data-i18n="top_pdf_btn" class="editable-node">📄 Tải CV (PDF)</span>
         </button>
         <!-- Language Selector (Chuẩn 2 ký tự: VI | EN | ES | ZH) -->
         <div class="relative inline-block">
-          <select id="langSelectCV" onchange="switchLanguageCV(this.value, true)" data-i18n-aria="aria_lang_select" aria-label="Chọn ngôn ngữ hiển thị" class="bg-slate-900/90 text-slate-200 border border-slate-700/80 hover:border-sky-400/60 text-xs font-medium rounded-lg px-2.5 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 cursor-pointer transition-all">
+          <select id="langSelectCV" onchange="switchLanguageCV(this.value, true)" data-i18n-aria="aria_lang_select" aria-label="Chọn ngôn ngữ hiển thị" class="bg-slate-900/90 text-slate-200 border border-slate-700/80 hover:border-sky-400/60 text-xs font-medium rounded-lg h-9 px-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 cursor-pointer transition-all">
             <option value="vi">VI</option>
             <option value="en">EN</option>
             <option value="es">ES</option>
@@ -680,7 +676,7 @@
           </select>
         </div>
         <!-- Theme Toggle Button (Đồng bộ Light/Dark với Portfolio Showcase) -->
-        <button id="themeBtnCV" type="button" onclick="toggleLightDark()" data-i18n-aria="aria_theme_toggle" aria-label="Chuyển đổi giao diện Sáng / Tối" aria-pressed="true" class="p-1.5 rounded-lg bg-slate-900/90 border border-slate-700/80 text-slate-200 hover:border-sky-400/60 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 cursor-pointer">
+        <button id="themeBtnCV" type="button" onclick="toggleLightDark()" data-i18n-aria="aria_theme_toggle" aria-label="Chuyển đổi giao diện Sáng / Tối" aria-pressed="true" class="inline-flex items-center justify-center w-9 h-9 shrink-0 rounded-lg bg-slate-900/90 border border-slate-700/80 text-slate-200 hover:border-sky-400/60 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sun" id="themeIconSunCV" class="lucide lucide-sun w-4 h-4 text-amber-400"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="moon" id="themeIconMoonCV" class="lucide lucide-moon w-4 h-4 text-slate-700 hidden"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
         </button>
@@ -796,33 +792,22 @@
               <h3 data-i18n="exp_ins_title" class="editable-node text-base sm:text-[17px] font-bold text-white leading-snug text-balance">Bảo hiểm nhân thọ — Kênh Đại lý</h3>
               <span data-i18n="exp_ins_period" data-w17-date="" class="editable-node text-xs font-mono font-semibold text-sky-400">2020 – 2025</span>
             </div>
-            <div data-i18n="exp_ins_sub" class="editable-node text-[11.5px] font-medium text-sky-400 leading-relaxed">Thù lao, hoa hồng &amp; thi đua • Chi trả &amp; đối soát • Lập kế hoạch &amp; hiệu suất</div>
             <ul class="exp-roles flex flex-col gap-3">
               <li data-card-id="exp_role_1" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span data-i18n="exp_r1_co" class="editable-node text-sm font-bold text-white">AIA Vietnam</span>
-                  <span data-i18n="exp_r1_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">12/2024 – 11/2025</span>
                 </div>
-                <div data-i18n="exp_r1_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Agency Payment (DCOM)</div>
+                <div data-i18n="exp_r1_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Agency Specialist (DCOM)</div>
               </li>
               <li data-card-id="exp_role_2" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span data-i18n="exp_r2_co" class="editable-node text-sm font-bold text-white">Chubb Life Vietnam</span>
-                  <span data-i18n="exp_r2_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">03/2023 – 06/2024</span>
                 </div>
                 <div data-i18n="exp_r2_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Assistant Manager — Agency Planning &amp; Performance Analytics</div>
-              </li>
-              <li data-card-id="exp_role_3" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
-                <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span data-i18n="exp_r3_co" class="editable-node text-sm font-bold text-white">AIA Vietnam</span>
-                  <span data-i18n="exp_r3_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">01/2022 – 03/2023</span>
-                </div>
-                <div data-i18n="exp_r3_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Agency Specialist (DCOM)</div>
               </li>
               <li data-card-id="exp_role_4" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span data-i18n="exp_r4_co" class="editable-node text-sm font-bold text-white">Prudential Vietnam</span>
-                  <span data-i18n="exp_r4_date" data-w17-date="" class="editable-node text-xs font-mono text-slate-400">03/2020 – 01/2022</span>
                 </div>
                 <div data-i18n="exp_r4_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">The Gallerie Compensation &amp; Incentive Senior Specialist</div>
               </li>
@@ -830,19 +815,23 @@
             <ul class="exp-points space-y-2.5 text-xs text-slate-300 leading-relaxed">
               <li data-card-id="exp_ins_p1" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
-                <span data-i18n="exp_ins_p1" class="editable-node"><strong class="text-white">Chi trả &amp; đối soát (AIA):</strong> tổng hợp dữ liệu nhiều nguồn để tính thù lao, hoa hồng cho đại lý; chi trả 2 kỳ/tháng, theo dõi điều chỉnh clawback tới 6 tháng, đối chiếu với hệ thống trước khi chi.</span>
+                <span data-i18n="exp_ins_p1" class="editable-node"><strong class="text-white">Tính &amp; chi trả thù lao:</strong> tổng hợp dữ liệu nhiều nguồn để tính thù lao, hoa hồng đại lý; chi trả 2 kỳ/tháng; theo dõi điều chỉnh clawback tới 6 tháng; đối chiếu hệ thống trước khi chi.</span>
               </li>
               <li data-card-id="exp_ins_p2" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
-                <span data-i18n="exp_ins_p2" class="editable-node"><strong class="text-white">Thù lao &amp; thi đua (Prudential):</strong> quản lý và tính các chương trình thù lao, thi đua, ghi nhận ngắn hạn và dài hạn; theo dõi ngân sách; soạn memo truyền thông chương trình.</span>
+                <span data-i18n="exp_ins_p2" class="editable-node"><strong class="text-white">Thi đua &amp; ghi nhận:</strong> quản lý, tính các chương trình thi đua, ghi nhận ngắn hạn và dài hạn; soạn memo truyền thông chương trình.</span>
               </li>
               <li data-card-id="exp_ins_p3" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
-                <span data-i18n="exp_ins_p3" class="editable-node"><strong class="text-white">Lập kế hoạch &amp; hiệu suất (Chubb Life):</strong> lập kế hoạch kinh doanh kênh Đại lý và dự báo doanh số; hỗ trợ thiết kế, theo dõi thi đua; quản lý ngân sách và chi phí hoạt động bán hàng.</span>
+                <span data-i18n="exp_ins_p3" class="editable-node"><strong class="text-white">Kế hoạch &amp; ngân sách:</strong> lập kế hoạch kinh doanh kênh Đại lý, dự báo doanh số; theo dõi ngân sách thi đua và chi phí hoạt động bán hàng.</span>
               </li>
               <li data-card-id="exp_ins_p4" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
-                <span data-i18n="exp_ins_p4" class="editable-node"><strong class="text-white">Báo cáo &amp; hỗ trợ đại lý:</strong> báo cáo ngày/tuần/tháng và dashboard cho Leader, đội ngũ kinh doanh; giải đáp đại lý về cách tính hoa hồng; phối hợp Finance, Reporting, Actuarial.</span>
+                <span data-i18n="exp_ins_p4" class="editable-node"><strong class="text-white">Báo cáo &amp; dashboard:</strong> báo cáo ngày/tuần/tháng, dashboard cho Leader và đội ngũ kinh doanh.</span>
+              </li>
+              <li data-card-id="exp_ins_p5" class="exp-point-item draggable-card relative flex items-start gap-2">
+                <span class="text-sky-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
+                <span data-i18n="exp_ins_p5" class="editable-node"><strong class="text-white">Hỗ trợ &amp; phối hợp:</strong> giải đáp đại lý về cách tính hoa hồng; phối hợp Finance, Reporting, Actuarial.</span>
               </li>
             </ul>
           </article>
@@ -851,12 +840,42 @@
               <h3 data-i18n="exp_data_title" class="editable-node text-base font-bold text-white leading-snug text-balance">Phân tích dữ liệu, tài chính &amp; kinh doanh</h3>
               <span data-i18n="exp_data_period" data-w17-date="" class="editable-node text-xs font-mono font-semibold text-emerald-400">2018 – 2019</span>
             </div>
-            <div data-i18n="exp_data_cos" class="editable-node text-xs font-semibold text-slate-200">Rich Products Vietnam · Lazada E-Logistics · Speedlink</div>
-            <div data-i18n="exp_data_roles" class="editable-node text-[11.5px] text-sky-400 font-medium leading-snug">Data Analyst · Invoice Lead · Senior Pricing &amp; Business Analyst</div>
-            <ul class="exp-points space-y-2 text-xs text-slate-300 leading-relaxed">
+            <ul class="exp-roles flex flex-col gap-3">
+              <li data-card-id="exp_role_d1" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
+                <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span data-i18n="exp_rd1_co" class="editable-node text-sm font-bold text-white">Speedlink</span>
+                </div>
+                <div data-i18n="exp_rd1_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Senior Pricing &amp; Business Analyst</div>
+              </li>
+              <li data-card-id="exp_role_d2" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
+                <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span data-i18n="exp_rd2_co" class="editable-node text-sm font-bold text-white">Lazada E-Logistics</span>
+                </div>
+                <div data-i18n="exp_rd2_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Invoice Lead</div>
+              </li>
+              <li data-card-id="exp_role_d3" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
+                <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span data-i18n="exp_rd3_co" class="editable-node text-sm font-bold text-white">Rich Products Vietnam</span>
+                </div>
+                <div data-i18n="exp_rd3_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Data Analyst</div>
+              </li>
+            </ul>
+            <ul class="exp-points space-y-2.5 text-xs text-slate-300 leading-relaxed">
               <li data-card-id="exp_data_p1" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-emerald-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
-                <span data-i18n="exp_data_p1" class="editable-node">Báo cáo P&amp;L và chi phí đa chiều (tuyến, khu vực, 3PL, bảng giá, trọng lượng) trên Power BI; công cụ định giá cho bộ phận Billing; đối soát hóa đơn vận chuyển 3PL; chuẩn hóa dữ liệu bán ra từ nhà phân phối.</span>
+                <span data-i18n="exp_data_p1" class="editable-node"><strong class="text-white">Báo cáo P&amp;L &amp; chi phí:</strong> báo cáo P&amp;L và chi phí đa chiều (tuyến, khu vực, 3PL, bảng giá, trọng lượng) trên Power BI.</span>
+              </li>
+              <li data-card-id="exp_data_p2" class="exp-point-item draggable-card relative flex items-start gap-2">
+                <span class="text-emerald-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
+                <span data-i18n="exp_data_p2" class="editable-node"><strong class="text-white">Định giá:</strong> xây dựng công cụ định giá cho bộ phận Billing.</span>
+              </li>
+              <li data-card-id="exp_data_p3" class="exp-point-item draggable-card relative flex items-start gap-2">
+                <span class="text-emerald-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
+                <span data-i18n="exp_data_p3" class="editable-node"><strong class="text-white">Đối soát hóa đơn:</strong> đối soát hóa đơn vận chuyển của đối tác 3PL.</span>
+              </li>
+              <li data-card-id="exp_data_p4" class="exp-point-item draggable-card relative flex items-start gap-2">
+                <span class="text-emerald-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
+                <span data-i18n="exp_data_p4" class="editable-node"><strong class="text-white">Chuẩn hóa dữ liệu:</strong> chuẩn hóa dữ liệu bán ra từ nhà phân phối.</span>
               </li>
             </ul>
           </article>
@@ -865,12 +884,26 @@
               <h3 data-i18n="exp_acc_title" class="editable-node text-base font-bold text-white leading-snug text-balance">Kế toán</h3>
               <span data-i18n="exp_acc_period" data-w17-date="" class="editable-node text-xs font-mono font-semibold text-amber-400">2012 – 2018</span>
             </div>
-            <div data-i18n="exp_acc_cos" class="editable-node text-xs font-semibold text-slate-200">Saigon Co.op</div>
-            <div data-i18n="exp_acc_roles" class="editable-node text-[11.5px] text-sky-400 font-medium leading-snug">Accountant Staff</div>
-            <ul class="exp-points space-y-2 text-xs text-slate-300 leading-relaxed">
+            <ul class="exp-roles flex flex-col gap-3">
+              <li data-card-id="exp_role_a1" class="exp-role-item draggable-card relative border-l-2 border-slate-700 pl-3 space-y-0.5">
+                <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span data-i18n="exp_ra1_co" class="editable-node text-sm font-bold text-white">Saigon Co.op</span>
+                </div>
+                <div data-i18n="exp_ra1_role" class="editable-node text-xs sm:text-[13px] text-sky-400 font-medium leading-snug">Accountant Staff</div>
+              </li>
+            </ul>
+            <ul class="exp-points space-y-2.5 text-xs text-slate-300 leading-relaxed">
               <li data-card-id="exp_acc_p1" class="exp-point-item draggable-card relative flex items-start gap-2">
                 <span class="text-amber-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
-                <span data-i18n="exp_acc_p1" class="editable-node">AP/AR; phát hành và kiểm tra hóa đơn thuế đầu vào/đầu ra; thanh toán nhà cung cấp và đối chiếu tài khoản thanh toán bù trừ cho 30 Co.op; Oracle ERP, DataLoad, Access, Excel.</span>
+                <span data-i18n="exp_acc_p1" class="editable-node"><strong class="text-white">Công nợ AP/AR:</strong> thanh toán nhà cung cấp; đối chiếu tài khoản thanh toán bù trừ cho 30 Co.op.</span>
+              </li>
+              <li data-card-id="exp_acc_p2" class="exp-point-item draggable-card relative flex items-start gap-2">
+                <span class="text-amber-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
+                <span data-i18n="exp_acc_p2" class="editable-node"><strong class="text-white">Hóa đơn thuế:</strong> phát hành và kiểm tra hóa đơn thuế đầu vào/đầu ra.</span>
+              </li>
+              <li data-card-id="exp_acc_p3" class="exp-point-item draggable-card relative flex items-start gap-2">
+                <span class="text-amber-400 font-bold shrink-0 no-edit" aria-hidden="true">✓</span>
+                <span data-i18n="exp_acc_p3" class="editable-node"><strong class="text-white">Công cụ:</strong> Oracle ERP, DataLoad, Access, Excel.</span>
               </li>
             </ul>
           </article>
@@ -1992,7 +2025,6 @@
       vi: {
         nav_back: "← Quay lại Portfolio",
         aria_page_switch: "Chuyển giữa Portfolio và CV",
-        top_capability_badge: "CV & Hồ sơ năng lực",
         pill_loc: "📍 TP. Hồ Chí Minh",
         pill_work: "🌐 Freelance / Remote",
         pill_lang: "🗣 Business English",
@@ -2071,33 +2103,36 @@
         exp_heading: "Kinh Nghiệm <span class=\"inline-block\">Làm Việc</span>",
         exp_ins_title: "Bảo hiểm nhân thọ — Kênh Đại lý",
         exp_ins_period: "2020 – 2025",
-        exp_ins_sub: "Thù lao, hoa hồng & thi đua • Chi trả & đối soát • Lập kế hoạch & hiệu suất",
         exp_r1_co: "AIA Vietnam",
-        exp_r1_role: "Agency Payment (DCOM)",
-        exp_r1_date: "12/2024 – 11/2025",
+        exp_r1_role: "Agency Specialist (DCOM)",
         exp_r2_co: "Chubb Life Vietnam",
         exp_r2_role: "Assistant Manager — Agency Planning & Performance Analytics",
-        exp_r2_date: "03/2023 – 06/2024",
-        exp_r3_co: "AIA Vietnam",
-        exp_r3_role: "Agency Specialist (DCOM)",
-        exp_r3_date: "01/2022 – 03/2023",
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
-        exp_r4_date: "03/2020 – 01/2022",
-        exp_ins_p1: "<strong class=\"text-white\">Chi trả & đối soát (AIA):</strong> tổng hợp dữ liệu nhiều nguồn để tính thù lao, hoa hồng cho đại lý; chi trả 2 kỳ/tháng, theo dõi điều chỉnh clawback tới 6 tháng, đối chiếu với hệ thống trước khi chi.",
-        exp_ins_p2: "<strong class=\"text-white\">Thù lao & thi đua (Prudential):</strong> quản lý và tính các chương trình thù lao, thi đua, ghi nhận ngắn hạn và dài hạn; theo dõi ngân sách; soạn memo truyền thông chương trình.",
-        exp_ins_p3: "<strong class=\"text-white\">Lập kế hoạch & hiệu suất (Chubb Life):</strong> lập kế hoạch kinh doanh kênh Đại lý và dự báo doanh số; hỗ trợ thiết kế, theo dõi thi đua; quản lý ngân sách và chi phí hoạt động bán hàng.",
-        exp_ins_p4: "<strong class=\"text-white\">Báo cáo & hỗ trợ đại lý:</strong> báo cáo ngày/tuần/tháng và dashboard cho Leader, đội ngũ kinh doanh; giải đáp đại lý về cách tính hoa hồng; phối hợp Finance, Reporting, Actuarial.",
+        exp_ins_p1: "<strong class=\"text-white\">Tính & chi trả thù lao:</strong> tổng hợp dữ liệu nhiều nguồn để tính thù lao, hoa hồng đại lý; chi trả 2 kỳ/tháng; theo dõi điều chỉnh clawback tới 6 tháng; đối chiếu hệ thống trước khi chi.",
+        exp_ins_p2: "<strong class=\"text-white\">Thi đua & ghi nhận:</strong> quản lý, tính các chương trình thi đua, ghi nhận ngắn hạn và dài hạn; soạn memo truyền thông chương trình.",
+        exp_ins_p3: "<strong class=\"text-white\">Kế hoạch & ngân sách:</strong> lập kế hoạch kinh doanh kênh Đại lý, dự báo doanh số; theo dõi ngân sách thi đua và chi phí hoạt động bán hàng.",
+        exp_ins_p4: "<strong class=\"text-white\">Báo cáo & dashboard:</strong> báo cáo ngày/tuần/tháng, dashboard cho Leader và đội ngũ kinh doanh.",
+        exp_ins_p5: "<strong class=\"text-white\">Hỗ trợ & phối hợp:</strong> giải đáp đại lý về cách tính hoa hồng; phối hợp Finance, Reporting, Actuarial.",
         exp_data_title: "Phân tích dữ liệu, tài chính & kinh doanh",
         exp_data_period: "2018 – 2019",
-        exp_data_cos: "Rich Products Vietnam · Lazada E-Logistics · Speedlink",
-        exp_data_roles: "Data Analyst · Invoice Lead · Senior Pricing & Business Analyst",
-        exp_data_p1: "Báo cáo P&L và chi phí đa chiều (tuyến, khu vực, 3PL, bảng giá, trọng lượng) trên Power BI; công cụ định giá cho bộ phận Billing; đối soát hóa đơn vận chuyển 3PL; chuẩn hóa dữ liệu bán ra từ nhà phân phối.",
+        exp_rd1_co: "Speedlink",
+        exp_rd1_role: "Senior Pricing & Business Analyst",
+        exp_rd2_co: "Lazada E-Logistics",
+        exp_rd2_role: "Invoice Lead",
+        exp_rd3_co: "Rich Products Vietnam",
+        exp_rd3_role: "Data Analyst",
+        exp_data_p1: "<strong class=\"text-white\">Báo cáo P&L & chi phí:</strong> báo cáo P&L và chi phí đa chiều (tuyến, khu vực, 3PL, bảng giá, trọng lượng) trên Power BI.",
+        exp_data_p2: "<strong class=\"text-white\">Định giá:</strong> xây dựng công cụ định giá cho bộ phận Billing.",
+        exp_data_p3: "<strong class=\"text-white\">Đối soát hóa đơn:</strong> đối soát hóa đơn vận chuyển của đối tác 3PL.",
+        exp_data_p4: "<strong class=\"text-white\">Chuẩn hóa dữ liệu:</strong> chuẩn hóa dữ liệu bán ra từ nhà phân phối.",
         exp_acc_title: "Kế toán",
         exp_acc_period: "2012 – 2018",
-        exp_acc_cos: "Saigon Co.op",
-        exp_acc_roles: "Accountant Staff",
-        exp_acc_p1: "AP/AR; phát hành và kiểm tra hóa đơn thuế đầu vào/đầu ra; thanh toán nhà cung cấp và đối chiếu tài khoản thanh toán bù trừ cho 30 Co.op; Oracle ERP, DataLoad, Access, Excel.",
+        exp_ra1_co: "Saigon Co.op",
+        exp_ra1_role: "Accountant Staff",
+        exp_acc_p1: "<strong class=\"text-white\">Công nợ AP/AR:</strong> thanh toán nhà cung cấp; đối chiếu tài khoản thanh toán bù trừ cho 30 Co.op.",
+        exp_acc_p2: "<strong class=\"text-white\">Hóa đơn thuế:</strong> phát hành và kiểm tra hóa đơn thuế đầu vào/đầu ra.",
+        exp_acc_p3: "<strong class=\"text-white\">Công cụ:</strong> Oracle ERP, DataLoad, Access, Excel.",
         skill_grp_5: "Agency Operations & Compensation",
         edu_meta_1: "Đại học Mở TP.HCM",
         edu_year_1: "2014–2016",
@@ -2115,7 +2150,6 @@
       en: {
         nav_back: "← Back to Portfolio",
         aria_page_switch: "Switch between Portfolio and CV",
-        top_capability_badge: "CV & Capability Profile",
         pill_loc: "📍 Ho Chi Minh City",
         pill_work: "🌐 Freelance / Remote",
         pill_lang: "🗣 Business English",
@@ -2194,33 +2228,36 @@
         exp_heading: "Work <span class=\"inline-block\">Experience</span>",
         exp_ins_title: "Life Insurance — Agency Channel",
         exp_ins_period: "2020 – 2025",
-        exp_ins_sub: "Compensation, commissions & incentives • Payment & reconciliation • Planning & performance",
         exp_r1_co: "AIA Vietnam",
-        exp_r1_role: "Agency Payment (DCOM)",
-        exp_r1_date: "12/2024 – 11/2025",
+        exp_r1_role: "Agency Specialist (DCOM)",
         exp_r2_co: "Chubb Life Vietnam",
         exp_r2_role: "Assistant Manager — Agency Planning & Performance Analytics",
-        exp_r2_date: "03/2023 – 06/2024",
-        exp_r3_co: "AIA Vietnam",
-        exp_r3_role: "Agency Specialist (DCOM)",
-        exp_r3_date: "01/2022 – 03/2023",
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
-        exp_r4_date: "03/2020 – 01/2022",
-        exp_ins_p1: "<strong class=\"text-white\">Payment & reconciliation (AIA):</strong> combined multi-source data to calculate agency compensation and commissions; ran payouts twice a month, tracked clawback adjustments for up to six months and cross-checked results with the system before payment.",
-        exp_ins_p2: "<strong class=\"text-white\">Compensation & incentives (Prudential):</strong> administered and calculated short- and long-term compensation, incentive and recognition programs; tracked budget spending; prepared program memos for stakeholders.",
-        exp_ins_p3: "<strong class=\"text-white\">Planning & performance (Chubb Life):</strong> prepared agency business plans and sales forecasts; supported contest design and periodic tracking; managed sales-activity budgets and costs.",
-        exp_ins_p4: "<strong class=\"text-white\">Reporting & agency support:</strong> daily/weekly/monthly reports and dashboards for leaders and sales teams; explained commission rules to agents; worked with Finance, Reporting and Actuarial.",
+        exp_ins_p1: "<strong class=\"text-white\">Compensation & payouts:</strong> combined multi-source data to calculate agency compensation and commissions; ran payouts twice a month; tracked clawback adjustments for up to six months; reconciled with the system before payment.",
+        exp_ins_p2: "<strong class=\"text-white\">Incentives & recognition:</strong> administered and calculated short- and long-term incentive and recognition programs; prepared program communication memos.",
+        exp_ins_p3: "<strong class=\"text-white\">Planning & budgeting:</strong> prepared agency business plans and sales forecasts; tracked incentive budgets and sales-activity costs.",
+        exp_ins_p4: "<strong class=\"text-white\">Reporting & dashboards:</strong> daily/weekly/monthly reports and dashboards for leaders and sales teams.",
+        exp_ins_p5: "<strong class=\"text-white\">Support & coordination:</strong> explained commission rules to agents; worked with Finance, Reporting and Actuarial.",
         exp_data_title: "Data, Finance & Business Analysis",
         exp_data_period: "2018 – 2019",
-        exp_data_cos: "Rich Products Vietnam · Lazada E-Logistics · Speedlink",
-        exp_data_roles: "Data Analyst · Invoice Lead · Senior Pricing & Business Analyst",
-        exp_data_p1: "Multi-dimensional P&L and cost reporting (route, area, 3PL, rate card, weight) in Power BI; pricing tool for the Billing team; 3PL invoice reconciliation; standardized distributor sell-out data.",
+        exp_rd1_co: "Speedlink",
+        exp_rd1_role: "Senior Pricing & Business Analyst",
+        exp_rd2_co: "Lazada E-Logistics",
+        exp_rd2_role: "Invoice Lead",
+        exp_rd3_co: "Rich Products Vietnam",
+        exp_rd3_role: "Data Analyst",
+        exp_data_p1: "<strong class=\"text-white\">P&L & cost reporting:</strong> multi-dimensional P&L and cost reports (route, area, 3PL, rate card, weight) in Power BI.",
+        exp_data_p2: "<strong class=\"text-white\">Pricing:</strong> built a pricing tool for the Billing team.",
+        exp_data_p3: "<strong class=\"text-white\">Invoice reconciliation:</strong> reconciled 3PL shipping invoices.",
+        exp_data_p4: "<strong class=\"text-white\">Data standardization:</strong> standardized distributor sell-out data.",
         exp_acc_title: "Accounting",
         exp_acc_period: "2012 – 2018",
-        exp_acc_cos: "Saigon Co.op",
-        exp_acc_roles: "Accountant Staff",
-        exp_acc_p1: "AP/AR; issued and validated input/output tax invoices; vendor payments and clearing-account reconciliation for 30 Co.op stores; Oracle ERP, DataLoad, Access, Excel.",
+        exp_ra1_co: "Saigon Co.op",
+        exp_ra1_role: "Accountant Staff",
+        exp_acc_p1: "<strong class=\"text-white\">AP/AR:</strong> vendor payments; clearing-account reconciliation for 30 Co.op stores.",
+        exp_acc_p2: "<strong class=\"text-white\">Tax invoices:</strong> issued and validated input/output tax invoices.",
+        exp_acc_p3: "<strong class=\"text-white\">Tools:</strong> Oracle ERP, DataLoad, Access, Excel.",
         skill_grp_5: "Agency Operations & Compensation",
         edu_meta_1: "Open University (HCMC)",
         edu_year_1: "2014–2016",
@@ -2238,7 +2275,6 @@
       es: {
         nav_back: "← Volver al Portafolio",
         aria_page_switch: "Cambiar entre Portafolio y CV",
-        top_capability_badge: "CV y Perfil de Capacidades",
         pill_loc: "📍 Ciudad Ho Chi Minh",
         pill_work: "🌐 Freelance / Remoto",
         pill_lang: "🗣 Inglés de negocios",
@@ -2317,33 +2353,36 @@
         exp_heading: "Experiencia <span class=\"inline-block\">Laboral</span>",
         exp_ins_title: "Seguros de vida — Canal de agencias",
         exp_ins_period: "2020 – 2025",
-        exp_ins_sub: "Compensación, comisiones e incentivos • Pagos y conciliación • Planificación y desempeño",
         exp_r1_co: "AIA Vietnam",
-        exp_r1_role: "Agency Payment (DCOM)",
-        exp_r1_date: "12/2024 – 11/2025",
+        exp_r1_role: "Agency Specialist (DCOM)",
         exp_r2_co: "Chubb Life Vietnam",
         exp_r2_role: "Assistant Manager — Agency Planning & Performance Analytics",
-        exp_r2_date: "03/2023 – 06/2024",
-        exp_r3_co: "AIA Vietnam",
-        exp_r3_role: "Agency Specialist (DCOM)",
-        exp_r3_date: "01/2022 – 03/2023",
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
-        exp_r4_date: "03/2020 – 01/2022",
-        exp_ins_p1: "<strong class=\"text-white\">Pagos y conciliación (AIA):</strong> consolidé datos de varias fuentes para calcular compensaciones y comisiones de agentes; pagos dos veces al mes, seguimiento de ajustes de clawback hasta seis meses y verificación con el sistema antes de pagar.",
-        exp_ins_p2: "<strong class=\"text-white\">Compensación e incentivos (Prudential):</strong> administré y calculé programas de compensación, incentivos y reconocimiento de corto y largo plazo; seguimiento del presupuesto; memorandos de comunicación de los programas.",
-        exp_ins_p3: "<strong class=\"text-white\">Planificación y desempeño (Chubb Life):</strong> planes de negocio del canal de agencias y previsiones de ventas; apoyo al diseño y seguimiento de concursos; gestión de presupuestos y costos de actividades comerciales.",
-        exp_ins_p4: "<strong class=\"text-white\">Reportes y soporte a agentes:</strong> reportes diarios/semanales/mensuales y dashboards para líderes y equipos de ventas; explicación de reglas de comisiones a los agentes; coordinación con Finanzas, Reporting y Actuarial.",
+        exp_ins_p1: "<strong class=\"text-white\">Cálculo y pago de compensaciones:</strong> consolidé datos de varias fuentes para calcular compensaciones y comisiones de agentes; pagos dos veces al mes; seguimiento de ajustes de clawback hasta seis meses; conciliación con el sistema antes de pagar.",
+        exp_ins_p2: "<strong class=\"text-white\">Incentivos y reconocimiento:</strong> administré y calculé programas de incentivos y reconocimiento de corto y largo plazo; memorandos de comunicación de los programas.",
+        exp_ins_p3: "<strong class=\"text-white\">Planificación y presupuesto:</strong> planes de negocio del canal de agencias y previsiones de ventas; seguimiento del presupuesto de incentivos y de los costos de actividades comerciales.",
+        exp_ins_p4: "<strong class=\"text-white\">Reportes y dashboards:</strong> reportes diarios/semanales/mensuales y dashboards para líderes y equipos de ventas.",
+        exp_ins_p5: "<strong class=\"text-white\">Soporte y coordinación:</strong> explicación de reglas de comisiones a los agentes; coordinación con Finanzas, Reporting y Actuarial.",
         exp_data_title: "Análisis de datos, finanzas y negocio",
         exp_data_period: "2018 – 2019",
-        exp_data_cos: "Rich Products Vietnam · Lazada E-Logistics · Speedlink",
-        exp_data_roles: "Data Analyst · Invoice Lead · Senior Pricing & Business Analyst",
-        exp_data_p1: "Reportes de P&L y costos multidimensionales (ruta, zona, 3PL, tarifario, peso) en Power BI; herramienta de precios para Facturación; conciliación de facturas de 3PL; estandarización de datos de sell-out de distribuidores.",
+        exp_rd1_co: "Speedlink",
+        exp_rd1_role: "Senior Pricing & Business Analyst",
+        exp_rd2_co: "Lazada E-Logistics",
+        exp_rd2_role: "Invoice Lead",
+        exp_rd3_co: "Rich Products Vietnam",
+        exp_rd3_role: "Data Analyst",
+        exp_data_p1: "<strong class=\"text-white\">Reportes de P&L y costos:</strong> reportes de P&L y costos multidimensionales (ruta, zona, 3PL, tarifario, peso) en Power BI.",
+        exp_data_p2: "<strong class=\"text-white\">Precios:</strong> herramienta de precios para el equipo de Facturación.",
+        exp_data_p3: "<strong class=\"text-white\">Conciliación de facturas:</strong> conciliación de facturas de transporte de 3PL.",
+        exp_data_p4: "<strong class=\"text-white\">Estandarización de datos:</strong> estandarización de datos de sell-out de distribuidores.",
         exp_acc_title: "Contabilidad",
         exp_acc_period: "2012 – 2018",
-        exp_acc_cos: "Saigon Co.op",
-        exp_acc_roles: "Accountant Staff",
-        exp_acc_p1: "AP/AR; emisión y validación de facturas fiscales de compra y venta; pagos a proveedores y conciliación de la cuenta de compensación para 30 tiendas Co.op; Oracle ERP, DataLoad, Access, Excel.",
+        exp_ra1_co: "Saigon Co.op",
+        exp_ra1_role: "Accountant Staff",
+        exp_acc_p1: "<strong class=\"text-white\">Cuentas por pagar y cobrar:</strong> pagos a proveedores; conciliación de la cuenta de compensación para 30 tiendas Co.op.",
+        exp_acc_p2: "<strong class=\"text-white\">Facturas fiscales:</strong> emisión y validación de facturas fiscales de compra y venta.",
+        exp_acc_p3: "<strong class=\"text-white\">Herramientas:</strong> Oracle ERP, DataLoad, Access, Excel.",
         skill_grp_5: "Operaciones y compensación de agencias",
         edu_meta_1: "Universidad Abierta (HCMC)",
         edu_year_1: "2014–2016",
@@ -2361,7 +2400,6 @@
       zh: {
         nav_back: "← 返回作品集",
         aria_page_switch: "在作品集与简历之间切换",
-        top_capability_badge: "简历与能力档案",
         pill_loc: "📍 胡志明市",
         pill_work: "🌐 自由职业 / 远程",
         pill_lang: "🗣 商务英语",
@@ -2440,33 +2478,36 @@
         exp_heading: "工作经历",
         exp_ins_title: "人寿保险 — 代理人渠道",
         exp_ins_period: "2020 – 2025",
-        exp_ins_sub: "薪酬、佣金与激励 • 支付与对账 • 规划与绩效",
         exp_r1_co: "AIA Vietnam",
-        exp_r1_role: "Agency Payment (DCOM)",
-        exp_r1_date: "12/2024 – 11/2025",
+        exp_r1_role: "Agency Specialist (DCOM)",
         exp_r2_co: "Chubb Life Vietnam",
         exp_r2_role: "Assistant Manager — Agency Planning & Performance Analytics",
-        exp_r2_date: "03/2023 – 06/2024",
-        exp_r3_co: "AIA Vietnam",
-        exp_r3_role: "Agency Specialist (DCOM)",
-        exp_r3_date: "01/2022 – 03/2023",
         exp_r4_co: "Prudential Vietnam",
         exp_r4_role: "The Gallerie Compensation & Incentive Senior Specialist",
-        exp_r4_date: "03/2020 – 01/2022",
-        exp_ins_p1: "<strong class=\"text-white\">支付与对账（AIA）：</strong>整合多来源数据计算代理人薪酬与佣金；每月两次发放，跟踪最长六个月的佣金追回调整，发放前与系统逐项核对。",
-        exp_ins_p2: "<strong class=\"text-white\">薪酬与激励（Prudential）：</strong>管理并计算长短期薪酬、激励与表彰方案；跟踪预算支出；撰写方案沟通备忘录。",
-        exp_ins_p3: "<strong class=\"text-white\">规划与绩效（Chubb Life）：</strong>制定代理人渠道业务计划与销售预测；协助竞赛方案设计与定期跟踪；管理销售活动预算与成本。",
-        exp_ins_p4: "<strong class=\"text-white\">报表与代理人支持：</strong>为主管和销售团队提供日/周/月报表与看板；向代理人解释佣金规则；与财务、报表及精算团队协作。",
+        exp_ins_p1: "<strong class=\"text-white\">薪酬计算与发放：</strong>整合多来源数据计算代理人薪酬与佣金；每月两次发放；跟踪最长六个月的佣金追回调整；发放前与系统核对。",
+        exp_ins_p2: "<strong class=\"text-white\">激励与表彰：</strong>管理并计算长短期激励与表彰方案；撰写方案沟通备忘录。",
+        exp_ins_p3: "<strong class=\"text-white\">规划与预算：</strong>制定代理人渠道业务计划与销售预测；跟踪激励预算与销售活动成本。",
+        exp_ins_p4: "<strong class=\"text-white\">报表与看板：</strong>为主管和销售团队提供日/周/月报表与看板。",
+        exp_ins_p5: "<strong class=\"text-white\">支持与协作：</strong>向代理人解释佣金规则；与财务、报表及精算团队协作。",
         exp_data_title: "数据、财务与业务分析",
         exp_data_period: "2018 – 2019",
-        exp_data_cos: "Rich Products Vietnam · Lazada E-Logistics · Speedlink",
-        exp_data_roles: "Data Analyst · Invoice Lead · Senior Pricing & Business Analyst",
-        exp_data_p1: "在 Power BI 中进行多维 P&L 与成本报表（线路、区域、3PL、费率表、重量）；为计费团队制作定价工具；3PL 运费发票对账；规范经销商销售数据。",
+        exp_rd1_co: "Speedlink",
+        exp_rd1_role: "Senior Pricing & Business Analyst",
+        exp_rd2_co: "Lazada E-Logistics",
+        exp_rd2_role: "Invoice Lead",
+        exp_rd3_co: "Rich Products Vietnam",
+        exp_rd3_role: "Data Analyst",
+        exp_data_p1: "<strong class=\"text-white\">P&L 与成本报表：</strong>在 Power BI 中制作多维 P&L 与成本报表（线路、区域、3PL、费率表、重量）。",
+        exp_data_p2: "<strong class=\"text-white\">定价：</strong>为计费团队制作定价工具。",
+        exp_data_p3: "<strong class=\"text-white\">发票对账：</strong>3PL 运费发票对账。",
+        exp_data_p4: "<strong class=\"text-white\">数据规范：</strong>规范经销商销售数据。",
         exp_acc_title: "会计",
         exp_acc_period: "2012 – 2018",
-        exp_acc_cos: "Saigon Co.op",
-        exp_acc_roles: "Accountant Staff",
-        exp_acc_p1: "应付/应收（AP/AR）；开具并核验进项/销项税务发票；为 30 家 Co.op 门店处理供应商付款并核对清算账户；Oracle ERP、DataLoad、Access、Excel。",
+        exp_ra1_co: "Saigon Co.op",
+        exp_ra1_role: "Accountant Staff",
+        exp_acc_p1: "<strong class=\"text-white\">应付/应收：</strong>供应商付款；为 30 家 Co.op 门店核对清算账户。",
+        exp_acc_p2: "<strong class=\"text-white\">税务发票：</strong>开具并核验进项/销项税务发票。",
+        exp_acc_p3: "<strong class=\"text-white\">工具：</strong>Oracle ERP、DataLoad、Access、Excel。",
         skill_grp_5: "代理人运营与薪酬",
         edu_meta_1: "胡志明市开放大学",
         edu_year_1: "2014–2016",
