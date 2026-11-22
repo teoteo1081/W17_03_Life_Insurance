@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tạo link UTM</title>
+  <style>
+    :root { --bg:#0b1220; --card:#111a2e; --line:#24324f; --text:#e5edf9; --muted:#94a3b8; --accent:#38bdf8; --ok:#34d399; --focus:#7dd3fc; }
+    :root[data-theme="light"] { --bg:#f5f7fb; --card:#fff; --line:#d6deea; --text:#0f172a; --muted:#475569; --accent:#0369a1; --ok:#047857; --focus:#0369a1; }
+    @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg:#f5f7fb; --card:#fff; --line:#d6deea; --text:#0f172a; --muted:#475569; --accent:#0369a1; --ok:#047857; --focus:#0369a1; } }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.5 "Segoe UI", system-ui, -apple-system, "Noto Sans", sans-serif; }
+    main { max-width: 880px; margin: 0 auto; padding: 24px 16px 48px; }
+    h1 { font-size: 1.5rem; margin: 0 0 4px; text-wrap: balance; }
+    h2 { font-size: 1.1rem; margin: 0 0 12px; text-wrap: balance; }
+    p.lead { color: var(--muted); margin: 0 0 24px; text-wrap: balance; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 4px; }
+    .hint { color: var(--muted); font-size: .8rem; margin-top: 4px; }
+    select, input { width: 100%; min-height: 44px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; }
+    select:focus-visible, input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    .out { display: flex; gap: 8px; flex-wrap: wrap; align-items: stretch; }
+    .out output { flex: 1 1 280px; min-width: 0; overflow-wrap: anywhere; padding: 12px; border-radius: 8px; border: 1px dashed var(--line); font-family: Consolas, monospace; font-size: .85rem; }
+    button { min-height: 44px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+    button:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+    button:active { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    button.primary { background: var(--accent); color: var(--bg); }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .status { min-height: 1.5em; color: var(--ok); font-size: .9rem; margin-top: 8px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    td.url { overflow-wrap: anywhere; font-family: Consolas, monospace; min-width: 220px; }
+    .empty { color: var(--muted); }
+    .row-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Tạo link UTM cho CV &amp; Portfolio</h1>
+  <p class="lead">Mỗi nơi đăng dùng một link riêng → GA4 (property “TJ W17 Life Insurance”) cho biết lượt xem đến từ đâu, CV nào hiệu quả.</p>
+
+  <section class="card" aria-labelledby="h-make">
+    <h2 id="h-make">1. Chọn trang và nơi đăng</h2>
+    <div class="grid">
+      <div>
+        <label for="page">Trang gửi đi</label>
+        <select id="page"></select>
+        <p class="hint">CV mới: thêm 1 dòng vào danh sách PAGES trong file này.</p>
+      </div>
+      <div>
+        <label for="source">Nơi đăng</label>
+        <select id="source"></select>
+      </div>
+      <div>
+        <label for="content">Nhóm / bài đăng cụ thể (không bắt buộc)</label>
+        <input id="content" type="text" inputmode="text" autocomplete="off" placeholder="vd. group_freelancer_vn">
+        <p class="hint">Chỉ chữ không dấu, số, _ và -. Tự chuyển đổi khi gõ.</p>
+      </div>
+      <div>
+        <label for="campaign">Chiến dịch</label>
+        <input id="campaign" type="text" autocomplete="off" value="tim_viec_2026">
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-out">
+    <h2 id="h-out">2. Link để dán</h2>
+    <div class="out">
+      <output id="result" for="page source content campaign" aria-live="polite"></output>
+      <button type="button" class="primary" id="btn-copy">Sao chép</button>
+      <button type="button" id="btn-save">Lưu vào sổ</button>
+    </div>
+    <p class="status" id="status" role="status"></p>
+  </section>
+
+  <section class="card" aria-labelledby="h-log">
+    <h2 id="h-log">3. Sổ link đã đăng (lưu trên trình duyệt này)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Ngày</th><th scope="col">Trang</th><th scope="col">Nơi đăng</th><th scope="col">Nhóm</th><th scope="col">Link</th></tr></thead>
+        <tbody id="log"></tbody>
+      </table>
+    </div>
+    <div class="row-actions">
+      <button type="button" id="btn-csv">Tải CSV</button>
+      <button type="button" id="btn-clear">Xóa sổ</button>
+    </div>
+  </section>
+</main>
+<script>
+(() => {
+  const BASE = 'https://teoteo1081.github.io/W17_03_Life_Insurance/';
+  // Mỗi CV mới: thêm 1 dòng (file + nhãn). cv_variant nằm trong thẻ meta của chính trang CV đó.
+  const PAGES = [
+    { file: 'index_portfolio_clean.html', label: 'CV — Vận hành & Phân tích Dữ liệu (data_ops)' },
+    { file: '', label: 'Portfolio (trang chính)' },
+  ];
+  const SOURCES = [
+    { id: 'upwork', label: 'Upwork', medium: 'freelance_platform' },
+    { id: 'freelancer', label: 'Freelancer.com', medium: 'freelance_platform' },
+    { id: 'fiverr', label: 'Fiverr', medium: 'freelance_platform' },
+    { id: 'vlance', label: 'vLance', medium: 'freelance_platform' },
+    { id: 'topcv', label: 'TopCV', medium: 'job_board' },
+    { id: 'vietnamworks', label: 'VietnamWorks', medium: 'job_board' },
+    { id: 'linkedin', label: 'LinkedIn', medium: 'social' },
+    { id: 'facebook', label: 'Facebook group', medium: 'group' },
+    { id: 'zalo', label: 'Zalo', medium: 'chat' },
+    { id: 'email', label: 'Email gửi trực tiếp', medium: 'email' },
+    { id: 'other', label: 'Khác', medium: 'referral' },
+  ];
+  const KEY = 'w17_utm_log_v1';
+  const $ = (id) => document.getElementById(id);
+
+  PAGES.forEach((p, i) => $('page').add(new Option(p.label, String(i))));
+  SOURCES.forEach((s, i) => $('source').add(new Option(s.label, String(i))));
+
+  const slug = (v) => String(v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .toLowerCase().replace(/[^a-z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40);
+
+  function build() {
+    const page = PAGES[Number($('page').value)];
+    const src = SOURCES[Number($('source').value)];
+    const q = new URLSearchParams({ utm_source: src.id, utm_medium: src.medium, utm_campaign: slug($('campaign').value) || 'freelance' });
+    const content = slug($('content').value);
+    if (content) q.set('utm_content', content);
+    return { url: BASE + page.file + '?' + q.toString(), page: page.label, source: src.label, content };
+  }
+  function render() { $('result').textContent = build().url; }
+  ['page', 'source', 'content', 'campaign'].forEach((id) => $(id).addEventListener('input', render));
+  ['content', 'campaign'].forEach((id) => $(id).addEventListener('blur', () => { $(id).value = slug($(id).value); render(); }));
+
+  function say(msg) { $('status').textContent = msg; clearTimeout(say.t); say.t = setTimeout(() => { $('status').textContent = ''; }, 2500); }
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise((ok, fail) => {
+      const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      let done = false; try { done = document.execCommand('copy'); } catch (e) {}
+      ta.remove(); done ? ok() : fail();
+    });
+  }
+  $('btn-copy').addEventListener('click', () => copyText(build().url).then(() => say('Đã sao chép link.'), () => say('Không sao chép được — hãy bôi đen link và copy tay.')));
+
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } };
+  const store = (rows) => { try { localStorage.setItem(KEY, JSON.stringify(rows)); return true; } catch (e) { return false; } };
+  function drawLog() {
+    const tbody = $('log'); tbody.replaceChildren();
+    const rows = load();
+    if (!rows.length) {
+      const tr = tbody.insertRow(); const td = tr.insertCell(); td.colSpan = 5; td.className = 'empty'; td.textContent = 'Chưa có link nào được lưu.';
+    }
+    rows.forEach((r) => {
+      const tr = tbody.insertRow();
+      [r.date, r.page, r.source, r.content || '—', r.url].forEach((v, i) => { const td = tr.insertCell(); td.textContent = v; if (i === 4) td.className = 'url'; });
+    });
+    $('btn-csv').disabled = $('btn-clear').disabled = !rows.length;
+  }
+  $('btn-save').addEventListener('click', () => {
+    const b = build(); const rows = load();
+    rows.unshift({ date: new Date().toISOString().slice(0, 10), page: b.page, source: b.source, content: b.content, url: b.url });
+    say(store(rows) ? 'Đã lưu vào sổ.' : 'Trình duyệt chặn lưu — dùng Tải CSV thay thế.'); drawLog();
+  });
+  $('btn-csv').addEventListener('click', () => {
+    const esc = (v) => '"' + String(v || '').replace(/"/g, '""') + '"';
+    const csv = '﻿Ngày,Trang,Nơi đăng,Nhóm,Link\n' + load().map((r) => [r.date, r.page, r.source, r.content, r.url].map(esc).join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'utm_links.csv'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+  $('btn-clear').addEventListener('click', () => { store([]); drawLog(); say('Đã xóa sổ.'); });
+
+  render(); drawLog();
+})();
+</script>
+</body>
+</html>
