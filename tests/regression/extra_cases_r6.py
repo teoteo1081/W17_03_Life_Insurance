@@ -25,7 +25,7 @@ OLD = {
     "contact.phone": "+84 855 239 805",
     "contact.zaloUrl": "https://zalo.me/0855239805",
     "contact.githubUrl": "https://github.com/teoteo1081",
-    "site.baseUrl": "https://teoteo1081.github.io/W17_03_Life_Insurance/",
+    "site.baseUrl": "https://teoteo1081.github.io/tjthaonguyen/",
     "ga4.measurementId": "G-F8Y8CWQJZC",
 }
 NEW = {

@@ -18,7 +18,7 @@ import json
 
 R = None  # gán bởi run_all
 
-BASE = "https://teoteo1081.github.io/W17_03_Life_Insurance/"
+BASE = "https://teoteo1081.github.io/tjthaonguyen/"
 PDF_URL = BASE + "?utm_source=cv_pdf&utm_medium=pdf&utm_campaign=cv"
 QR_URL = BASE + "?utm_source=cv_pdf&utm_medium=qr&utm_campaign=cv"
 PHONE, TEL = "+84 855 239 805", "tel:+84855239805"
@@ -126,7 +126,7 @@ def t_pdf_links(b, env):
     if BASE in uris:
         bad.append("nút Portfolio trong PDF chưa đổi sang link UTM nguồn PDF")
     flat = " ".join(text.split())
-    for need in (PHONE, "Quét để xem Portfolio", "teoteo1081.github.io/W17_03_Life_Insurance"):
+    for need in (PHONE, "Quét để xem Portfolio", "teoteo1081.github.io/tjthaonguyen"):
         if need not in flat:
             bad.append(f"chữ PDF thiếu {need!r}")
     for banned in ("Lưu & đăng", "Bật sửa chữ", "Chỉ lưu vào máy", "Tải CV (PDF)", "Cài đặt"):
