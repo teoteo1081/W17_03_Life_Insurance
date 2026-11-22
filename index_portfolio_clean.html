@@ -2,6 +2,7 @@
 <html lang="vi" class="dark scroll-smooth" data-palette="ocean"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="w17-cv-variant" content="data_ops">
   <title>NGUYỄN THỊ THU THẢO (TJ) — Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance)</title>
   <meta name="description" content="Hồ sơ của Nguyễn Thị Thu Thảo (TJ) — Chuyên viên Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu, đối soát, dashboard Power BI/HTML và website gọn nhẹ. Nhận dự án freelance, làm việc từ xa.">
   <meta property="og:title" content="NGUYỄN THỊ THU THẢO (TJ) — Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance)">
@@ -49,8 +50,12 @@
       const id = cfg && cfg.ga4 && cfg.ga4.measurementId;
       const base = cfg && cfg.site && cfg.site.baseUrl;
       const host = typeof base === 'string' ? base.split('/')[2] : '';
-      // script nằm trong <head> (chạy trước khi có <body>): nhận trang theo đường dẫn
-      const page = /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
+      // Mỗi bản CV khai <meta name="w17-cv-variant" content="ma_ngan"> (vd. data_ops, insurance) trước script này
+      // -> mọi sự kiện mang cv_variant để GA4 tách số liệu theo từng CV. Trang không khai = Portfolio.
+      const variantMeta = document.querySelector('meta[name="w17-cv-variant"]');
+      const cvVariant = variantMeta && /^[a-z0-9_]{1,30}$/.test(variantMeta.content || '') ? variantMeta.content : '';
+      // script nằm trong <head> (chạy trước khi có <body>): nhận trang theo thẻ meta, dự phòng theo đường dẫn
+      const page = cvVariant || /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
       const active = typeof id === 'string' && /^G-[A-Z0-9]{6,12}$/.test(id) && location.protocol === 'https:' && location.hostname === host
         && document.documentElement.getAttribute('data-w17-mode') !== 'creator' && !navigator.webdriver;
       const lang = () => (document.documentElement.lang || 'vi').slice(0, 2);
@@ -83,6 +88,7 @@
         const debug = /[?&]ga_debug=1(?:&|$)/.test(location.search);
         const conf = { content_group: page, site_lang: lang(), allow_google_signals: false, allow_ad_personalization_signals: false };
         if (debug) conf.debug_mode = true;
+        if (cvVariant) conf.cv_variant = cvVariant;
         if (owner) { conf.traffic_type = 'internal'; gtag('set', { traffic_type: 'internal' }); }
         gtag('config', id, conf);
         const tag = document.createElement('script');
@@ -92,6 +98,7 @@
         // Chỉ nhận tham số là mã ngắn (chữ, số, _ . -): không thể lọt email, số điện thoại hay chữ tự do.
         window.w17Track = function (name, params) {
           const p = { content_group: page, site_lang: lang() };
+          if (cvVariant) p.cv_variant = cvVariant;
           Object.keys(params || {}).forEach((k) => {
             const v = params[k];
             if (typeof v === 'string' && /^[A-Za-z0-9_.-]{1,40}$/.test(v)) p[k] = v;

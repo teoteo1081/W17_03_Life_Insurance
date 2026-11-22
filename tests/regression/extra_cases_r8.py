@@ -105,7 +105,7 @@ def t_public_events(b, env):
             or any(c[2].get(k) != "denied" for c in consents for k in ("ad_storage", "ad_user_data", "ad_personalization")):
         bad.append(f"consent mặc định sai: {consents}")
     cfgs = [a for a in dl if a[0] == "config"]
-    if len(cfgs) != 1 or cfgs[0][1] != GA_ID or cfgs[0][2].get("content_group") != "portfolio" or cfgs[0][2].get("debug_mode"):
+    if len(cfgs) != 1 or cfgs[0][1] != GA_ID or cfgs[0][2].get("content_group") != "portfolio" or cfgs[0][2].get("debug_mode") or "cv_variant" in cfgs[0][2]:
         bad.append(f"config Portfolio: {cfgs}")
     if not any(f"gtag/js?id={GA_ID}" in u for u in sent):
         bad.append("không tải gtag.js đúng ID")
@@ -151,7 +151,7 @@ def t_public_events(b, env):
     _goto(pg, PUBLIC + "index_portfolio_clean.html")
     dl = json.loads(pg.evaluate(DL_JS))
     cfgs = [a for a in dl if a[0] == "config"]
-    if len(cfgs) != 1 or cfgs[0][2].get("content_group") != "cv":
+    if len(cfgs) != 1 or cfgs[0][2].get("content_group") != "cv" or cfgs[0][2].get("cv_variant") != "data_ops":
         bad.append(f"config CV: {cfgs}")
     pg.evaluate(STOP_NAV_JS)
     for sel in ("a[data-w17-link='portfolio']", "#btn-cv-pdf", "#portfolio-root > section a[href^='tel:']",
@@ -166,6 +166,8 @@ def t_public_events(b, env):
         bad.append(f"CV tham số: {ev}")
     if any(e[1].get("content_group") != "cv" for e in ev):
         bad.append("sự kiện CV thiếu content_group=cv")
+    if any(e[1].get("cv_variant") != "data_ops" for e in ev):
+        bad.append("sự kiện CV thiếu cv_variant=data_ops")
     ctx.close()
     R.record("R8", "R8-02 web công khai (giả lập, không gửi Google): consent mặc định 2b, config đúng ID/content_group, 11 sự kiện Portfolio + 6 sự kiện CV đúng tên/tham số, không lọt tên/email/số/nội dung khách gõ", not bad, " | ".join(bad[:6]))
 
