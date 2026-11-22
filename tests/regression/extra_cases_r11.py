@@ -41,7 +41,7 @@ def _jsonld(html):
 def t_seo(b, env):
     bad = []
     env.reset_work()
-    base = "https://teoteo1081.github.io/tjthaonguyen/"
+    base = "https://teoteo1081.github.io/tjnguyenthao/"
     for name, img in (("index.html", "assets/og-portfolio.png"), ("cv.html", "assets/og-cv.png")):
         html = _raw(env.work / name)
         ld = _jsonld(html)

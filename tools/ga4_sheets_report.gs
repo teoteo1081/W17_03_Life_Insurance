@@ -1,5 +1,5 @@
 /**
- * Báo cáo GA4 -> Google Sheets cho https://teoteo1081.github.io/tjthaonguyen/
+ * Báo cáo GA4 -> Google Sheets cho https://teoteo1081.github.io/tjnguyenthao/
  * (property "TJ W17 Life Insurance (Portfolio + CV)" = 565375502).
  *
  * Cài đặt (một lần):
@@ -75,7 +75,7 @@ function capNhat() {
   info.getRange(1, 1, 7, 2).setValues([
     ['Cập nhật lần cuối', Utilities.formatDate(new Date(), 'Asia/Ho_Chi_Minh', 'dd/MM/yyyy HH:mm')],
     ['Khoảng thời gian', DAYS + ' ngày gần nhất (tính cả hôm nay)'],
-    ['Nguồn dữ liệu', 'GA4 property ' + PROPERTY_ID + ' — teoteo1081.github.io/tjthaonguyen'],
+    ['Nguồn dữ liệu', 'GA4 property ' + PROPERTY_ID + ' — teoteo1081.github.io/tjnguyenthao'],
     ['Lượt xem của chủ trang', 'Đã loại (bộ lọc Internal Traffic, đánh dấu bằng ?toi_la_chu_trang=1)'],
     ['"—" nghĩa là', 'GA4 không có giá trị (vd. vào thẳng không qua link UTM, hoặc trang Portfolio không có mã CV)'],
     ['Độ trễ', 'GA4 có thể trễ vài giờ; số liệu hôm nay chưa đủ'],
