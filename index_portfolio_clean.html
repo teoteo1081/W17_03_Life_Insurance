@@ -3291,7 +3291,10 @@
         if (!btn) return;
         e.preventDefault();
         const value = btn.getAttribute('data-w17-copy') || '';
+        const kind = btn.getAttribute('data-w17-copy-done') === 'copy_email_done' ? 'email' : 'phone';
         const done = () => {
+          // Đo lượt copy (chỉ khi đã copy được); không gửi số/email lên GA4
+          if (window.w17Track) window.w17Track(kind === 'email' ? 'contact_email_copy' : 'contact_phone_copy', { link_location: btn.closest('footer') ? 'footer' : 'hero' });
           const dict = translationsCV[currentLangCV] || translationsCV.vi;
           const icon = btn.querySelector('span');
           const prevLabel = btn.getAttribute('aria-label');
@@ -3305,7 +3308,9 @@
           const ta = document.createElement('textarea');
           ta.value = value; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
           document.body.appendChild(ta); ta.select();
-          try { document.execCommand('copy'); done(); } catch (err) {}
+          let ok = false;
+          try { ok = document.execCommand('copy'); } catch (err) {}
+          if (ok) done();
           ta.remove();
         };
         if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(value).then(done, fallback);
