@@ -1216,7 +1216,7 @@ def main():
                 ("R5", lambda: (X5.t_editor_strips(b, env), X5.t_server_rejects(env))),
                 ("R6", lambda: (X6.t_static_config(env), X6.t_settings_api(env), X6.t_stale_save(env), X6.t_cv_known_ids(b, env), X6.t_settings_dialog(b, env))),
                 ("R7", lambda: (X7.t_contact(b, env), X7.t_pdf_links(b, env), X7.t_qr(b, env), X7.t_clean_final(b, env))),
-                ("R8", lambda: (X8.t_no_tracking_local(b, env), X8.t_public_events(b, env), X8.t_consent_europe(b, env), X8.t_debug_and_clean(b, env))),
+                ("R8", lambda: (X8.t_no_tracking_local(b, env), X8.t_public_events(b, env), X8.t_consent_europe(b, env), X8.t_debug_and_clean(b, env), X8.t_short_links(b, env))),
                 ("R9", lambda: (X9.t_structure(b, env), X9.t_hidden_public(b, env), X9.t_editor_layout(b, env), X9.t_mobile_switch(b, env))),
                 ("R10", lambda: (X10.t_stale_tab(b, env), X10.t_cv_legacy_draft(b, env), X10.t_settings_rollback(b, env), X10.t_menu_sections(b, env), X10.t_cv_trash(b, env), X10.t_cdn_blocked(b, env))),
                 ("R11", lambda: (X11.t_seo(b, env), X11.t_portfolio_cards(b, env), X11.t_cv_cards(b, env), X11.t_owner_flag(b, env))),

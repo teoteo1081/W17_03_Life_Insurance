@@ -238,3 +238,30 @@ def t_debug_and_clean(b, env):
             bad.append(f"{rel}: Final chứa banner hoặc gtag.js")
     ctx.close()
     R.record("R8", "R8-04 ?ga_debug=1 bật DebugView; Final lưu từ editor không chứa banner/gtag.js", not bad, " | ".join(bad))
+
+def t_short_links(b, env):
+    """R8-05 link gọn ?r=...: GA4 nhận như link UTM (page_location), thanh địa chỉ được làm sạch; link UTM dài vẫn đúng."""
+    bad = []
+    env.reset_work()
+    ctx, _ = _public_context(b, env)
+    pg = R.new_page(ctx)
+    C = "utm_campaign=tim_viec_2026"
+    cases = [
+        ("cv.html?r=nhan", f"cv.html?utm_source=ban_be&utm_medium=referral&{C}&utm_content=nhan", "cv.html"),
+        ("?r=topcv", f"?utm_source=topcv&utm_medium=job_board&{C}", ""),
+        ("cv.html?r=facebook.group_a#experience", f"cv.html?utm_source=facebook&utm_medium=group&{C}&utm_content=group_a#experience", "cv.html#experience"),
+        ("cv.html?r=ban_be", f"cv.html?utm_source=ban_be&utm_medium=referral&{C}", "cv.html"),
+        ("cv.html?utm_source=zalo&utm_medium=chat&ga_debug=1", "cv.html?utm_source=zalo&utm_medium=chat&ga_debug=1", "cv.html?ga_debug=1"),
+        ("cv.html", "cv.html", "cv.html"),
+    ]
+    for path, want_loc, want_bar in cases:
+        _goto(pg, PUBLIC + path, wait=400)
+        dl = json.loads(pg.evaluate(DL_JS))
+        cfgs = [a for a in dl if a[0] == "config"]
+        loc = cfgs[0][2].get("page_location") if cfgs else None
+        if loc != PUBLIC + want_loc:
+            bad.append(f"{path}: page_location={loc}")
+        if pg.url != PUBLIC + want_bar:
+            bad.append(f"{path}: thanh địa chỉ={pg.url}")
+    ctx.close()
+    R.record("R8", "R8-05 link gọn ?r=: mã nơi đăng/bạn bè/nhóm -> page_location dạng UTM, thanh địa chỉ sạch (bỏ r, utm_*); link UTM dài và tham số khác giữ đúng", not bad, " | ".join(bad[:6]))

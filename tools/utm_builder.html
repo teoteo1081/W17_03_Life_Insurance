@@ -19,6 +19,9 @@
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
     label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 4px; }
     .hint { color: var(--muted); font-size: .8rem; margin-top: 4px; }
+    .check { display: flex; gap: 8px; align-items: center; min-height: 44px; font-weight: 600; cursor: pointer; }
+    .check input { width: 20px; min-height: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
+    input:disabled { opacity: .5; }
     select, input { width: 100%; min-height: 44px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; }
     select:focus-visible, input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
     .out { display: flex; gap: 8px; flex-wrap: wrap; align-items: stretch; }
@@ -60,8 +63,12 @@
         <p class="hint">Chỉ chữ không dấu, số, _ và -. Tự chuyển đổi khi gõ.</p>
       </div>
       <div>
-        <label for="campaign">Chiến dịch</label>
-        <input id="campaign" type="text" autocomplete="off" value="tim_viec_2026">
+        <label class="check" for="short"><input id="short" type="checkbox" checked> Link gọn (khuyên dùng)</label>
+        <p class="hint">Dạng …/cv.html?r=ma — web tự hiểu, GA4 đo đủ; người xem chỉ thấy link sạch. Bỏ chọn để lấy link UTM đầy đủ.</p>
+      </div>
+      <div>
+        <label for="campaign">Chiến dịch (chỉ cho link UTM đầy đủ)</label>
+        <input id="campaign" type="text" autocomplete="off" value="tim_viec_2026" disabled>
       </div>
     </div>
   </section>
@@ -69,7 +76,7 @@
   <section class="card" aria-labelledby="h-out">
     <h2 id="h-out">2. Link để dán</h2>
     <div class="out">
-      <output id="result" for="page source content campaign" aria-live="polite"></output>
+      <output id="result" for="page source content short campaign" aria-live="polite"></output>
       <button type="button" class="primary" id="btn-copy">Sao chép</button>
       <button type="button" id="btn-save">Lưu vào sổ</button>
     </div>
@@ -124,13 +131,22 @@
   function build() {
     const page = PAGES[Number($('page').value)];
     const src = SOURCES[Number($('source').value)];
-    const q = new URLSearchParams({ utm_source: src.id, utm_medium: src.medium, utm_campaign: slug($('campaign').value) || 'freelance' });
     const content = slug($('content').value);
+    if ($('short').checked) {
+      // Khớp mã trong trang (REF_MEDIUM): nơi đăng = mã, thêm .nhom; bạn bè = tên người (trùng mã nơi đăng thì ghi ban_be.ten).
+      const codes = SOURCES.map((x) => x.id);
+      let code;
+      if (src.id === 'ban_be') code = content ? (codes.includes(content) ? 'ban_be.' + content : content) : 'ban_be';
+      else code = src.id + (content ? '.' + content : '');
+      return { url: BASE + page.file + '?r=' + code, page: page.label, source: src.label, content };
+    }
+    const q = new URLSearchParams({ utm_source: src.id, utm_medium: src.medium, utm_campaign: slug($('campaign').value) || 'freelance' });
     if (content) q.set('utm_content', content);
     return { url: BASE + page.file + '?' + q.toString(), page: page.label, source: src.label, content };
   }
   function render() { $('result').textContent = build().url; }
   ['page', 'source', 'content', 'campaign'].forEach((id) => $(id).addEventListener('input', render));
+  $('short').addEventListener('change', () => { $('campaign').disabled = $('short').checked; render(); });
   ['content', 'campaign'].forEach((id) => $(id).addEventListener('blur', () => { $(id).value = slug($(id).value); render(); }));
 
   function say(msg) { $('status').textContent = msg; clearTimeout(say.t); say.t = setTimeout(() => { $('status').textContent = ''; }, 2500); }

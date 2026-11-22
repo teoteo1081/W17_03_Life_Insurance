@@ -74,6 +74,28 @@
         } catch (e) { return false; }
       })();
 
+      // Link gọn ?r=ma (thay cho link UTM dài): mã trùng nơi đăng có sẵn -> nguồn đó; mã khác -> bạn bè giới thiệu (mã = tên người).
+      // Dạng ma.nhom (vd. facebook.group_a) ghi thêm nhóm/bài đăng. GA4 nhận như link UTM qua page_location.
+      const REF_MEDIUM = { ban_be: 'referral', other: 'referral', upwork: 'freelance_platform', freelancer: 'freelance_platform',
+        fiverr: 'freelance_platform', vlance: 'freelance_platform', topcv: 'job_board', vietnamworks: 'job_board',
+        linkedin: 'social', facebook: 'group', zalo: 'chat', email: 'email' };
+      const trackedHref = (() => {
+        try {
+          const q = new URLSearchParams(location.search);
+          const r = (q.get('r') || '').toLowerCase();
+          if (q.has('utm_source') || !/^[a-z0-9_-]{1,40}(\.[a-z0-9_-]{1,40})?$/.test(r)) return location.href;
+          const parts = r.split('.');
+          const known = Object.prototype.hasOwnProperty.call(REF_MEDIUM, parts[0]);
+          q.delete('r');
+          q.set('utm_source', known ? parts[0] : 'ban_be');
+          q.set('utm_medium', known ? REF_MEDIUM[parts[0]] : 'referral');
+          q.set('utm_campaign', 'tim_viec_2026');
+          const content = known ? parts[1] : parts.join('_');
+          if (content) q.set('utm_content', content);
+          return location.origin + location.pathname + '?' + q.toString() + location.hash;
+        } catch (e) { return location.href; }
+      })();
+
       window.w17Track = function () {};
       if (active) {
         window.dataLayer = window.dataLayer || [];
@@ -89,6 +111,7 @@
         const conf = { content_group: page, site_lang: lang(), allow_google_signals: false, allow_ad_personalization_signals: false };
         if (debug) conf.debug_mode = true;
         if (cvVariant) conf.cv_variant = cvVariant;
+        conf.page_location = trackedHref;
         if (owner) { conf.traffic_type = 'internal'; gtag('set', { traffic_type: 'internal' }); }
         gtag('config', id, conf);
         const tag = document.createElement('script');
@@ -107,6 +130,17 @@
           gtag('event', name, p);
         };
       }
+
+      // GA4 đã giữ địa chỉ đầy đủ (page_location) -> làm sạch thanh địa chỉ: bỏ r và utm_* để người xem chỉ thấy link gọn.
+      try {
+        const q = new URLSearchParams(location.search);
+        const drop = Array.from(q.keys()).filter((k) => k === 'r' || /^utm_/.test(k));
+        if (drop.length) {
+          drop.forEach((k) => q.delete(k));
+          const rest = q.toString();
+          history.replaceState(history.state, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+        }
+      } catch (e) {}
 
       function where(node) {
         if (node.closest('#cv-print-contact')) return 'print';
