@@ -116,8 +116,8 @@ def t_cv_legacy_draft(b, env):
     html = pg.evaluate("() => cloneCleanHtmlCV()")
     if any(f'data-card-id="{c}"' not in html for c in sol):
         bad.append("HTML Final xuất ra thiếu thẻ")
-    st, data = _post(env, "/api/save", {"html": html, "targets": ["index_portfolio_clean.html"]})
-    disk = _raw(env.work / "index_portfolio_clean.html")
+    st, data = _post(env, "/api/save", {"html": html, "targets": ["cv.html"]})
+    disk = _raw(env.work / "cv.html")
     if st != 200 or any(f'data-card-id="{c}"' not in disk for c in sol):
         bad.append(f"file lưu qua server thiếu thẻ ({st})")
     pg.evaluate("(k) => localStorage.removeItem(k)", CV_KEY)
@@ -128,8 +128,8 @@ def t_cv_legacy_draft(b, env):
 
 def t_settings_rollback(b, env):
     bad = []
-    files = ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"]
-    for victim in ("index_portfolio_clean.html", "editor_workspace/editor_cv.html"):
+    files = ["index.html", "cv.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"]
+    for victim in ("cv.html", "editor_workspace/editor_cv.html"):
         env.reset_work()
         before = {f: R.sha(env.work / f) for f in files}
         path = env.work / victim

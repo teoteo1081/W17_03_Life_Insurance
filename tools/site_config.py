@@ -4,7 +4,7 @@
 Cấu hình dùng chung của Portfolio và CV (email, Zalo, GitHub, địa chỉ web công khai).
 
 Nguồn: khối <script type="application/json" id="w17-site-config"> nằm GIỐNG HỆT NHAU trong hai file Final
-(index.html = Portfolio, index_portfolio_clean.html = CV).
+(index.html = Portfolio, cv.html = CV).
 
 Đổi một giá trị (qua nút ⚙ Cài đặt trong editor -> POST /api/settings, hoặc lệnh dưới đây) sẽ:
   * thay giá trị CŨ bằng giá trị MỚI ở mọi chỗ trong cả hai file (href, chữ hiển thị, từ điển 4 ngôn ngữ,
@@ -32,9 +32,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 PORTFOLIO = "index.html"
-CV = "index_portfolio_clean.html"
+CV = "cv.html"
 FINALS = (PORTFOLIO, CV)
-CV_PATH = "index_portfolio_clean.html"   # đường dẫn CV tính từ địa chỉ web gốc
+CV_PATH = "cv.html"   # đường dẫn CV tính từ địa chỉ web gốc
 
 SCHEMA = 1
 CONFIG_RE = re.compile(r'(<script type="application/json" id="w17-site-config">)(.*?)(</script>)', re.S)

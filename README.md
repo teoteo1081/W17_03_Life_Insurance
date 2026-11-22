@@ -27,7 +27,7 @@ Lưu ý:
 ```text
 W17_03_Claude_porfolio/
 ├── index.html                  # [Final] Portfolio Showcase V3 (Dịch vụ + dashboard GA4 minh họa)
-├── index_portfolio_clean.html  # [Final] Hồ Sơ Năng Lực / Interactive CV V3 (Bản sạch sẵn sàng deploy & in PDF)
+├── cv.html  # [Final] Hồ Sơ Năng Lực / Interactive CV V3 (Bản sạch sẵn sàng deploy & in PDF)
 ├── editor_workspace/           # Không gian soạn thảo trực quan (Visual Editor)
 │   ├── editor_portfolio.html   # Bản Editor của Portfolio Showcase (Có thanh công cụ sửa chữ & xuất bản Final)
 │   └── editor_cv.html          # Bản Editor của Hồ Sơ Năng Lực (Có nút [⬆][⬇], kéo thả, đổi màu, đổi ảnh)
@@ -51,17 +51,17 @@ W17_03_Claude_porfolio/
 
    - **4 Dự Án Cá Nhân**: Liên kết trực tiếp tới Live Demo & GitHub của *WRP Tax Services*, *Operation 0 — 1,000 Chunks Engine*, *TJ WordLoop Multiplayer Game*, và *TJ Courses Hub*.
 
-2. **`index_portfolio_clean.html` — Hồ Sơ Năng Lực / Interactive CV V3**:
+2. **`cv.html` — Hồ Sơ Năng Lực / Interactive CV V3**:
    - Giao diện Executive Dark/Light Mode với 4 bảng màu chủ đạo (*Ocean, Emerald, Royal Gold, Midnight Indigo*).
    - Tối ưu hóa CSS in ấn (`@media print`) xuất PDF chuẩn màu 100%.
-   - Liên kết điều hướng 2 chiều mượt mà giữa **Portfolio Showcase (`./index.html`)** và **Hồ Sơ Năng Lực (`./index_portfolio_clean.html`)**.
+   - Liên kết điều hướng 2 chiều mượt mà giữa **Portfolio Showcase (`./index.html`)** và **Hồ Sơ Năng Lực (`./cv.html`)**.
 
 ---
 
 ## 💻 Cách Chạy Thử Nhanh Trên Máy Khác
 
 ### Cách 1: Mở trực tiếp (Zero-Config)
-- Chỉ cần **double-click** mở trực tiếp file `index.html` hoặc `index_portfolio_clean.html` trên bất kỳ trình duyệt nào (mọi thư viện Tailwind CSS, Lucide Icons và Google Fonts đều hoạt động độc lập qua CDN và đường dẫn tương đối).
+- Chỉ cần **double-click** mở trực tiếp file `index.html` hoặc `cv.html` trên bất kỳ trình duyệt nào (mọi thư viện Tailwind CSS, Lucide Icons và Google Fonts đều hoạt động độc lập qua CDN và đường dẫn tương đối).
 
 ### Cách 2: Chạy qua Local Dev Server (Hỗ trợ tự động lưu file sạch từ Visual Editor)
 ```bash
@@ -69,17 +69,17 @@ python dev_server.py
 ```
 Sau đó mở trình duyệt tại địa chỉ:
 - **Portfolio Showcase (Final)**: `http://localhost:8000/index.html`
-- **Hồ Sơ Năng Lực (Final)**: `http://localhost:8000/index_portfolio_clean.html`
+- **Hồ Sơ Năng Lực (Final)**: `http://localhost:8000/cv.html`
 - **Visual Editor Workspace**: `http://localhost:8000/editor_workspace/editor_portfolio.html`
 
 ### Bảo vệ endpoint lưu file (`/api/save`)
 - Server chỉ bind `127.0.0.1`, **không bật CORS**; trang trong editor tự lấy token phiên ngẫu nhiên qua `GET /api/session` (chỉ trả cho đúng origin của dev server) rồi gửi kèm header `X-W17-Token`.
-- Chỉ ghi `index.html` và `index_portfolio_clean.html`, body tối đa 12MB, HTML phải đủ các thành phần đặc trưng của trang, đủ kích thước và không còn trạng thái editor; ghi nguyên tử, tuần tự hóa các lần ghi đồng thời và tự sao lưu bản cũ vào `.w17_backups/` (giữ 5 bản, đã `.gitignore`).
+- Chỉ ghi `index.html` và `cv.html`, body tối đa 12MB, HTML phải đủ các thành phần đặc trưng của trang, đủ kích thước và không còn trạng thái editor; ghi nguyên tử, tuần tự hóa các lần ghi đồng thời và tự sao lưu bản cũ vào `.w17_backups/` (giữ 5 bản, đã `.gitignore`).
 - Chỉ phục vụ file tĩnh có đuôi trong allowlist; đường dẫn được kiểm sau khi giải mã percent-encoding; không liệt kê thư mục, không phục vụ `*.py` hay thư mục ẩn.
 - Mở file bằng `file://` vẫn tải được file sạch về máy nhưng **không** ghi trực tiếp vào dự án; hãy dùng `python dev_server.py`.
 
 ### Creator ↔ Final (một nguồn duy nhất)
-`index.html` và `index_portfolio_clean.html` là nguồn; hai file trong `editor_workspace/` được **sinh** từ chúng:
+`index.html` và `cv.html` là nguồn; hai file trong `editor_workspace/` được **sinh** từ chúng:
 ```bash
 python tools/sync_creators.py          # ghi lại hai Creator sau khi sửa Final
 python tools/sync_creators.py --check  # báo lệch (dùng trong kiểm thử)

@@ -188,7 +188,7 @@ def t_server_extra(env):
         s2, _, _ = R.http("HEAD", base + path, {"Host": host})
         if s2 == 200:
             bad.append(f"N05 HEAD {path} -> {s2}")
-    for path in ["/index.html", "/index_portfolio_clean.html", "/editor_workspace/editor_cv.html"]:
+    for path in ["/index.html", "/cv.html", "/editor_workspace/editor_cv.html"]:
         s, _, _ = R.http("GET", base + path, {"Host": host})
         if s != 200:
             bad.append(f"N05 GET {path} (hợp lệ) -> {s}")
@@ -196,13 +196,13 @@ def t_server_extra(env):
     token = json.loads(body)["token"]
     hdr = {"Content-Type": "application/json", "Origin": base, "X-W17-Token": token}
     good_p = (env.pristine / "index.html").read_text(encoding="utf-8")
-    good_c = (env.pristine / "index_portfolio_clean.html").read_text(encoding="utf-8")
+    good_c = (env.pristine / "cv.html").read_text(encoding="utf-8")
     # N07: HTML rác chỉ chứa marker
     for label, name, html in [("marker-portfolio", "index.html", '<!doctype html><html><body><section id="ga4-ecosystem">JUNK</section></body></html>'),
-                              ("marker-cv", "index_portfolio_clean.html", '<!doctype html><html><body><main id="portfolio-root">JUNK</main></body></html>'),
+                              ("marker-cv", "cv.html", '<!doctype html><html><body><main id="portfolio-root">JUNK</main></body></html>'),
                               ("nửa-file", "index.html", good_p[: int(len(good_p) * 0.6)] + "</html>"),
                               ("thiếu-editor-script", "index.html", good_p.replace('id="visual-editor-script"', 'id="x"')),
-                              ("thiếu-baked", "index_portfolio_clean.html", good_c.replace('id="w17-baked-edits"', 'id="x"'))]:
+                              ("thiếu-baked", "cv.html", good_c.replace('id="w17-baked-edits"', 'id="x"'))]:
         s, _, _ = R.http("POST", base + "/api/save", hdr, json.dumps({"html": html, "targets": [name]}).encode())
         if s not in (400, 422):
             bad.append(f"N07 {label}: nhận {s}, phải bị từ chối")
@@ -235,7 +235,7 @@ def t_server_extra(env):
                 reads["bad"] += 1
                 reads.setdefault("why", []).append(repr(exc)[:80])
     threads = [threading.Thread(target=writer, args=("index.html", good_p)) for _ in range(3)] + \
-              [threading.Thread(target=writer, args=("index_portfolio_clean.html", good_c)) for _ in range(2)]
+              [threading.Thread(target=writer, args=("cv.html", good_c)) for _ in range(2)]
     rd = threading.Thread(target=reader)
     rd.start(); [t.start() for t in threads]; [t.join() for t in threads]; stop.set(); rd.join()
     if any(c != 200 for c in codes) or errors:

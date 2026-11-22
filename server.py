@@ -56,7 +56,7 @@ ALLOWED_FILES = {
         "visual-editor-script": "script", "w17-baked-edits": "script", "ga4-drilldown-modal": "div",
         "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script", "w17-jsonld": "script",
     },
-    "index_portfolio_clean.html": {
+    "cv.html": {
         "portfolio-root": "main", "reorderable-sections": "div", "interactive-editor-script": "script",
         "w17-baked-edits": "script", "solutions-grid": "div", "education-grid": "div",
         "w17-site-config": "script", "w17-settings-script": "script", "w17-analytics-script": "script", "w17-jsonld": "script",
@@ -102,7 +102,7 @@ MAX_SETTINGS_BODY = 16 * 1024
 
 # ---- Đăng lên web (git commit + push) ----
 PUBLISH_BRANCH = "main"
-PUBLISH_PATHS = ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html",
+PUBLISH_PATHS = ["index.html", "cv.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html",
                  "sitemap.xml"]
 PUBLISH_LOCK = threading.Lock()
 MAX_PUBLISH_BODY = 64 * 1024

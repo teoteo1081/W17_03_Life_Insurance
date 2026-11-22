@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = {"index.html": "assets/portfolio-base.css", "index_portfolio_clean.html": "assets/cv-base.css"}
+PAGES = {"index.html": "assets/portfolio-base.css", "cv.html": "assets/cv-base.css"}
 HEADER = "/* Sinh bởi tools/build_fallback_css.py từ Tailwind CDN 3.4.17 — đừng sửa tay. */\n"
 
 GRAB_JS = """() => [...document.querySelectorAll('style')].map((s) => s.textContent || '')

@@ -36,7 +36,7 @@ NEW = {
     "site.baseUrl": "https://tj.example.com/portfolio/",
     "ga4.measurementId": "G-TEST123456",
 }
-FINALS = ["index.html", "index_portfolio_clean.html"]
+FINALS = ["index.html", "cv.html"]
 
 
 def _site(env):
@@ -156,8 +156,8 @@ def t_settings_api(env):
             bad.append(f"index.html thiếu {needle[:70]}")
     if p.count("tj.work@example.com") < 9:   # href + nút + 4 locale contact_btn_email + 4 form_success_msg + config
         bad.append(f"index.html: email mới chỉ có {p.count('tj.work@example.com')} chỗ")
-    c = pages["index_portfolio_clean.html"]
-    for needle in ['<link rel="canonical" href="https://tj.example.com/portfolio/index_portfolio_clean.html">',
+    c = pages["cv.html"]
+    for needle in ['<link rel="canonical" href="https://tj.example.com/portfolio/cv.html">',
                    'hero_email: "tj.work@example.com"', 'href="https://github.com/tj-new-account"']:
         if needle not in c:
             bad.append(f"CV thiếu {needle[:70]}")
@@ -284,7 +284,7 @@ def t_settings_dialog(b, env):
         with pg.expect_navigation(timeout=8000):
             pg.click("#w17-settings-save")
         pg.wait_for_timeout(500)
-        if NEW["contact.email"] not in _raw(env.work / "index_portfolio_clean.html"):
+        if NEW["contact.email"] not in _raw(env.work / "cv.html"):
             bad.append("lưu qua hộp thoại không ghi CV")
         if 'href="mailto:tj.work@example.com"' not in pg.content():
             bad.append("trang tải lại chưa có email mới")

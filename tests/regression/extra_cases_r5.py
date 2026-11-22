@@ -15,7 +15,7 @@ R = None  # gán bởi run_all
 
 PAGES = [  # (trang Creator, file Final, hàm tạo bản lưu)
     ("editor_workspace/editor_portfolio.html", "index.html", "w17CloneCleanHtml"),
-    ("editor_workspace/editor_cv.html", "index_portfolio_clean.html", "cloneCleanHtmlCV"),
+    ("editor_workspace/editor_cv.html", "cv.html", "cloneCleanHtmlCV"),
 ]
 
 INJECT_JS = r"""

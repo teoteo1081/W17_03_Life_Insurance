@@ -52,11 +52,11 @@ REPO = Path(__file__).resolve().parents[2]
 LOCALES = ["vi", "en", "es", "zh"]
 VIEWPORTS = [(320, 568), (375, 812), (390, 844), (768, 1024), (1024, 768), (1440, 900)]
 FINAL_PORTFOLIO = "index.html"
-FINAL_CV = "index_portfolio_clean.html"
+FINAL_CV = "cv.html"
 CREATOR_PORTFOLIO = "editor_workspace/editor_portfolio.html"
 CREATOR_CV = "editor_workspace/editor_cv.html"
 ALL_PAGES = [FINAL_PORTFOLIO, FINAL_CV, CREATOR_PORTFOLIO, CREATOR_CV]
-TRACKED = ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html",
+TRACKED = ["index.html", "cv.html", "editor_workspace/editor_portfolio.html",
            "editor_workspace/editor_cv.html", "server.py", "dev_server.py", "ga4_metrics_live.json"]
 
 RESULTS = []
@@ -106,7 +106,7 @@ class Env:
 
     def reset_work(self):
         # server sinh lại file Creator sau mỗi lần lưu: khôi phục cả Final lẫn Creator
-        for rel in ["index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html", "sitemap.xml"]:
+        for rel in ["index.html", "cv.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html", "sitemap.xml"]:
             shutil.copyfile(self.pristine / rel, self.work / rel)
 
     def start(self):
@@ -932,7 +932,7 @@ def t_f10(env):
     sess_status, sess_headers, sess_body = http("GET", base + "/api/session", ok_origin)
     token = json.loads(sess_body).get("token") if sess_status == 200 else None
     good_html = (env.pristine / "index.html").read_text(encoding="utf-8")
-    cv_html = (env.pristine / "index_portfolio_clean.html").read_text(encoding="utf-8")
+    cv_html = (env.pristine / "cv.html").read_text(encoding="utf-8")
     jhdr = {"Content-Type": "application/json", "Origin": base, "X-W17-Token": token or ""}
     bad = []
 
@@ -942,7 +942,7 @@ def t_f10(env):
         h.update(headers or {})
         return http("POST", base + "/api/save", h, data)
 
-    before = {n: sha(env.work / n) for n in ("index.html", "index_portfolio_clean.html", "server.py")}
+    before = {n: sha(env.work / n) for n in ("index.html", "cv.html", "server.py")}
 
     def untouched(label):
         for n, h in before.items():
@@ -1026,7 +1026,7 @@ def t_f10(env):
     leftovers = [p.name for p in env.work.glob("*.tmp")]
     if leftovers:
         bad.append(f"còn file tạm {leftovers}")
-    s, _, body = post({"html": cv_html, "targets": ["index_portfolio_clean.html"]})
+    s, _, body = post({"html": cv_html, "targets": ["cv.html"]})
     if s != 200:
         bad.append(f"ghi CV phải 200, nhận {s}")
     # static: không phục vụ mã nguồn/thư mục ẩn
@@ -1119,7 +1119,7 @@ def t_nav(b, env):
     for a, b_ in [(FINAL_PORTFOLIO, FINAL_CV), (CREATOR_PORTFOLIO, CREATOR_CV)]:
         for start, tgt in [(a, b_), (b_, a)]:
             open_page(pg, env, start)
-            sel = {FINAL_CV: "a[href='./index_portfolio_clean.html']", FINAL_PORTFOLIO: "a[href='./index.html']",
+            sel = {FINAL_CV: "a[href='./cv.html']", FINAL_PORTFOLIO: "a[href='./index.html']",
                    CREATOR_CV: "a[href='./editor_cv.html']", CREATOR_PORTFOLIO: "a[href='./editor_portfolio.html']"}[tgt]
             link = pg.locator(sel).first
             link.scroll_into_view_if_needed()
@@ -1128,7 +1128,7 @@ def t_nav(b, env):
             pg.wait_for_timeout(500)
             if not pg.url.endswith("/" + tgt):
                 bad.append(f"{start} -> {tgt}: url={pg.url}")
-    record("NAV", "điều hướng hai chiều index.html <-> index_portfolio_clean.html và editor_portfolio <-> editor_cv bằng click thật", not bad, " | ".join(bad))
+    record("NAV", "điều hướng hai chiều index.html <-> cv.html và editor_portfolio <-> editor_cv bằng click thật", not bad, " | ".join(bad))
     ctx.close()
 
 

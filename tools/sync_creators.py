@@ -4,7 +4,7 @@
 Sinh (hoặc kiểm tra) hai bản Creator từ hai bản Final — Final là NGUỒN DUY NHẤT.
 
     editor_workspace/editor_portfolio.html  <-  index.html
-    editor_workspace/editor_cv.html         <-  index_portfolio_clean.html
+    editor_workspace/editor_cv.html         <-  cv.html
 
 Creator khác Final đúng hai điểm, nên i18n (vi/en/es/zh), sanitizer, lưu dữ liệu có schema, modal và toolbar
 không thể lệch nhau (AGENTS.md §2, §9; báo cáo audit F04/F05/F06/F08):
@@ -34,11 +34,11 @@ JOBS = [
     (
         "index.html",
         "editor_workspace/editor_portfolio.html",
-        [('href="./index_portfolio_clean.html"', 'href="./editor_cv.html"', 2),
+        [('href="./cv.html"', 'href="./editor_cv.html"', 2),
          ('href="./assets/portfolio-base.css"', 'href="../assets/portfolio-base.css"', 1)],
     ),
     (
-        "index_portfolio_clean.html",
+        "cv.html",
         "editor_workspace/editor_cv.html",
         [('href="./index.html"', 'href="./editor_portfolio.html"', 1),
          ('href="./assets/cv-base.css"', 'href="../assets/cv-base.css"', 1)],

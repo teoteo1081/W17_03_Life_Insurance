@@ -42,7 +42,7 @@
       const variantMeta = document.querySelector('meta[name="w17-cv-variant"]');
       const cvVariant = variantMeta && /^[a-z0-9_]{1,30}$/.test(variantMeta.content || '') ? variantMeta.content : '';
       // script nằm trong <head> (chạy trước khi có <body>): nhận trang theo thẻ meta, dự phòng theo đường dẫn
-      const page = cvVariant || /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
+      const page = cvVariant || /(^|\/)(cv|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
       const active = typeof id === 'string' && /^G-[A-Z0-9]{6,12}$/.test(id) && location.protocol === 'https:' && location.hostname === host
         && document.documentElement.getAttribute('data-w17-mode') !== 'creator' && !navigator.webdriver;
       const lang = () => (document.documentElement.lang || 'vi').slice(0, 2);
@@ -121,7 +121,7 @@
         if (link === 'portfolio' || link === 'portfolio-pdf' || (page === 'cv' && /(^|\/)(index|editor_portfolio)\.html$/.test(href))) {
           return w17Track('portfolio_from_cv_click', { link_location: loc });
         }
-        if (page === 'portfolio' && /(index_portfolio_clean|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
+        if (page === 'portfolio' && /(^|\/)(cv|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
         const webCard = node.closest('[data-w17-card-group="website"] [data-w17-card]');
         if (webCard && href && !/^https:\/\/github\.com\//.test(href)) return w17Track('project_demo_click', { project_id: webCard.getAttribute('data-w17-card') });
         const demo = node.querySelector('[data-i18n$="_btn_demo"]');
@@ -4607,8 +4607,8 @@
         cloneToast.classList.add('hidden');
       }
 
-      cloneDoc.querySelectorAll('a[href*="editor_cv.html"], a[href*="index_portfolio_clean.html"]').forEach((a) => {
-        a.setAttribute('href', './index_portfolio_clean.html');
+      cloneDoc.querySelectorAll('a[href*="editor_cv.html"], a[href*="cv.html"]').forEach((a) => {
+        a.setAttribute('href', './cv.html');
       });
 
       cloneDoc.querySelectorAll('[contenteditable]').forEach((el) => el.removeAttribute('contenteditable'));
@@ -5366,7 +5366,7 @@
       const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
 
       // Phiên bản file Final lúc mở trang: gửi kèm khi lưu; tab/cửa sổ khác đã lưu sau đó thì server trả 409, nháp vẫn giữ.
-      const W17_FINAL = /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'index_portfolio_clean.html' : 'index.html';
+      const W17_FINAL = /(^|\/)(cv|editor_cv)\.html$/.test(location.pathname) ? 'cv.html' : 'index.html';
       const revs = {};
       const revReady = isLocal()
         ? fetch('/api/revision?file=' + W17_FINAL, { cache: 'no-store' }).then((r) => r.json()).then((d) => { if (d && typeof d.revision === 'string') revs[W17_FINAL] = d.revision; }).catch(() => {})

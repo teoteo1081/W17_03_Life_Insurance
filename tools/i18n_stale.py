@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 STATE = ROOT / "i18n" / "translated_from.json"
 PAGES = {
     "index.html": ("const translations = {", "const W17_PRISTINE", "editsByLang"),
-    "index_portfolio_clean.html": ("const translationsCV = {", "const PRISTINE_CV", "textEditsByLang"),
+    "cv.html": ("const translationsCV = {", "const PRISTINE_CV", "textEditsByLang"),
 }
 LANGS = ("vi", "en", "es", "zh")
 

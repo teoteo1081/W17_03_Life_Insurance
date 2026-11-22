@@ -4,7 +4,7 @@ Dành cho chủ website, không cần biết lập trình. Chỉ ghi những vi�
 
 Hai trang trên web:
 - **Portfolio**: https://teoteo1081.github.io/W17_03_Claude_porfolio/
-- **CV**: https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html
+- **CV**: https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html
 
 ---
 
@@ -138,13 +138,13 @@ Link **CV** (gửi nhà tuyển dụng):
 
 | Gửi ở đâu | Link |
 |---|---|
-| Zalo — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=zalo&utm_medium=social&utm_campaign=apply` |
-| Viber — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=viber&utm_medium=social&utm_campaign=apply` |
-| Messenger — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=messenger&utm_medium=social&utm_campaign=apply` |
-| LinkedIn — tin nhắn ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=linkedin&utm_medium=social&utm_campaign=apply` |
-| Email — thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=email&utm_medium=email&utm_campaign=apply` |
-| TopCV — hồ sơ / thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=topcv&utm_medium=referral&utm_campaign=apply` |
-| ITviec — hồ sơ / thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/index_portfolio_clean.html?utm_source=itviec&utm_medium=referral&utm_campaign=apply` |
+| Zalo — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html?utm_source=zalo&utm_medium=social&utm_campaign=apply` |
+| Viber — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html?utm_source=viber&utm_medium=social&utm_campaign=apply` |
+| Messenger — gửi nhà tuyển dụng | `https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html?utm_source=messenger&utm_medium=social&utm_campaign=apply` |
+| LinkedIn — tin nhắn ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html?utm_source=linkedin&utm_medium=social&utm_campaign=apply` |
+| Email — thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html?utm_source=email&utm_medium=email&utm_campaign=apply` |
+| TopCV — hồ sơ / thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html?utm_source=topcv&utm_medium=referral&utm_campaign=apply` |
+| ITviec — hồ sơ / thư ứng tuyển | `https://teoteo1081.github.io/W17_03_Claude_porfolio/cv.html?utm_source=itviec&utm_medium=referral&utm_campaign=apply` |
 
 **File CV PDF: KHÔNG tự thêm UTM.** Link "Xem Portfolio" và mã QR trong PDF đã tự mang `utm_source=cv_pdf&utm_medium=pdf&utm_campaign=cv` (bấm link) và `utm_source=cv_pdf&utm_medium=qr&utm_campaign=cv` (quét QR). Gửi file PDF qua kênh nào thì trong GA4 vẫn hiện là `cv_pdf`; muốn biết kênh thì gửi **thêm** link CV ở bảng trên.
 

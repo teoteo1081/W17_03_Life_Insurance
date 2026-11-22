@@ -42,7 +42,7 @@
       const variantMeta = document.querySelector('meta[name="w17-cv-variant"]');
       const cvVariant = variantMeta && /^[a-z0-9_]{1,30}$/.test(variantMeta.content || '') ? variantMeta.content : '';
       // script nằm trong <head> (chạy trước khi có <body>): nhận trang theo thẻ meta, dự phòng theo đường dẫn
-      const page = cvVariant || /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
+      const page = cvVariant || /(^|\/)(cv|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
       const active = typeof id === 'string' && /^G-[A-Z0-9]{6,12}$/.test(id) && location.protocol === 'https:' && location.hostname === host
         && document.documentElement.getAttribute('data-w17-mode') !== 'creator' && !navigator.webdriver;
       const lang = () => (document.documentElement.lang || 'vi').slice(0, 2);
@@ -121,7 +121,7 @@
         if (link === 'portfolio' || link === 'portfolio-pdf' || (page === 'cv' && /(^|\/)(index|editor_portfolio)\.html$/.test(href))) {
           return w17Track('portfolio_from_cv_click', { link_location: loc });
         }
-        if (page === 'portfolio' && /(index_portfolio_clean|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
+        if (page === 'portfolio' && /(^|\/)(cv|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
         const webCard = node.closest('[data-w17-card-group="website"] [data-w17-card]');
         if (webCard && href && !/^https:\/\/github\.com\//.test(href)) return w17Track('project_demo_click', { project_id: webCard.getAttribute('data-w17-card') });
         const demo = node.querySelector('[data-i18n$="_btn_demo"]');
@@ -319,7 +319,7 @@
             Thao Nguyen
           </span>
         </a>
-        <div id="w17-page-switch" role="group" aria-label="Chuyển giữa Portfolio và CV" data-i18n-aria="aria_page_switch" class="inline-grid grid-cols-2 items-center rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100/80 dark:bg-slate-900/80 p-0.5 text-xs font-bold shrink-0"><span aria-current="page" class="px-3 py-1.5 min-w-[5.5rem] text-center rounded-lg bg-emerald-500 text-slate-950">Portfolio</span><a href="./index_portfolio_clean.html" class="px-3 py-1.5 min-w-[5.5rem] text-center rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">CV</a></div>
+        <div id="w17-page-switch" role="group" aria-label="Chuyển giữa Portfolio và CV" data-i18n-aria="aria_page_switch" class="inline-grid grid-cols-2 items-center rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100/80 dark:bg-slate-900/80 p-0.5 text-xs font-bold shrink-0"><span aria-current="page" class="px-3 py-1.5 min-w-[5.5rem] text-center rounded-lg bg-emerald-500 text-slate-950">Portfolio</span><a href="./cv.html" class="px-3 py-1.5 min-w-[5.5rem] text-center rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">CV</a></div>
       </div>
 
       <!-- Desktop Nav Links -->
@@ -424,7 +424,7 @@
           <a href="https://github.com/teoteo1081" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-slate-800 dark:text-slate-200 bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 hover:border-emerald-500/50 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
             <span data-i18n="hero_btn_github" class="editable-node">🐙 Xem GitHub ↗</span>
           </a>
-          <a href="./index_portfolio_clean.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 hover:border-emerald-400 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
+          <a href="./cv.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 hover:border-emerald-400 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition-all">
             <span data-i18n="hero_btn_capability" class="editable-node">📄 Xem CV</span>
           </a>
         </div>
@@ -4607,8 +4607,8 @@
         cloneToast.classList.add('hidden');
       }
 
-      cloneDoc.querySelectorAll('a[href*="editor_cv.html"], a[href*="index_portfolio_clean.html"]').forEach((a) => {
-        a.setAttribute('href', './index_portfolio_clean.html');
+      cloneDoc.querySelectorAll('a[href*="editor_cv.html"], a[href*="cv.html"]').forEach((a) => {
+        a.setAttribute('href', './cv.html');
       });
 
       cloneDoc.querySelectorAll('[contenteditable]').forEach((el) => el.removeAttribute('contenteditable'));
@@ -5366,7 +5366,7 @@
       const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
 
       // Phiên bản file Final lúc mở trang: gửi kèm khi lưu; tab/cửa sổ khác đã lưu sau đó thì server trả 409, nháp vẫn giữ.
-      const W17_FINAL = /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'index_portfolio_clean.html' : 'index.html';
+      const W17_FINAL = /(^|\/)(cv|editor_cv)\.html$/.test(location.pathname) ? 'cv.html' : 'index.html';
       const revs = {};
       const revReady = isLocal()
         ? fetch('/api/revision?file=' + W17_FINAL, { cache: 'no-store' }).then((r) => r.json()).then((d) => { if (d && typeof d.revision === 'string') revs[W17_FINAL] = d.revision; }).catch(() => {})

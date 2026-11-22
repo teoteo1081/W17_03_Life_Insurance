@@ -42,7 +42,7 @@ def t_seo(b, env):
     bad = []
     env.reset_work()
     base = "https://teoteo1081.github.io/tjthaonguyen/"
-    for name, img in (("index.html", "assets/og-portfolio.png"), ("index_portfolio_clean.html", "assets/og-cv.png")):
+    for name, img in (("index.html", "assets/og-portfolio.png"), ("cv.html", "assets/og-cv.png")):
         html = _raw(env.work / name)
         ld = _jsonld(html)
         if not ld:
@@ -53,7 +53,7 @@ def t_seo(b, env):
         if types.get("WebSite", {}).get("url") != base or person.get("email") != "thuthao28011989@yahoo.com" or person.get("telephone") != "+84855239805" \
                 or person.get("sameAs") != ["https://github.com/teoteo1081"]:
             bad.append(f"{name}: JSON-LD lệch cấu hình {person}")
-        if name.startswith("index_portfolio_clean") and types.get("ProfilePage", {}).get("mainEntity", {}).get("@id") != base + "#person":
+        if name.startswith("cv") and types.get("ProfilePage", {}).get("mainEntity", {}).get("@id") != base + "#person":
             bad.append("CV thiếu ProfilePage trỏ Person")
         if re.search(r"aggregateRating|\"review\"|Review", json.dumps(ld)):
             bad.append(f"{name}: JSON-LD có đánh giá/review")
@@ -64,15 +64,15 @@ def t_seo(b, env):
         if not (env.work / img).is_file():
             bad.append(f"thiếu file {img}")
     sm = _raw(env.work / "sitemap.xml")
-    if re.findall(r"<loc>(.*?)</loc>", sm) != [base, base + "index_portfolio_clean.html"]:
+    if re.findall(r"<loc>(.*?)</loc>", sm) != [base, base + "cv.html"]:
         bad.append(f"sitemap sai: {sm}")
     st, _, body = R.http("POST", env.base + "/api/settings", _hdr(env), json.dumps({"changes": {"site.baseUrl": "https://tj.example.com/p/"}}).encode("utf-8"))
     if st != 200:
         bad.append(f"đổi địa chỉ web -> {st}")
     else:
-        ld = _jsonld(_raw(env.work / "index_portfolio_clean.html"))
+        ld = _jsonld(_raw(env.work / "cv.html"))
         html = _raw(env.work / "index.html")
-        if not ld or {n["@type"]: n for n in ld["@graph"]}["ProfilePage"]["url"] != "https://tj.example.com/p/index_portfolio_clean.html" \
+        if not ld or {n["@type"]: n for n in ld["@graph"]}["ProfilePage"]["url"] != "https://tj.example.com/p/cv.html" \
                 or '<meta property="og:image" content="https://tj.example.com/p/assets/og-portfolio.png">' not in html \
                 or "<loc>https://tj.example.com/p/</loc>" not in _raw(env.work / "sitemap.xml"):
             bad.append("đổi địa chỉ web: JSON-LD/ảnh chia sẻ/sitemap chưa đổi")
@@ -200,7 +200,7 @@ def t_owner_flag(b, env):
     X8._goto(pg, X8.PUBLIC + "?toi_la_chu_trang=1")
     if not pg.evaluate(internal):
         bad.append("?toi_la_chu_trang=1 không đánh dấu nội bộ")
-    X8._goto(pg, X8.PUBLIC + "index_portfolio_clean.html")
+    X8._goto(pg, X8.PUBLIC + "cv.html")
     if not pg.evaluate(internal):
         bad.append("không nhớ cờ chủ trang cho lần sau / trang CV")
     X8._goto(pg, X8.PUBLIC + "?toi_la_chu_trang=0")

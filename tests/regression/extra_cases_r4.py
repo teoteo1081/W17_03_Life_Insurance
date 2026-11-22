@@ -24,7 +24,7 @@ from urllib.parse import urlsplit
 
 R = None  # gán bởi run_all
 
-PUBLISH_PATHS = {"index.html", "index_portfolio_clean.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"}
+PUBLISH_PATHS = {"index.html", "cv.html", "editor_workspace/editor_portfolio.html", "editor_workspace/editor_cv.html"}
 
 
 def _raw(path):
@@ -104,7 +104,7 @@ def t_save_syncs_creator(env):
     bad = []
     sync = _sync(env)
     cases = [("index.html", "editor_workspace/editor_portfolio.html", "Cách đọc số liệu này"),
-             ("index_portfolio_clean.html", "editor_workspace/editor_cv.html", "Business English")]
+             ("cv.html", "editor_workspace/editor_cv.html", "Business English")]
     for final, creator, marker in cases:
         env.reset_work()
         html = _raw(env.work / final)
@@ -225,7 +225,7 @@ def t_public_host_drafts(b, env):
     pg = R.new_page(ctx)
     checks = [
         (f"{pub}/index.html", "[data-i18n=hero_badge]", "DRAFT-R4-PORTFOLIO", False),
-        (f"{pub}/index_portfolio_clean.html", "[data-i18n=pill_lang]", "DRAFT-R4-CV", False),
+        (f"{pub}/cv.html", "[data-i18n=pill_lang]", "DRAFT-R4-CV", False),
         (f"{pub}/{R.CREATOR_PORTFOLIO}", "[data-i18n=hero_badge]", "DRAFT-R4-PORTFOLIO", True),
         (f"{pub}/{R.CREATOR_CV}", "[data-i18n=pill_lang]", "DRAFT-R4-CV", True),
         (f"{env.base}/index.html", "[data-i18n=hero_badge]", "DRAFT-R4-PORTFOLIO", True),

@@ -84,7 +84,7 @@ def t_no_tracking_local(b, env):
     if reqs:
         bad.append(f"có request Google: {reqs[:3]}")
     ctx.close()
-    for rel in ("index.html", "index_portfolio_clean.html"):
+    for rel in ("index.html", "cv.html"):
         txt = (R.REPO / rel).read_text(encoding="utf-8")
         if '"measurementId":"' + W17_GA_ID + '"' not in txt or ORIGIN_GA_ID in txt or OLD_STREAM_ID in txt:
             bad.append(f"{rel}: GA4 phải dùng mã riêng {W17_GA_ID}, không dùng ID của Portfolio gốc")
@@ -116,7 +116,7 @@ def t_public_events(b, env):
         ("#contact a[href^='tel:']", "contact_phone_click"),
         ("#contact a[href^='mailto:'] [data-i18n=contact_btn_email]", "contact_email_click"),
         ("#contact a[href*='zalo.me'] [data-i18n=contact_btn_zalo]", "contact_zalo_click"),
-        ("#main-navbar a[href$='index_portfolio_clean.html']", "cv_from_portfolio_click"),
+        ("#main-navbar a[href$='cv.html']", "cv_from_portfolio_click"),
         ("[data-i18n=spoke1_btn_demo]", "project_demo_click"),
     ]
     for sel, _ in clicks:
@@ -148,7 +148,7 @@ def t_public_events(b, env):
         if s in dump:
             bad.append(f"dataLayer chứa {s!r}")
     # ---------------- CV ----------------
-    _goto(pg, PUBLIC + "index_portfolio_clean.html")
+    _goto(pg, PUBLIC + "cv.html")
     dl = json.loads(pg.evaluate(DL_JS))
     cfgs = [a for a in dl if a[0] == "config"]
     if len(cfgs) != 1 or cfgs[0][2].get("content_group") != "cv" or cfgs[0][2].get("cv_variant") != "data_ops":
@@ -207,7 +207,7 @@ def t_consent_europe(b, env):
         dl = json.loads(pg.evaluate(DL_JS))
         if ["consent", "update", {"analytics_storage": "granted"}] not in dl:
             bad.append("Đồng ý không gửi consent update granted")
-    _goto(pg, PUBLIC + "index_portfolio_clean.html")
+    _goto(pg, PUBLIC + "cv.html")
     pg.locator("footer [data-w17-consent-open]").click()
     if not pg.locator("#w17-consent-banner").is_visible():
         bad.append("CV: nút quyền riêng tư không mở banner")

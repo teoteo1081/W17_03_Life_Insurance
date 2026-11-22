@@ -28,10 +28,10 @@ Lý do từng thay đổi nằm ở `docs/CHANGE_RATIONALE.md`.
 
 **A2. Không còn tuyên bố không kiểm chứng được.** Các lệnh sau phải **không** trả kết quả trong nội dung hiển thị của 2 file Final:
 ```bash
-grep -nE "xác thực 100|100% Verified|Verified Specialist|đã xác thực|认证专家|100% 真实|Verificad|verificad" index.html index_portfolio_clean.html
-grep -nE "~60%|500\+|12 Vùng|12 Regions|12 Regiones|12 个战区|80–90%" index.html index_portfolio_clean.html
-grep -nE "ROAS|CPA|CVR" index.html index_portfolio_clean.html
-grep -nE "Google Ads|Meta Ads|TikTok" index.html index_portfolio_clean.html
+grep -nE "xác thực 100|100% Verified|Verified Specialist|đã xác thực|认证专家|100% 真实|Verificad|verificad" index.html cv.html
+grep -nE "~60%|500\+|12 Vùng|12 Regions|12 Regiones|12 个战区|80–90%" index.html cv.html
+grep -nE "ROAS|CPA|CVR" index.html cv.html
+grep -nE "Google Ads|Meta Ads|TikTok" index.html cv.html
 ```
 Ngoại lệ vòng 4 (P0-4): "Google Ads / Meta Ads" **được phép** trong thẻ và cửa sổ chi tiết dịch vụ 6 (`eco_card4_desc`, `modal_p4_item2`) vì đó là phạm vi nhận làm theo yêu cầu, không phải tuyên bố kết quả.
 Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WRP Tax Services (Certified Public Accountant / Enrolled Agent, không phải chỉ số quảng cáo) và một dòng nằm trong chuỗi ảnh nhúng base64; cả hai chấp nhận được. Tên Prudential, Chubb Life, AIA **được phép** xuất hiện (chủ hồ sơ cho phép ở vòng 2); chúng chỉ nằm trong `sol_desc` của CV.
@@ -48,7 +48,7 @@ Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WR
 
 **A6 (cập nhật vòng 4, P0-2). Số điện thoại công khai `+84 855 239 805`** (chủ hồ sơ xác nhận 2026-11-20: đúng số 0855239805, hiển thị dạng quốc tế), link `tel:+84855239805`; ở mục Liên hệ Portfolio, hero CV và khối in PDF. Quản lý ở trường `contact.phone` của `w17-site-config`. Kiểm: test R7-01, R6-02. Nội dung A6 gốc bên dưới là lịch sử.
 
-**A6 gốc (vòng 2). Số điện thoại không còn hiển thị.** Dòng điện thoại ở hero CV và khóa `hero_phone` đã bị xóa; nhãn Zalo không còn ghi số. Kiểm: `grep -n "855" index.html index_portfolio_clean.html` chỉ được trả các liên kết `https://zalo.me/…`. **Giới hạn cần biết:** số Zalo trùng số điện thoại nên địa chỉ liên kết `zalo.me` vẫn chứa số; chỉ ẩn được khỏi chữ hiển thị. Email công khai giữ nguyên.
+**A6 gốc (vòng 2). Số điện thoại không còn hiển thị.** Dòng điện thoại ở hero CV và khóa `hero_phone` đã bị xóa; nhãn Zalo không còn ghi số. Kiểm: `grep -n "855" index.html cv.html` chỉ được trả các liên kết `https://zalo.me/…`. **Giới hạn cần biết:** số Zalo trùng số điện thoại nên địa chỉ liên kết `zalo.me` vẫn chứa số; chỉ ẩn được khỏi chữ hiển thị. Email công khai giữ nguyên.
 
 ## 4. Anchor kỹ thuật (A7–A9)
 
@@ -61,7 +61,7 @@ Ghi chú: lệnh `ROAS|CPA|CVR` còn trả vài dòng `CPA/EA` trong mô tả WR
 python -X utf8 tools/sync_creators.py --check   # phải in OK cho cả hai Creator
 ```
 
-**A10. Cấu hình dùng chung một nguồn (vòng 4).** Email, link Zalo, link GitHub (trang cá nhân) và địa chỉ web công khai nằm trong khối `<script type="application/json" id="w17-site-config">` **giống hệt nhau** ở hai file Final. Đổi qua nút ⚙ Cài đặt của editor (`POST /api/settings`) thì server thay giá trị cũ → mới ở mọi chỗ của cả hai file (giữ nguyên link repo `github.com/<tên>/<repo>`), đặt lại canonical/og:url, sinh lại Creator. `/api/save` trả 409 nếu bản lưu mang cấu hình khác bản trên đĩa (trang mở trước khi đổi cài đặt). Canonical Portfolio = địa chỉ web; canonical CV = địa chỉ web + `index_portfolio_clean.html`; không còn `og:url` trỏ `https://teoteo1081.github.io/` (404). Kiểm: `python -X utf8 tools/site_config.py --check`, test R6-01..03, R6-05.
+**A10. Cấu hình dùng chung một nguồn (vòng 4).** Email, link Zalo, link GitHub (trang cá nhân) và địa chỉ web công khai nằm trong khối `<script type="application/json" id="w17-site-config">` **giống hệt nhau** ở hai file Final. Đổi qua nút ⚙ Cài đặt của editor (`POST /api/settings`) thì server thay giá trị cũ → mới ở mọi chỗ của cả hai file (giữ nguyên link repo `github.com/<tên>/<repo>`), đặt lại canonical/og:url, sinh lại Creator. `/api/save` trả 409 nếu bản lưu mang cấu hình khác bản trên đĩa (trang mở trước khi đổi cài đặt). Canonical Portfolio = địa chỉ web; canonical CV = địa chỉ web + `cv.html`; không còn `og:url` trỏ `https://teoteo1081.github.io/` (404). Kiểm: `python -X utf8 tools/site_config.py --check`, test R6-01..03, R6-05.
 
 **A11 (sửa sau audit 2b91184). Xóa thẻ CV là thao tác TƯỜNG MINH.** Bấm ✕ hai lần (xác nhận) -> mã thẻ vào `deletedIds` của nháp + thẻ vào thùng rác "🗑 Đã xóa" (khôi phục từng thẻ, cả sau tải lại, tới khi Lưu). Khôi phục nháp CHỈ gỡ thẻ trong `deletedIds`; không suy "vắng = đã xóa" (nháp snapshot cũ, nháp chỉ có `knownIds` đều giữ mọi thẻ). Áp cho thẻ Học vấn và tag kỹ năng (thẻ giải pháp/số liệu không có nút xóa trên giao diện). Kiểm: R6-04, N01, R10-02, R10-05. Nội dung A11 cũ bên dưới là lịch sử.
 

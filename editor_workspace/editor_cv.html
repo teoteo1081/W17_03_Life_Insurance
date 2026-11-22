@@ -8,7 +8,7 @@
   <meta property="og:title" content="NGUYỄN THỊ THU THẢO (TJ) — Chuyên viên Vận hành &amp; Phân tích Dữ liệu (Freelance)">
   <meta property="og:description" content="Hồ sơ của Nguyễn Thị Thu Thảo (TJ) — Chuyên viên Vận hành &amp; Phân tích Dữ liệu: tự động hóa nhập liệu, đối soát, dashboard Power BI/HTML và website gọn nhẹ. Nhận dự án freelance, làm việc từ xa.">
   <meta property="og:type" content="profile">
-  <meta property="og:url" content="https://teoteo1081.github.io/tjthaonguyen/index_portfolio_clean.html">
+  <meta property="og:url" content="https://teoteo1081.github.io/tjthaonguyen/cv.html">
   <meta property="og:image" content="https://teoteo1081.github.io/tjthaonguyen/assets/og-cv.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -17,8 +17,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://teoteo1081.github.io/tjthaonguyen/assets/og-cv.png">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://teoteo1081.github.io/tjthaonguyen/index_portfolio_clean.html">
-  <script type="application/ld+json" id="w17-jsonld">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://teoteo1081.github.io/tjthaonguyen/#website","url":"https://teoteo1081.github.io/tjthaonguyen/","name":"Thao Nguyen (TJ) — Portfolio","inLanguage":["vi","en","es","zh"],"publisher":{"@id":"https://teoteo1081.github.io/tjthaonguyen/#person"}},{"@type":"Person","@id":"https://teoteo1081.github.io/tjthaonguyen/#person","name":"Nguyễn Thị Thu Thảo","alternateName":["Thao Nguyen","TJ"],"jobTitle":"Operations \u0026 Data Analyst (Freelance)","url":"https://teoteo1081.github.io/tjthaonguyen/","email":"thuthao28011989@yahoo.com","telephone":"+84855239805","address":{"@type":"PostalAddress","addressLocality":"Ho Chi Minh City","addressCountry":"VN"},"sameAs":["https://github.com/teoteo1081"],"knowsAbout":["Operations automation","Data analytics","Power BI","Python","SQL","Google Sheets","GA4","Google Tag Manager","US tax office back-office (CCH Autoflow)","Sales compensation and KPI","Website and landing page development"]},{"@type":"ProfilePage","@id":"https://teoteo1081.github.io/tjthaonguyen/index_portfolio_clean.html#profile","url":"https://teoteo1081.github.io/tjthaonguyen/index_portfolio_clean.html","name":"CV — Nguyễn Thị Thu Thảo","inLanguage":"vi","isPartOf":{"@id":"https://teoteo1081.github.io/tjthaonguyen/#website"},"mainEntity":{"@id":"https://teoteo1081.github.io/tjthaonguyen/#person"}}]}</script>
+  <link rel="canonical" href="https://teoteo1081.github.io/tjthaonguyen/cv.html">
+  <script type="application/ld+json" id="w17-jsonld">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://teoteo1081.github.io/tjthaonguyen/#website","url":"https://teoteo1081.github.io/tjthaonguyen/","name":"Thao Nguyen (TJ) — Portfolio","inLanguage":["vi","en","es","zh"],"publisher":{"@id":"https://teoteo1081.github.io/tjthaonguyen/#person"}},{"@type":"Person","@id":"https://teoteo1081.github.io/tjthaonguyen/#person","name":"Nguyễn Thị Thu Thảo","alternateName":["Thao Nguyen","TJ"],"jobTitle":"Operations \u0026 Data Analyst (Freelance)","url":"https://teoteo1081.github.io/tjthaonguyen/","email":"thuthao28011989@yahoo.com","telephone":"+84855239805","address":{"@type":"PostalAddress","addressLocality":"Ho Chi Minh City","addressCountry":"VN"},"sameAs":["https://github.com/teoteo1081"],"knowsAbout":["Operations automation","Data analytics","Power BI","Python","SQL","Google Sheets","GA4","Google Tag Manager","US tax office back-office (CCH Autoflow)","Sales compensation and KPI","Website and landing page development"]},{"@type":"ProfilePage","@id":"https://teoteo1081.github.io/tjthaonguyen/cv.html#profile","url":"https://teoteo1081.github.io/tjthaonguyen/cv.html","name":"CV — Nguyễn Thị Thu Thảo","inLanguage":"vi","isPartOf":{"@id":"https://teoteo1081.github.io/tjthaonguyen/#website"},"mainEntity":{"@id":"https://teoteo1081.github.io/tjthaonguyen/#person"}}]}</script>
   <script type="application/json" id="w17-site-config">{"schema":1,"contact":{"email":"thuthao28011989@yahoo.com","phone":"+84 855 239 805","zaloUrl":"https://zalo.me/0855239805","githubUrl":"https://github.com/teoteo1081"},"site":{"baseUrl":"https://teoteo1081.github.io/tjthaonguyen/"},"ga4":{"measurementId":"G-F8Y8CWQJZC"}}</script>
   <script id="w17-analytics-script">
     // GA4 cho Portfolio + CV (Measurement ID trong w17-site-config, đổi ở ⚙ Cài đặt; để trống = tắt).
@@ -55,7 +55,7 @@
       const variantMeta = document.querySelector('meta[name="w17-cv-variant"]');
       const cvVariant = variantMeta && /^[a-z0-9_]{1,30}$/.test(variantMeta.content || '') ? variantMeta.content : '';
       // script nằm trong <head> (chạy trước khi có <body>): nhận trang theo thẻ meta, dự phòng theo đường dẫn
-      const page = cvVariant || /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
+      const page = cvVariant || /(^|\/)(cv|editor_cv)\.html$/.test(location.pathname) ? 'cv' : 'portfolio';
       const active = typeof id === 'string' && /^G-[A-Z0-9]{6,12}$/.test(id) && location.protocol === 'https:' && location.hostname === host
         && document.documentElement.getAttribute('data-w17-mode') !== 'creator' && !navigator.webdriver;
       const lang = () => (document.documentElement.lang || 'vi').slice(0, 2);
@@ -134,7 +134,7 @@
         if (link === 'portfolio' || link === 'portfolio-pdf' || (page === 'cv' && /(^|\/)(index|editor_portfolio)\.html$/.test(href))) {
           return w17Track('portfolio_from_cv_click', { link_location: loc });
         }
-        if (page === 'portfolio' && /(index_portfolio_clean|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
+        if (page === 'portfolio' && /(^|\/)(cv|editor_cv)\.html$/.test(href)) return w17Track('cv_from_portfolio_click', { link_location: loc });
         const webCard = node.closest('[data-w17-card-group="website"] [data-w17-card]');
         if (webCard && href && !/^https:\/\/github\.com\//.test(href)) return w17Track('project_demo_click', { project_id: webCard.getAttribute('data-w17-card') });
         const demo = node.querySelector('[data-i18n$="_btn_demo"]');
@@ -4828,7 +4828,7 @@
     }
 
     async function exportCleanHTML() {
-      const FILE = 'index_portfolio_clean.html';
+      const FILE = 'cv.html';
       const btn = document.getElementById('btn-save-final');
       if (btn) btn.disabled = true;
       try {
@@ -4889,7 +4889,7 @@
     }
 
     async function publishToWebCV() {
-      const FILE = 'index_portfolio_clean.html';
+      const FILE = 'cv.html';
       if (!isLocalServerCV()) {
         showToast(uiCV('t_need_local'), 9000);
         return { ok: false, reason: 'not-local' };
@@ -5290,7 +5290,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
 
       // Phiên bản file Final lúc mở trang: gửi kèm khi lưu; tab/cửa sổ khác đã lưu sau đó thì server trả 409, nháp vẫn giữ.
-      const W17_FINAL = /(index_portfolio_clean|editor_cv)\.html$/.test(location.pathname) ? 'index_portfolio_clean.html' : 'index.html';
+      const W17_FINAL = /(^|\/)(cv|editor_cv)\.html$/.test(location.pathname) ? 'cv.html' : 'index.html';
       const revs = {};
       const revReady = isLocal()
         ? fetch('/api/revision?file=' + W17_FINAL, { cache: 'no-store' }).then((r) => r.json()).then((d) => { if (d && typeof d.revision === 'string') revs[W17_FINAL] = d.revision; }).catch(() => {})
