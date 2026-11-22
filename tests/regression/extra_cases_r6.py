@@ -26,7 +26,7 @@ OLD = {
     "contact.zaloUrl": "https://zalo.me/0855239805",
     "contact.githubUrl": "https://github.com/teoteo1081",
     "site.baseUrl": "https://teoteo1081.github.io/W17_03_Life_Insurance/",
-    "ga4.measurementId": "",
+    "ga4.measurementId": "G-B114Q293V1",
 }
 NEW = {
     "contact.email": "tj.work@example.com",
