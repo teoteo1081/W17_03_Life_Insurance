@@ -20,11 +20,12 @@ import json
 R = None  # gán bởi run_all
 
 PUBLIC = "https://teoteo1081.github.io/W17_03_Life_Insurance/"
-# W17_03_Life_Insurance: GA4 dùng luồng RIÊNG G-B114Q293V1 (không dùng G-501ZEXPEVQ của Portfolio gốc). Khi giả lập web công khai, trang được
+# W17_03_Life_Insurance: GA4 dùng property RIÊNG G-F8Y8CWQJZC (không dùng G-501ZEXPEVQ của Portfolio gốc). Khi giả lập web công khai, trang được
 # phục vụ kèm một mã GIẢ để vẫn kiểm được đường code GA4/consent mà không dùng property thật nào.
 GA_ID = "G-TEST123456"
-W17_GA_ID = "G-B114Q293V1"   # mã thật của web này
+W17_GA_ID = "G-F8Y8CWQJZC"   # mã thật của web này (property riêng)
 ORIGIN_GA_ID = "G-501ZEXPEVQ"  # mã của Portfolio gốc — cấm dùng
+OLD_STREAM_ID = "G-B114Q293V1"  # luồng tạm cũ trong property Portfolio gốc — cấm dùng
 PII = ["Nguyen Van Khach", "khach.test@example.com", "0901234567", "Noi dung bi mat"]
 PRIVACY = {"vi": "Quyền riêng tư & cookie", "en": "Privacy & cookies", "es": "Privacidad y cookies", "zh": "隐私与 Cookie"}
 
@@ -85,7 +86,7 @@ def t_no_tracking_local(b, env):
     ctx.close()
     for rel in ("index.html", "index_portfolio_clean.html"):
         txt = (R.REPO / rel).read_text(encoding="utf-8")
-        if '"measurementId":"' + W17_GA_ID + '"' not in txt or ORIGIN_GA_ID in txt:
+        if '"measurementId":"' + W17_GA_ID + '"' not in txt or ORIGIN_GA_ID in txt or OLD_STREAM_ID in txt:
             bad.append(f"{rel}: GA4 phải dùng mã riêng {W17_GA_ID}, không dùng ID của Portfolio gốc")
     R.record("R8", "R8-01 localhost/editor/trình duyệt tự động: không tải gtag, không dataLayer, không request Google (4 trang)", not bad, " | ".join(bad))
 
